@@ -1,3 +1,3 @@
-[submodule "env-xmonad-dzen"]
-	path = env-xmonad-dzen
-	url = git@github.com:hicolour/env-xmonad-dzen.git
+[submodule "env-dzen"]
+	path = env-dzen
+	url = git@github.com:hicolour/env-dzen.git
