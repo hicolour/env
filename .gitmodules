@@ -4,9 +4,6 @@
 [submodule "env-xmonad"]
 	path = env-xmonad
 	url = git@github.com:hicolour/env-xmonad.git
-[submodule "env-roxterm"]
-	path = env-roxterm
-	url = git@github.com:hicolour/env-roxterm.git
 [submodule "env-mc"]
 	path = env-mc
 	url = git@github.com:hicolour/env-mc.git
