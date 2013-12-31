@@ -24,17 +24,22 @@ var=$(pwd)
 # s .bin-env-xmonad
 
 s .xinitrc .xinitrc
+
 s env-xmonad .xmonad
 s env-dzen	.dzen
 
-# mkdir -p ~/.config
+
+# Config dir
+mkdir -p ~/.config
 
 # s .config/dunst 
 # s .config/gtk-2.0
 # s .config/gtk-3.0
 # s .config/htop
-# s .config/mc
-# s .config/roxterm.sourceforge.net
+
+s env-mc .config/mc
+s env-roxterm .config/roxterm.sourceforge.net
+
 # s .config/twmn
 
 

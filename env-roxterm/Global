@@ -1,0 +1,9 @@
+[roxterm options]
+profile=Main
+shortcut_scheme=Main
+colour_scheme=coffee_bear
+
+warn_close=0
+only_warn_running=0
+
+encoding=UTF-8
