@@ -7,3 +7,6 @@
 [submodule "env-mc"]
 	path = env-mc
 	url = git@github.com:hicolour/env-mc.git
+[submodule "env-roxterm"]
+	path = env-roxterm
+	url = git@github.com:hicolour/env-roxterm.git
