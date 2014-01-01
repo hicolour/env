@@ -10,3 +10,6 @@
 [submodule "env-roxterm"]
 	path = env-roxterm
 	url = git@github.com:hicolour/env-roxterm.git
+[submodule "env-dunst"]
+	path = env-dunst
+	url = git@github.com:hicolour/env-dunst.git

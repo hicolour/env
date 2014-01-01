@@ -61,7 +61,7 @@ dunst &
 #roxterm --role rails_dobroserver -e bash -c "cd /data/projects/dobroserver && rails s -p 2000" &
 #roxterm --role rails_fitlog      -e bash -c "cd /data/projects/fitlog      && rails s -p 2001" &
 
-#roxterm --role roxterm_startup &
+roxterm --role roxterm_startup & roxterm --role roxterm_startup & roxterm --role roxterm_startup & roxterm --role roxterm_startup &
 #roxterm --role ranger_startup -e ranger &
 
 exec xmonad
