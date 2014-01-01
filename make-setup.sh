@@ -37,6 +37,7 @@ mkdir -p ~/.config
 # s .config/gtk-3.0
 # s .config/htop
 
+s env-dunst .config/dunst 
 s env-mc .config/mc
 s env-roxterm .config/roxterm.sourceforge.net
 
