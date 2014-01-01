@@ -1,9 +1,11 @@
-env-xmonad
-==========
+env setup
+===
 
-Xmonad setup / Used with ArchLinux, Dzen2,  
+ArchLinux @ Xmonad / Dzen2 / Dmenu / Dunst 
 
-Current state:
+
+current state
+===
 
 <img src="https://raw.github.com/hicolour/env/master/screen.png" />
 
