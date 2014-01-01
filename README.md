@@ -1,8 +1,13 @@
-env setup
+env
 ===
 
 ArchLinux @ Xmonad / Dzen2 / Dmenu / Dunst 
 
+
+setup
+===
+    ./make-nstall -- install all requires tools
+    ./make-setup  -- setup config files 
 
 current state
 ===
