@@ -9,6 +9,7 @@ fi
 
 xrandr --output eDP1 --auto --left-of DP1 --auto
 
+xset m 6/1 1
 
 #xrandr --output LVDS1 --auto --left-of HDMI1 --auto
 
@@ -26,8 +27,9 @@ xsetroot -cursor_name left_ptr
 # wallpaper
 #sh ~/.fehbg &
 #xloadimage -onroot -fullscreen ~/.wallpaper/02-1920x1200.jpg &
-feh --bg-center ~/.wallpaper/winter-1920x1200.jpg &
+# feh --bg-center ~/.wallpaper/winter-1920x1200.jpg &
 
+feh --bg-center ~/.wallpaper/thyon-04.jpg &
 
 # notification engine -old
 #twmnd &
@@ -63,5 +65,10 @@ dunst &
 
 roxterm --role roxterm_startup & roxterm --role roxterm_startup & roxterm --role roxterm_startup & roxterm --role roxterm_startup &
 #roxterm --role ranger_startup -e ranger &
+
+skype &
+pidgin &
+
+google-chrome-stable &
 
 exec xmonad

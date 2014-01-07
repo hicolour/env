@@ -88,6 +88,7 @@ y jdk7
 
 # build
 p maven
+y gradle
 
 # server
 p tomcat7
