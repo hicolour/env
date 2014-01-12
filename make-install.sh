@@ -36,9 +36,14 @@ p dmenu
 
 
 
+# editors
+p vim
+
+
 # git utils
 p git
 p gitk
+y bash-completion-git
 
 
 p xloadimage

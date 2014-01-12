@@ -41,6 +41,11 @@ s env-dunst .config/dunst
 s env-mc .config/mc
 s env-roxterm .config/roxterm.sourceforge.net
 
+
+# env-git
+s env-git/.gitconfig .gitconfig  
+
+
 # s .config/twmn
 
 

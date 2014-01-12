@@ -13,3 +13,6 @@
 [submodule "env-dunst"]
 	path = env-dunst
 	url = git@github.com:hicolour/env-dunst.git
+[submodule "env-git"]
+	path = env-git
+	url = git@github.com:hicolour/env-git.git
