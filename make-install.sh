@@ -148,3 +148,26 @@ p envypn-font
 
 y solaar
  
+
+#ebooks
+y calibre 
+
+#xxxy
+
+# y xwinfo-git
+# p  xdotool
+
+p xorg-xprop
+
+#twitter
+y hotot
+
+
+
+#scala stack
+p scala
+p sbt
+
+y playframework2
+
+p mongodb

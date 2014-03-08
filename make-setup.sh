@@ -44,7 +44,9 @@ s env-roxterm .config/roxterm.sourceforge.net
 
 # env-git
 s env-git/.gitconfig .gitconfig  
+s env-git/.gitignore .gitignore  
 
+git config --global core.excludesfile '~/.gitignore'
 
 # s .config/twmn
 

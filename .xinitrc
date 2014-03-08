@@ -6,8 +6,9 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   done
   unset f
 fi
-
-xrandr --output eDP1 --auto --left-of DP1 --auto
+xrandr --output DP1 --auto --right-of DP2 --auto
+# xrandr --output DP1 --auto --right-of DP2 --auto
+# xrandr --output eDP1 --auto --left-of DP2 --auto
 
 xset m 6/1 1
 
@@ -63,12 +64,18 @@ dunst &
 #roxterm --role rails_dobroserver -e bash -c "cd /data/projects/dobroserver && rails s -p 2000" &
 #roxterm --role rails_fitlog      -e bash -c "cd /data/projects/fitlog      && rails s -p 2001" &
 
-roxterm --role roxterm_startup & roxterm --role roxterm_startup & roxterm --role roxterm_startup & roxterm --role roxterm_startup &
+roxterm --role roxterm_startup & roxterm --role roxterm_startup & 
+
+sleep 1
 #roxterm --role ranger_startup -e ranger &
 
 skype &
 pidgin &
 
-google-chrome-stable &
+sleep 3 
+
+hotot-gtk3 &
+
+
 
 exec xmonad
