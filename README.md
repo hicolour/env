@@ -37,5 +37,5 @@ Base setup:
 #### Current state
 
 
-<img src="https://raw.github.com/hicolour/env/master/screen.png" />
+![Screen] (screen.png)
 
