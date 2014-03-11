@@ -6,7 +6,7 @@ Quick, convenient and efficient work enviroment setup tool for  [ArchLinux](http
 ## Pre-requirements
 
 * Archlinux base base-devel instalaltion 
-* Working xorg:
+* Working xorg, you need to be able to launch `startx`
 	
 
 ## Installation
