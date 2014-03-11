@@ -15,7 +15,7 @@ Quick env setup on arch linux:
 * Working xorg:
 	
 
-#### Setup
+#### Tiling window manager
 
 Clone project:
 
@@ -51,8 +51,10 @@ Hardware addons:
 
 #### Base
 
-Tiling window manager ...
+##### Xmonad - Tiling window manager ...
 
- * **Mod** == Windows Key
+ * `mod`: windows key
+
+
 
 
