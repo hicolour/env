@@ -1,12 +1,12 @@
 base: 
-	./.utils/install-base.sh
-	./.utils/setup-base.sh
+	./env-utils/install-base.sh
+	./env-utils/setup-base.sh
 
 ext: 
-	./.utils/install-ext.sh
-	./.utils/setup-ext.sh
+	./env-utils/install-ext.sh
+	./env-utils/setup-ext.sh
 
 dev: 
-	./.utils/install-dev.sh
-	./.utils/setup-dev.sh
+	./env-utils/install-dev.sh
+	./env-utils/setup-dev.sh
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. ./.utils/utils.sh
+. ./env-utils/utils.sh
 
 
 
