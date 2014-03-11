@@ -34,6 +34,11 @@ Base setup:
 ![Screen] (screen.png)
 
 
+#### PAckages
+
+ * *base* - base componnets: xmonad, dzen2, dmenu, dunst, roxterm, 
+
+
 #### Configuration
 
 Mod == Windows Key
