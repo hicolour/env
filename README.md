@@ -36,7 +36,7 @@ Base setup:
 
 #### PAckages
 
- * *base* - base componnets: xmonad, dzen2, dmenu, dunst, roxterm, 
+ * #base# - base componnets: xmonad, dzen2, dmenu, dunst, roxterm, 
 
 
 #### Configuration
