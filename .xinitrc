@@ -6,9 +6,10 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   done
   unset f
 fi
-xrandr --output DP1 --auto --right-of DP2 --auto
-# xrandr --output DP1 --auto --right-of DP2 --auto
-# xrandr --output eDP1 --auto --left-of DP2 --auto
+#xrandr --output DP1 --auto --right-of DP2 --auto
+xrandr --output DP1 --auto --right-of DP2 --auto 
+xrandr --output eDP1 --auto --right-of DP1 --auto 
+#xrandr --output eDP1 --auto --left-of DP1 --auto --left-of DP2 --auto  
 
 xset m 6/1 1
 
