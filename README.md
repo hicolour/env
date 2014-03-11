@@ -34,9 +34,9 @@ Base setup:
 ![Screen] (screen.png)
 
 
-#### PAckages
+#### Packages
 
- * **base** - base componnets: xmonad, dzen2, dmenu, dunst, roxterm, 
+ * **base** - base componnets: xmonad, dzen2, dmenu, dunst, roxterm, .. : [componenets](.utills/install-base)
 
 
 #### Configuration
