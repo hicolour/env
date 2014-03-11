@@ -48,7 +48,12 @@ Hardware addons:
 
 ##### Xmonad - Tiling window manager ...
 
+
+###### Mod 
+
  * `mod`: windows key
+
+###### Base laout
 
 
 		 ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┲━━━━━━━━━━┓
@@ -69,3 +74,6 @@ Hardware addons:
 		 ┗━━━━━━━┻━━━━━━━┻━━━━━━━┹────────────────────────────────┺━━━━━━━┻━━━━━━━┻━━━━━━━┻━━━━━━━┛ 
 
 
+ * `mod-`` to `mod-=`: workspaces
+
+ * `mod-space`: layout change
