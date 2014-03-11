@@ -1,6 +1,6 @@
 # Env! 
 
-Quick, convenient and efficient worke enviroment setup tool for  [ArchLinux](http://xmonad.org/) distribution, based on [Xmonad](http://xmonad.org/) tiling window manager.  
+Quick, convenient and efficient work enviroment setup tool for  [ArchLinux](http://xmonad.org/) distribution, based on [Xmonad](http://xmonad.org/) tiling windows manager.  
 
 
 ## Pre-requirements
