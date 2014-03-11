@@ -1,21 +1,15 @@
-## Env! 
+# Env! 
 
-Quick env setup on arch linux:
-
-* Xmonad 
-* Dzen2 
-* Dmenu 
-* Dunst  
+Quick, convenient and efficient worke enviroment setup tool for  [ArchLinux](http://xmonad.org/) distribution, based on [Xmonad](http://xmonad.org/) tiling window manager.  
 
 
-#### Pre-requirements
+## Pre-requirements
 
 * Archlinux base base-devel instalaltion 
-
 * Working xorg:
 	
 
-#### Tiling window manager
+## Installation
 
 Clone project:
 
@@ -28,13 +22,13 @@ Base setup:
 
 
 
-#### Current state
+## Current state
 
 
 ![Screen] (screen.png)
 
 
-#### Packages
+## Packages
 
 Common:
 
@@ -48,6 +42,8 @@ Hardware addons:
 
  * `t440s` - lenovo t440s stack: power-mgt, ...   : [@install-t440s](.utils/install-t440s.sh)
 
+
+## Detailed description
 
 #### Base
 
