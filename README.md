@@ -1,11 +1,10 @@
-env
-===
+## env
+
 
 ArchLinux @ Xmonad / Dzen2 / Dmenu / Dunst 
 
 
-pre-requirements
-======
+#### pre-requirements
 
 * Archlinux base base-devel instalaltion 
 
@@ -17,8 +16,7 @@ pre-requirements
 
 
 
-setup
-======
+#### setup
 
 Clone project:
 
@@ -31,8 +29,8 @@ Base setup:
 
 
 
-current state
-======
+#### current state
+
 
 <img src="https://raw.github.com/hicolour/env/master/screen.png" />
 
