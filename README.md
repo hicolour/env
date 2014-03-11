@@ -49,8 +49,10 @@ Hardware addons:
  * **t440s** - lenovo t440s stack: power-mgt, ...   : [@install-t440s](.utils/install-t440s.sh)
 
 
-#### Configuration
+#### Base
 
-Mod == Windows Key
+Tiling window manager ...
+
+ * **Mod** == Windows Key
 
 
