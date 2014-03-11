@@ -15,12 +15,6 @@ Quick env setup on arch linux:
 * Working xorg:
 	
 
-    startx
-
-
-
-
-
 #### Setup
 
 Clone project:
@@ -38,4 +32,10 @@ Base setup:
 
 
 ![Screen] (screen.png)
+
+
+#### Configuration
+
+Mod == Windows Key
+
 
