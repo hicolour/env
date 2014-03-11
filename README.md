@@ -31,15 +31,15 @@ Base setup:
 
 Common:
 
- * `base` - base stack: xmonad, dzen2, dmenu, dunst, roxterm, gtk, slim, ...   : [@install-base](.utils/install-base.sh)
+ * `base` - base stack: xmonad, dzen2, dmenu, dunst, roxterm, gtk, slim, ...   : [@install-base](env-utils/install-base.sh)
 
  * `ext` - extended stack - basic linux componenets: xmonad, dzen2, dmenu, dunst, roxterm, gtk, slim, ...   : [@install-ext](.utils/install-ext.sh)
 
- * `dev` - developer stack: jdk, java, scala, ...   : [@install-dev](.utils/install-dev.sh)
+ * `dev` - developer stack: jdk, java, scala, ...   : [@install-dev](env-utils/install-dev.sh)
 
 Hardware addons:
 
- * `t440s` - lenovo t440s stack: power-mgt, ...   : [@install-t440s](.utils/install-t440s.sh)
+ * `t440s` - lenovo t440s stack: power-mgt, ...   : [@install-t440s](env-utils/install-t440s.sh)
 
 
 ## Detailed description
@@ -49,6 +49,34 @@ Hardware addons:
 ##### Xmonad - Tiling window manager ...
 
  * `mod`: windows key
+
+
+ 		 `Mod 
+		 Quick config:
+		 ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┲━━━━━━━━━━┓
+		 │  w1 │  w2 │  w3 │  w4 │  w5 │  w6 │  w7 │  w8 │  w9 │  w10│  w11│  w12│  w13┃          ┃
+		 │ `   │ 1   │ 2   │ 3   │ 4   │ 5   │ 6   │ 7   │ 8   │ 9   │ 0   │ -   │ =   ┃ ⌫        ┃
+		 ┢━────┴━━┱──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┺━━┯━━━━━━━┩
+		 ┃        ┃close│     │     │     │     │     │     │     │     │dmenu│     │ }   │ |     │
+		 ┃ ↹      ┃ q   │ w   │ e   │ r   │ t   │ y   │ u   │ i   │ o   │ p   │ [   │ ]   │ \     │
+		 ┣━━━━━━━━┴┱────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┲━━━━┷━━━━━━━┪
+		 ┃         ┃     │     │     │ full│     │     │     │     │     │     │     ┃ terminal   ┃
+		 ┃ ⇬       ┃ a   │ s   │ d   │ f   │ g   │ h   │ j   │ k   │ l   │ ;   │ '   ┃ ⏎          ┃
+		 ┣━━━━━━━━━┻━━┱──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┲━━┻━━━━━━━━━━━━┫
+		 ┃            ┃     │     │     │     │ subl│     │     │     │     │     ┃               ┃
+		 ┃ ⇧          ┃ z   │ x   │ c   │ v   │ b   │ n   │ m   │ ,   │ .   │ /   ┃ ⇧             ┃
+		 ┣━━━━━━━┳━━━━┻━━┳━━┷━━━━┱┴─────┴─────┴─────┴─────┴─────┴─┲━━━┷━━━┳━┷━━━━━╋━━━━━━━┳━━━━━━━┫
+		 ┃       ┃ *mod* ┃       ┃         layout                 ┃       ┃       ┃       ┃       ┃
+		 ┃ Ctrl  ┃ super ┃ Alt   ┃ Space                          ┃ AltGr ┃ super ┃ menu  ┃ Ctrl  ┃ 
+		 ┗━━━━━━━┻━━━━━━━┻━━━━━━━┹────────────────────────────────┺━━━━━━━┻━━━━━━━┻━━━━━━━┻━━━━━━━┛ 
+
+                                                                                       ┌─────┐
+                                                                                       │     │
+                                                                                       │ ↑   │
+                                                                                 ┌─────┼─────┼─────┐
+                                                                                 │     │     │     │
+                                                                                 │ ←   │ ↓   │ →   │
+                                                                                 └─────┴─────┴─────┘`
 
 
 
