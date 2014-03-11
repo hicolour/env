@@ -36,7 +36,11 @@ Base setup:
 
 #### Packages
 
- * **base** - base componnets: xmonad, dzen2, dmenu, dunst, roxterm, gtk, slim, ...   : [@install-base](.utils/install-base.sh)
+ * **base** - base stack: xmonad, dzen2, dmenu, dunst, roxterm, gtk, slim, ...   : [@install-base](.utils/install-base.sh)
+
+ * **ext** - extended stack - basic linux componenets: xmonad, dzen2, dmenu, dunst, roxterm, gtk, slim, ...   : [@install-ext](.utils/install-ext.sh)
+
+ * **dev** - developer stack: jdk, java, scala, ...   : [@install-dev](.utils/install-dev.sh)
 
 
 #### Configuration
