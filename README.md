@@ -36,7 +36,7 @@ Base setup:
 
 #### Packages
 
- * **base** - base componnets: xmonad, dzen2, dmenu, dunst, roxterm, .. : [componenets](.utills/install-base.sh)
+ * **base** - base componnets: xmonad, dzen2, dmenu, dunst, roxterm, : [componenets](.utils/install-base.sh)
 
 
 #### Configuration
