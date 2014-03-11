@@ -1,7 +1,11 @@
-## env
+## Env! 
 
+Quick env setup on arch linux:
 
-ArchLinux @ Xmonad / Dzen2 / Dmenu / Dunst 
+* Xmonad 
+* Dzen2 
+* Dmenu 
+* Dunst  
 
 
 #### pre-requirements
