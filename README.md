@@ -74,6 +74,6 @@ Hardware addons:
 		 ┗━━━━━━━┻━━━━━━━┻━━━━━━━┹────────────────────────────────┺━━━━━━━┻━━━━━━━┻━━━━━━━┻━━━━━━━┛ 
 
 
- * `mod-`` to `mod-=`: workspaces
+ * `mod-` to `mod-=`: workspace w1,w2,...,w13
 
  * `mod-space`: layout change
