@@ -12,10 +12,10 @@ Quick env setup on arch linux:
 
 * Archlinux base base-devel instalaltion 
 
-* Working xorg
+* Working xorg:
 	
 
-    make base
+    startx
 
 
 
