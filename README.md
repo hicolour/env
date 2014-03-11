@@ -8,19 +8,19 @@ Quick env setup on arch linux:
 * Dunst  
 
 
-#### pre-requirements
+#### Pre-requirements
 
 * Archlinux base base-devel instalaltion 
 
 * Working xorg
 	
 	
-	startx :)
+	startx
 
 
 
 
-#### setup
+#### Setup
 
 Clone project:
 
@@ -33,7 +33,7 @@ Base setup:
 
 
 
-#### current state
+#### Current state
 
 
 <img src="https://raw.github.com/hicolour/env/master/screen.png" />
