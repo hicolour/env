@@ -14,8 +14,9 @@ Quick env setup on arch linux:
 
 * Working xorg
 	
-	
-	startx
+
+    make base
+
 
 
 
