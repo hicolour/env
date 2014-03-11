@@ -1,0 +1,193 @@
+[user]
+
+    #user placeholder
+	email = marek.prochera@gmail.com
+	name = Marek Prochera
+
+[color]
+    ui = auto
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[alias]
+
+
+
+    #toolbox ?
+    a = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort
+    aa = "!git config -l | grep alias | cut -c 7-"
+
+
+    # magician time saving
+    m =  checkout master
+
+    p = push origin master
+
+
+    jp = log origin/master@{\"1 hour ago\"}..origin/master
+
+
+    
+    #core 
+    st = status -s
+    co = checkout
+    ci = commit
+
+
+    #list remotes
+    rem="!git config -l | grep remote.*url | tail -n +2" 
+
+
+    jp = log origin/master@{\"1 hour ago\"}..origin/master
+
+
+    #reset commands
+    r = reset
+    r1 = reset HEAD^
+    r2 = reset HEAD^^
+    rh = reset --hard
+    rh1 = reset HEAD^ --hard
+    rh2 = reset HEAD^^ --hard
+
+    #stash
+    sl = stash list
+    sa = stash apply
+    ss = stash save
+
+
+    # branch
+    # branch local
+    br = branch
+
+    # branch local/remote
+    brl = branch -a
+
+    # branch remote
+    brr = branch -v
+
+    # log
+    ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    le = log --oneline --decorate
+    lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+    lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
+
+    # ---- File history ----
+    fl = log -u
+
+
+    dl = "!git ll -1"
+    dlc = diff --cached HEAD^
+    dr  = "!f() { git diff "$1"^.."$1"; }; f"
+    lc  = "!f() { git ll "$1"^.."$1"; }; f"
+    diffr  = "!f() { git diff "$1"^.."$1"; }; f"
+
+
+    # Find a file path in codebase
+    f = "!git ls-files | grep -i"
+
+    # Search/grep your entire codebase for a string
+    gr = grep -Ii
+
+    # Grep from root folder
+    gra = "!f() { A=$(pwd) && TOPLEVEL=$(git rev-parse --show-toplevel) && cd $TOPLEVEL && git grep --full-name -In $1 | xargs -I{} echo $TOPLEVEL/{} && cd $A; }; f"
+
+
+
+
+    # TAG
+
+    lasttag = describe --tags --abbrev=0
+    lt = describe --tags --abbrev=0
+
+
+    ours = "!f() { git co --ours $@ && git add $@; }; f"
+    theirs = "!f() { git co --theirs $@ && git add $@; }; f"
+
+
+    # - hist &  log
+
+    hi =  log --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset%C(yellow)%d%Creset %Cgreen(%cr)%Creset%n%w(80,8,8)%s' --graph
+
+    hifull = log --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset%C(yellow)%d%Creset %Cgreen(%cr)%Creset%n%w(80,8,8)%s%n' --graph --name-status
+
+
+    lo = log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=iso
+    changelog = log --pretty=format:'%Cgreen%d %Creset%s' --date=iso
+
+    ch = log --pretty=format:'%Cgreen%d %Creset%s' --date=iso
+
+    #--------- log -----------
+
+    #those who don't know history, are doomed to repeat it
+    hist = log --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset%C(yellow)%d%Creset %Cgreen(%cr)%Creset%n%w(80,8,8)%s' --graph
+    histfull = log --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset%C(yellow)%d%Creset %Cgreen(%cr)%Creset%n%w(80,8,8)%s%n' --graph --name-status
+    llog = log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=iso
+    changelog = log --pretty=format:'%Cgreen%d %Creset%s' --date=iso
+
+    #wish i knew
+    zwhois = "!sh -c 'git log -i -1 --pretty=\"format::%an <%ae>\n\" --author=\"$1\"' -"
+    zwhatis = show -s --pretty='tformat::%h (%s, %ad)' --date=short
+    zhowmany = "!sh -c 'git log -a --pretty=oneline | wc -l'"
+    zhowmanybywhom = shortlog -sn
+
+    #what's going on, I don't even
+    zanychanges = !sh -c 'git fetch' && git log --oneline HEAD..origin/$1
+    zanychangesonmaster = sh -c 'git fetch' && git log --oneline HEAD..origin/master
+    zwhoischanging = !sh -c 'git shortlog HEAD..origin/$0'
+    zwhoischangingmaster = !sh -c 'git shortlog HEAD..origin/master'
+    
+    #what branches you have on origin, with info on who is guilty and how long ago. Useful for gitflow and zfeature branches in general. Requires fetch up-front.
+    zshoworigin = !sh -c "isHash=true; for i in `git ls-remote -h origin`; do [ ! -z $isHash ] &&  echo \" $i\" || printf \"%-8s %8s %-8s%-3s %-10s %-20s\" `git show -s --pretty=format:\"%C(yellow)%h %Cred%ad %Cblue%an\" --date=relative $i`  ; [ ! -z $isHash ] && isHash=\"\" || isHash=true ;  done"
+
+    #get remote branches
+    ztrackallbranches = !sh -c "for branchname in `git branch -r `; do git branch --track $branchname; done"
+    zupdateallbranches = !sh -c "for branchname in `git branch -r `; do git checkout $branchname ; git pull; done"
+
+    # fix .gitignore
+    zfixgitignore = !git rm -r --cached . && git add . && git commit -m \"Just a .gitignore fix \"
+
+    #tags
+    zshowtags = show-ref --tags
+    zpushtags = push --tags
+    ztagwithdate = !sh -c 'git tag "$0"_$(date "+%y-%m-%d_%H-%M-%S")'
+
+    #better versions
+    zpurr = pull --rebase
+    zdifff = diff --color-words #just words
+    zbbranch = branch -v    
+    zbranches = branch -avvl
+    zsth = stash -u
+
+
+    zmakegitrepo = !git init && git add . && git commit -m \"initial commit\"
+    
+    #Finds a filename in the git repository. Gives absolute location (from the git root).
+    zfind = !sh -c 'git ls-tree -r --name-only HEAD | grep --color $1' - 
+
+    #Deletes all branches that were safely merged into the master. All other are skipped (no worries).
+    zcleanup = !git branch --merged master | grep -v 'master$' | xargs git branch -d  
+
+    #Deletes orphaned remote branches (.git/refs/remotes/origin), clean up reflog and remove all untracked files
+    zcleanuplocal = !git remote prune origin && git gc && git clean -df
+
+    zunstage = reset HEAD --
+[apply]
+    whitespace = nowarn
+[core]
+    pager = less -r
+	excludesfile = ~/.gitignore
+[help]
+    autocorrect = 1 #fucking magic!
+
