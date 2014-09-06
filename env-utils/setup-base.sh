@@ -34,3 +34,8 @@ s env-roxterm .config/roxterm.sourceforge.net
 # Base slim theme
 sudo systemctl enable slim.service
 echo 'current_theme       archlinux-simplyblack' >> /etc/slim.conf
+
+# Wicd
+sudo systemctl enable wicd.service
+
+

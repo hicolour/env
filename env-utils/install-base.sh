@@ -54,3 +54,5 @@ p envypn-font
 # Windows Utils
 p xorg-xprop
 
+# Network time protocol
+p ntp
