@@ -41,6 +41,7 @@ p scrot
 
 # Wallpaper
 p feh
+y imlibsetroot
 
 # MNotification Manager
 p dunst

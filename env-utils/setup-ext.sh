@@ -4,35 +4,14 @@
 
 
 # Base Xinitrc
-s .xinitrc .xinitrc
-
-# Xmonad config
-s env-xmonad .xmonad
-
-# Dzen config
-s env-dzen	.dzen
+s env-bash/.bashrc .bashrc
+s env-bash/.bash_profile .bash_profile 
 
 
-# Config dir
-mkdir -p ~/.config
+# Wicd
+sudo systemctl enable wicd.service
 
-# s .config/dunst 
-# s .config/gtk-2.0
-# s .config/gtk-3.0
-# s .config/htop
-
-# Dunst Config
-s env-dunst .config/dunst 
-
-# Midnight Commander
-s env-mc .config/mc
-
-# Roxterm
-s env-roxterm .config/roxterm.sourceforge.net
-
-
-# Base slim theme
-sudo systemctl enable slim.service
-echo 'current_theme       archlinux-simplyblack' >> /etc/slim.conf
-
-
+sudo systemctl enable dkms
+sudo modprobe vboxdrv
+echo "vboxdrv" >> /etc/modules-load.d/virtualbox.conf
+sudo dkms install vboxhost/$(pacman -Q virtualbox|awk {'print $2'}|sed 's/\-.\+//') -k $(uname -rm|sed 's/\ /\//')

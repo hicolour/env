@@ -4,6 +4,8 @@
 
 
 
+
+
 # Bash 
 p bash-completion
 p mlocate
@@ -47,6 +49,8 @@ p wine
 # VPN
 p vpnc
 
+# SSH tunel
+
 
 # Messangers 
 p skype
@@ -60,5 +64,8 @@ p calibre
 
 
 # Twitter
-y hotot
+#y hotot
+
+# Web
+p firefox
 

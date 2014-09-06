@@ -243,14 +243,20 @@ myEventHook = mempty
 myLogHook h = dynamicLogWithPP $ myDzenPP { ppOutput = hPutStrLn h }
 
 
+
+-- b8a761
+
+--  { ppCurrent          = wrap "^fg(#72aca9)[^fg(#d3d0c8)" "^fg(#72aca9)]"
+--   , ppLayout           = wrap "^fg(#72aca9)[^fg(#72aca9)" "^fg(#72aca9)]"
+
 myDzenPP = dzenPP
-  { ppCurrent          = wrap "^fg(#72aca9)[^fg(#d3d0c8)" "^fg(#72aca9)]"
+  { ppCurrent          = wrap "^fg(#c4a000)[^fg(#b8a761)" "^fg(#c4a000)]"
   , ppHidden           = wrap " ^fg(#d3d0c8)" " "
   , ppHiddenNoWindows  = wrap " ^fg(#747369)" " "
   , ppUrgent           = wrap "^fg(#8ab3b5)[^fg(#cdc5b3)" "^fg(#8ab3b5)]"
 
   , ppSep              = "  "
-  , ppLayout           = wrap "^fg(#72aca9)[^fg(#72aca9)" "^fg(#72aca9)]"
+  , ppLayout           = wrap "^fg(#775681)[^fg(#8e5276)" "^fg(#775681)]"
   , ppTitle            = (" " ++) . dzenColor "#5b709b" "" . dzenEscape
   , ppSort             = fmap (.namedScratchpadFilterOutWorkspace) $ ppSort defaultPP
   }

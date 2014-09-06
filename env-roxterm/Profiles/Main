@@ -20,4 +20,4 @@ allow_bold=0
 browser=/usr/bin/google-chrome-stable
 colour_scheme=coffee_bear
 background_type=2
-saturation=0.234286
+saturation=1.000000

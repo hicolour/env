@@ -6,5 +6,7 @@
 
 # Logitech mouse 
 y solaar
+
+y xf86-input-evdev-trackpoint
  
 

@@ -7,6 +7,10 @@
 # Latest JDK
 y jdk7
 
+
+y intellij-idea-13-ultimate
+
+
 # Building
 p maven
 y gradle
@@ -24,3 +28,8 @@ y playframework2
 
 # MongoDB
 p mongodb
+
+# mysql
+p mariadb
+
+y mysql-workbench
