@@ -13,11 +13,11 @@ scroll_on_output=1
 scrollback_lines=2000
 
 
-font=envypn 10
+font=Monospace Italic 19
 
 allow_bold=0
 
 browser=/usr/bin/google-chrome-stable
-colour_scheme=coffee_bear
+colour_scheme=GTK
 background_type=2
-saturation=0.196923
+saturation=1.000000

@@ -28,11 +28,11 @@ status=$(pacman -Qu | wc -l)
 
 color=$WHITE_BRIGHT
 
-if [ $status -gt 10 ]
+if [ $status -gt 3 ]
 then
     color=$YELLOW_BRIGHT
 fi
-if [ $status -gt 20 ]
+if [ $status -gt 10 ]
 then
     color=$RED_BRIGHT
 fi

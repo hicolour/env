@@ -60,6 +60,12 @@ export JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.config.file=/home/marek/project
 export CATALINA_PID=/var/run/chameleondeploy.pid
  
 export TOMCAT_JAVA_HOME=$JAVA_HOME
+
+
+# SBT
+export SBT_OPTS="-server -Xms512M -Xmx3000M -Xss1M  -XX:+UseConcMarkSweepGC -XX:NewRatio=8"
+
+
 #
 # ~/.bashrc
 #
