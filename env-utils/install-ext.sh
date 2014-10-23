@@ -11,6 +11,11 @@ p bash-completion
 p mlocate
 p xclip
 
+# SSH
+p openssh
+## Pass password to scirpts
+p sshpass
+
 
 # Editors
 p vim
@@ -21,9 +26,6 @@ p git
 p gitk
 y bash-completion-git
 
-
-# SSH
-p openssh
 
 
 # Network 
@@ -59,12 +61,13 @@ y google-talkplugin
 
 
 
+
 # Ebooks
 p calibre 
 
 
 # Twitter
-#y hotot
+y hotot
 
 # Web
 p firefox

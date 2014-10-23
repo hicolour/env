@@ -28,42 +28,33 @@ export PROMPT_COMMAND="history -a"        # update histfile after every command
 shopt -s histappend                       # append history file
  
 alias hg='history | gr'
- 
+alias su='yaourt -Suya --noconfirm'
+
 #Grep
  
 alias gr='grep --color -E'
  
+
+if [ -f ~/.private/priv-bashrc ];
+then
+   ~/.private/priv-bashrc
+fi
  
+
+# ---------- @jdk
+export JAVA_HOME=/usr/lib/jvm/oraclejdk8-64
+
+# ---------- @sbt
+export SBT_OPTS="-server -Xms512M -Xmx3000M -Xss1M  -XX:+UseConcMarkSweepGC -XX:NewRatio=8"
+# export SBT_OPTS="$SBT_OPTS -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled"
+
 # ---------- @maven
 MAVEN_OPTS="-Xmx2048m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled -Dfile.encoding=UTF-8 -Djava.security.egd=file:///dev/urandom"
  
 alias m="mvn clean install -DskipTests"
  
  
-# ---------- @amartus-chameleon -------------
-export AMARTUS_HOME=/home/marek/projects/amartus/chameleon/amartus_home
-#export MODEL_HOME=/home/marek/projects/amartus/chameleon-deploy/model_home
- 
-export MODEL_HOME=/home/marek/projects/amartus/transition/model_home
-#-verbose:class 
-export CATALINA_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n "
-export JPDA_OPTS="-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n"
-#-Dlog4j.configuration=file:/home/marek/projects/amartus/tmp/log4j.properties
-export JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.config.file=/home/marek/projects/amartus/tmp/logging.properties -Dlog4j.configuration=file:/home/marek/projects/amartus/tmp/log4j.properties 
--Dorg.apache.catalina.connector.CoyoteAdapter.ALLOW_BACKSLASH=true 
--Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -Dcom.sun.management.jmxremote=true \
-                  -Dcom.sun.management.jmxremote.port=9090 \
-                  -Dcom.sun.management.jmxremote.ssl=false \
-                  -Dcom.sun.management.jmxremote.authenticate=false \
-                  -Djava.rmi.server.hostname=mpr \
-                  -Xmx2048M -Xmx6144M -XX:MaxPermSize=128M -XX:+CMSClassUnloadingEnabled -XX:+CMSPermGenSweepingEnabled"
-export CATALINA_PID=/var/run/chameleondeploy.pid
- 
-export TOMCAT_JAVA_HOME=$JAVA_HOME
 
-
-# SBT
-export SBT_OPTS="-server -Xms512M -Xmx3000M -Xss1M  -XX:+UseConcMarkSweepGC -XX:NewRatio=8"
 
 
 #

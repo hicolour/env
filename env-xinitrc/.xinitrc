@@ -16,13 +16,14 @@ INTERNAL_OUTPUT="eDP1"
 # xrandr --output eDP1 --mode 1920x1080 --left-of DP2 
 # xrandr --output DP2 --mode 1152x864
 
-xrandr | grep -w $EXTERNAL_OUTPUT | grep " connected "
-if [ $? -eq 0 ]; then
-  xrandr --output $INTERNAL_OUTPUT --off --output DP1 --auto --right-of DP2 --auto 
-else
- xrandr --output $INTERNAL_OUTPUT --on --auto 
-fi
+# xrandr | grep -w $EXTERNAL_OUTPUT | grep " connected "
+# if [ $? -eq 0 ]; then
+#   xrandr --output $INTERNAL_OUTPUT --off --output DP1 --auto --right-of DP2 --auto 
+# else
+#  xrandr --output $INTERNAL_OUTPUT --on --auto 
+# fi
 
+~/.private/env-screen.sh
 
 # xrandr --output DP2 --mode 1024x768 --rate 60 --left-of  eDP1 --auto 
 
