@@ -3,6 +3,9 @@
 	[
 		{
 			"path": "/home/marek/projects/private/env"
+		},
+		{
+			"path": "/home/marek/.private"
 		}
 	]
 }
