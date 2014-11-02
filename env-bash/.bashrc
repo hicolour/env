@@ -45,7 +45,7 @@ fi
 export JAVA_HOME=/usr/lib/jvm/oraclejdk8-64
 
 # ---------- @sbt
-export SBT_OPTS="-server -Xms512M -Xmx3000M -Xss1M  -XX:+UseConcMarkSweepGC -XX:NewRatio=8"
+export SBT_OPTS="-Dscala.color -server -Xms512M -Xmx3000M -Xss1M  -XX:+UseConcMarkSweepGC -XX:NewRatio=8"
 # export SBT_OPTS="$SBT_OPTS -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled"
 
 # ---------- @maven
