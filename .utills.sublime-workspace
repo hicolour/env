@@ -20,37 +20,10 @@
 	"buffers":
 	[
 		{
-			"file": "env-utils/setup-crontab.sh",
+			"contents": "\nxrandr | grep -w $EXTERNAL_OUTPUT | grep \" connected \"\nif [ $? -eq 0 ]; then\n  xrandr --output $INTERNAL_OUTPUT --off --output DP1 --auto --right-of DP2 --auto \nelse\n xrandr --output $INTERNAL_OUTPUT --on --auto \nfi\n",
 			"settings":
 			{
-				"buffer_size": 126,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "env-dzen/status_checks/status_packages.sh",
-			"settings":
-			{
-				"buffer_size": 990,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "-- Import ----------------------------------------------------------------------\n\nimport XMonad\n\nimport Data.Monoid\n\nimport System.Exit\nimport System.IO\n\n\nimport qualified XMonad.StackSet as W -- keyboard bindings\nimport qualified Data.Map        as M -- mouse bindings\n\nimport Control.Monad (liftM2)\n\n-- hooks --\nimport XMonad.Hooks.DynamicLog\nimport XMonad.Hooks.ManageDocks\nimport XMonad.Hooks.UrgencyHook\n\nimport XMonad.Hooks.ManageHelpers\nimport XMonad.Hooks.InsertPosition\nimport XMonad.Hooks.EwmhDesktops\n\nimport XMonad.Hooks.SetWMName\n\n--import XMonad.Hooks.ICCMFocus\nimport XMonad.Hooks.ICCCMFocus\n\n-- util --\nimport XMonad.Util.Run(spawnPipe)\nimport XMonad.Util.NamedScratchpad\n\n\n-- layout --\nimport XMonad.Layout.ToggleLayouts\nimport XMonad.Layout.WindowNavigation\nimport XMonad.Layout.ResizableTile\n\nimport XMonad.Layout.NoBorders\nimport XMonad.Layout.Renamed\nimport XMonad.Layout.Reflect\nimport XMonad.Layout.Grid\nimport XMonad.Layout.IM\nimport XMonad.Layout.PerWorkspace (onWorkspace)\n\n\n-- \n--\n--\n-- quick config:\n-- ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┲━━━━━━━━━━┓\n-- │  w1 │  w2 │  w3 │  w4 │  w5 │  w6 │  w7 │  w8 │  w9 │  w10│  w11│  w12│  w13┃          ┃\n-- │ `   │ 1   │ 2   │ 3   │ 4   │ 5   │ 6   │ 7   │ 8   │ 9   │ 0   │ -   │ =   ┃ ⌫        ┃\n-- ┢━━━━━┷━━┱──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┺━━┯━━━━━━━┩\n-- ┃        ┃close│     │     │     │     │     │     │     │     │dmenu│     │ }   │ |     │\n-- ┃ ↹      ┃ q   │ w   │ e   │ r   │ t   │ y   │ u   │ i   │ o   │ p   │ [   │ ]   │ \\     │\n-- ┣━━━━━━━━┻┱────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┲━━━━┷━━━━━━━┪\n-- ┃         ┃     │     │     │ full│     │     │     │     │     │     │     ┃ terminal   ┃\n-- ┃ ⇬       ┃ a   │ s   │ d   │ f   │ g   │ h   │ j   │ k   │ l   │ ;   │ '   ┃ ⏎          ┃\n-- ┣━━━━━━━━━┻━━┱──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┲━━┻━━━━━━━━━━━━┫       ┌─────┐\n-- ┃            ┃     │     │     │     │ subl│     │     │     │     │     ┃               ┃       │     │\n-- ┃ ⇧          ┃ z   │ x   │ c   │ v   │ b   │ n   │ m   │ ,   │ .   │ /   ┃ ⇧             ┃       │ ↑   │\n-- ┣━━━━━━━┳━━━━┻━━┳━━┷━━━━┱┴─────┴─────┴─────┴─────┴─────┴─┲━━━┷━━━┳━┷━━━━━╋━━━━━━━┳━━━━━━━┫ ┌─────┼─────┼─────┐\n-- ┃       ┃ *mod* ┃       ┃         layout                 ┃       ┃       ┃       ┃       ┃ │     │     │     │\n-- ┃ Ctrl  ┃ super ┃ Alt   ┃ Space                          ┃ AltGr ┃ super ┃ menu  ┃ Ctrl  ┃\n-- ┗━━━━━━━┻━━━━━━━┻━━━━━━━┹────────────────────────────────┺━━━━━━━┻━━━━━━━┻━━━━━━━┻━━━━━━━┛\n--\n --      ┌─────┐\n --      │     │\n --      │ ↑   │\n -- ┌─────┼─────┼─────┐\n -- │     │     │     │\n -- │ ←   │ ↓   │ →   │\n -- └─────┴─────┴─────┘\n\n\n\n\n-- Main ------------------------------------------------------------------------\n\nmain = do\n\n\n  myDzenMonitoring_ <- spawnPipe myDzenMonitoring\n  myDzenXmonad_     <- spawnPipe myDzenXmonad\n\n  xmonad $ withUrgencyHook NoUrgencyHook $ ewmh defaultConfig {\n\n    -- simple stuff\n    terminal           = myTerminal,\n    focusFollowsMouse  = myFocusFollowsMouse,\n    borderWidth        = myBorderWidth,\n    modMask            = myModMask,\n    workspaces         = myWorkspaces,\n    normalBorderColor  = myNormalBorderColor,\n    focusedBorderColor = myFocusedBorderColor,\n\n    -- key bindings\n    keys               = myKeys,\n    mouseBindings      = myMouseBindings,\n\n    --hooks, layouts\n    layoutHook         = myLayout,\n    manageHook         = myManageHook,\n    handleEventHook    = myEventHook,\n    logHook            = takeTopFocus >> myLogHook myDzenXmonad_,\n    --logHook            = takeTopFocus,\n    startupHook      = myStartupHook\n  }\n\nmyTerminal          = \"roxterm\"\nmyFocusFollowsMouse = True\nmyBorderWidth       = 1\nmyModMask           = mod4Mask\n\nmyNormalBorderColor  = \"#111111\"\nmyFocusedBorderColor = \"#5a676b\"\n--myNormalBorderColor  = \"#111111\"\n--myFocusedBorderColor = \"#353b3e\"\n\n\n\nmyWorkspaces= [\"~:\",\"1:t\",\"2:t\",\"3:w\",\"4:w\",\"5:n\",\"6:i\",\"7:i\",\"8:im\",\"9:tw\",\"0:n\",\"-:m\",\"=:n\"]\n\n-- Layouts ---------------------------------------------------------------------\n\nmyLayout = windowNavigation $\n           avoidStruts $\n           smartBorders $\n           full $\n           onWorkspace \"dev\"  (gtile ||| grid ||| tile ||| mtile) $\n           onWorkspace \"8:im\"   im $\n           onWorkspace \"serv\" (grid ||| tile) $\n           tile ||| mtile ||| grid\n\n  where\n  rt    = ResizableTall 1 (2/100) (1/2) []\n\n  grt   = ResizableTall 1 (2/100) goldenratio []\n  goldenratio  = 2/(1+(toRational(sqrt(5)::Double)))\n\n\n  tile    = renamed [Replace \"t\" ] $ rt\n  mtile   = renamed [Replace \"mt\"] $ Mirror rt\n\n  gtile   = renamed [Replace \"gt\"] $ grt\n\n\n  --grid    = renamed [Replace \"g\" ] $ spacing 2 $ smartBorders Grid\n  grid    = renamed [Replace \"g\" ] $ Grid\n\n  full    = toggleLayouts (renamed [Replace \"f\" ] $ noBorders Full)\n\n  skypeRoster     = (ClassName \"Skype\") `And` (Not (Title \"Options\")) `And` (Not (Role \"ConversationsWindow\")) `And` (Not (Role \"CallWindowForm\"))\n\n  pidginRoster     = (ClassName \"Pidgin\") `And` (Not (Title \"Options\")) `And` (Not (Role \"ConversationsWindow\")) `And` (Not (Role \"CallWindowForm\"))\n\n  hototRoster     = (ClassName \"Hotot\") \n\n\n  im = renamed [Replace \"im\" ] $ withIM (0.18) skypeRoster $ withIM (0.18) pidginRoster $\n                                 reflectHoriz $\n                                 withIM (0.25) (ClassName \"Mumble\") grid\n\n\n-- Window Management -----------------------------------------------------------\n\nmyManageHook = (composeAll . concat $\n  [\n    [resource  =? r --> doIgnore              | r <- myIgnores    ]\n  , [className =? c --> viewShift \"8:im\"      | c <- myIm         ]\n  , [className =? c --> viewShift \"9:tw\"      | c <- myTwitt      ]\n  , [className =? c --> viewShift \"5:n\"      | c <- myNote      ]\n\n\n\n  --, [className =? c --> viewShift \"gfx\"     | c <- myGfxs       ]\n  --, [className =? c --> viewShift \"6:d-ide\" | c <- myDevIde     ]\n  --, [className =? c --> viewShift \"9:tw\"    | c <- myTwitt       ]\n -- , [className =? c --> doShift \"3:www\"    | c <- myWww       ]\n  --, [role      =? r --> doShift   \"serv\"    | r <- myServ       ]\n  --, [role      =? r --> doShift   \"gen\"     | r <- myGen        ]\n  --, [role      =? r --> doShift   \"fs\"      | r <- myFs         ]\n\n\n  , [name      =? n --> doCenterFloat      | n <- myNames      ]\n  , [className =? c --> doCenterFloat      | c <- myFloats     ]\n  , [className =? c --> doFullFloat        | c <- myFullFloats ]\n\n  , [isDialog       --> doFocusCenterFloat                     ]\n  , [isFullscreen   --> doFullFloat                            ]\n\n  , [insertPosition Below Newer                                ]\n  ])\n\n  <+> namedScratchpadManageHook scratchpads\n\n  where\n  viewShift = doF . liftM2 (.) W.greedyView W.shift\n\n  role = stringProperty \"WM_WINDOW_ROLE\"\n  name = stringProperty \"WM_NAME\"\n\n  doFocusCenterFloat = doF W.shiftMaster <+> doF W.swapDown <+> doCenterFloat\n\n  doFocusFullFloat   = doFullFloat\n\n  -- classnames\n  myFloats      = [\"MPlayer\", \"Vlc\", \"Smplayer\", \"Lxappearance\", \"XFontSel\"]\n  myFullFloats  = [\"feh\", \"Mirage\", \"Zathura\", \"Mcomix\"]\n  myIm          = [\"Pidgin\", \"Mumble\", \"Skype\"]\n  myTwitt       = [\"Hotot-gtk3\"]\n  myGfxs        = [\"Inkscape\", \"Gimp\"]\n\n  -- Gerally IntelliJ\n  myDevIde      = [\"sun-awt-X11-XFramePeer,\", \"jetbrains-idea-ce\"]\n\n  -- Sublime text\n  myNote        = [\"sublime-text\"]\n\n  -- Chrome\n  --myWww         = [\"Google-chrome\"]\n\n  -- roles\n  myServ        = [\"rails_dobroserver\", \"rails_fitlog\", \"rails_mili\"]\n  myGen         = [\"roxterm_startup\"]\n  myFs          = [\"ranger_startup\"]\n\n  -- resources\n  myIgnores = [\"desktop\", \"desktop_window\"]\n\n  -- names\n  myNames   = [\"Google Chrome Options\", \"Chromium Options\", \"Firefox Preferences\"]\n\n\n-- Event handling --------------------------------------------------------------\n\nmyEventHook = mempty\n\n-- Status bars and logging -----------------------------------------------------\n\nmyLogHook h = dynamicLogWithPP $ myDzenPP { ppOutput = hPutStrLn h }\n\n\n\n-- b8a761\n\n--  { ppCurrent          = wrap \"^fg(#72aca9)[^fg(#d3d0c8)\" \"^fg(#72aca9)]\"\n--   , ppLayout           = wrap \"^fg(#72aca9)[^fg(#72aca9)\" \"^fg(#72aca9)]\"\n\nmyDzenPP = dzenPP\n  { ppCurrent          = wrap \"^fg(#c4a000)[^fg(#b8a761)\" \"^fg(#c4a000)]\"\n  , ppHidden           = wrap \" ^fg(#d3d0c8)\" \" \"\n  , ppHiddenNoWindows  = wrap \" ^fg(#747369)\" \" \"\n  , ppUrgent           = wrap \"^fg(#8ab3b5)[^fg(#cdc5b3)\" \"^fg(#8ab3b5)]\"\n\n  , ppSep              = \"  \"\n  , ppLayout           = wrap \"^fg(#775681)[^fg(#8e5276)\" \"^fg(#775681)]\"\n  , ppTitle            = (\" \" ++) . dzenColor \"#5b709b\" \"\" . dzenEscape\n  , ppSort             = fmap (.namedScratchpadFilterOutWorkspace) $ ppSort defaultPP\n  }\n\n\n--myDzenXmonad=\"dzen2 -y 1030 -x 0 -w 1280 -ta l \" ++ myDzenStyle\nmyDzenXmonad=\"dzen2 -y 0 -x 0 -w 800 -ta l \" ++ myDzenStyle\n\nmyDzenMonitoring=\"~/.dzen/dzen_xmonad.sh\"\n\n-- Dzen helpers\nmyDzenStyle = \"-fg '\" ++ myFgColor ++\n              \"' -bg '\" ++ myBgColor ++\n              \"' -fn '\" ++ myFont ++\n              \"' -h 20\"\n\nmyFgColor = \"#d3d0c8\"\n--myBgColor = \"#0f0f0f\"\nmyBgColor = \"#1B1B1B\"\n\nmyFocusedFGColor = \"#8ab1c1\"\nmyAlertColor = \"#934a5a\"\n\nmyColorH  = \"#999999\"\nmyColorHN = \"#686868\"\n\n--myFont = \"Terminus\"\n--myFont = \"-*-terminus-medium-*-*-*-14-*-*-*-*-*-iso10646-*\"\n-- myFont = \"misc-ohsnap-medium-r-normal--12-87-100-100-c-70-iso8859-1\"\n--myFont = \"-xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso8859-1\"\n--myFont = \"-*-envypn-medium-*-*--13-*-*-*-*-*-*-1\"\nmyFont = \"-*-envypn-medium-*-*--14-*-*-*-*-*-*-1\"\n\n-- Startup hook ----------------------------------------------------------------\n-- Fix for Java GUI\nmyStartupHook = setWMName \"LG3D\"\n\n-- Scratchpads -----------------------------------------------------------------\n\nscratchpads = [\n                     -- RationalRect left top width height\n\n  NS \"terminal\" \"roxterm --role scratchpad\"\n    (role =? \"scratchpad\")\n    (customFloating $ W.RationalRect 0.15 0.6 0.7 0.35),\n\n  NS \"notes\" \"gvim --role notes ~/notes/org.txt\"\n    (role =? \"notes\")\n    nonFloating,\n\n  -- NS \"keepassx\" \"keepassx\"\n  --   (className =? \"Keepassx\")\n  --   (customFloating $ W.RationalRect 0.15 0.1 0.7 0.4),\n\n  NS \"htop\" \"roxterm --role htop -e htop\"\n    (role =? \"htop\")\n    (customFloating $ W.RationalRect 0.15 0.2 0.7 0.7),\n\n  NS \"wicd-curses\" \"roxterm --role wicd-curses -e wicd-curses\"\n    (role =? \"wicd-curses\")\n    (customFloating $ W.RationalRect 0.15 0.2 0.7 0.7),\n\n  NS \"ncmpcpp\" \"roxterm --role ncmpcpp -e ncmpcpp\"\n    (role =? \"ncmpcpp\")\n    (customFloating $ W.RationalRect 0.15 0.2 0.7 0.7),\n\n  NS \"spacefm\" \"spacefm\"\n    (className =? \"Spacefm\")\n    nonFloating,\n\n  NS \"ranger\" \"roxterm --role ranger -e ranger\"\n    (role =? \"ranger\")\n    nonFloating\n\n  ]\n  where role = stringProperty \"WM_WINDOW_ROLE\"\n\n-- Bindings --------------------------------------------------------------------\n\nmyKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $\n\n  [ ((modm,                 xK_Return), spawn $ XMonad.terminal conf) -- launch a terminal\n  , ((modm,                 xK_c     ), spawn \"google-chrome-stable\")\n  , ((modm,                 xK_b     ), spawn \"subl\")\n  , ((modm,                 xK_o     ), spawn \"dmenu_run -nb '#242424' -nf '#ccc' -sb '#909090'\")\n  --, ((modm,		              xK_p     ), spawn \"dmenu_run -nb '#0f0f0f' -fn '-xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso8859-1'\") \n  , ((modm,                 xK_p     ), spawn \"dmenu_run -fn '-*-envypn-medium-*-*--15-*-*-*-*-*-*-1' -nb '#1B1B1B' -nf '#ccc' -sb '#909090' -sf '#111'\") \n  , ((modm,                 xK_q     ), kill) -- close focused window\n  , ((modm,                 xK_space ), sendMessage NextLayout)  -- Rotate through the available layout algorithms\n  , ((modm .|. shiftMask,   xK_space ), setLayout $ XMonad.layoutHook conf) --  Reset the layouts on the current workspace to default\n  , ((modm,                 xK_n     ), refresh) -- Resize viewed windows to the correct size\n\n  , ((modm,                 xK_t     ), withFocused $ windows . W.sink) -- Push window back into tiling\n\n  , ((modm .|. shiftMask,   xK_comma ), sendMessage (IncMasterN 1)) -- Increment the number of windows in the master area\n  , ((modm .|. shiftMask,   xK_period), sendMessage (IncMasterN (-1))) -- Deincrement the number of windows in the master area\n\n  -- power\n  , ((modm .|. controlMask, xK_r     ), spawn \"~/scripts/close_all.sh && sleep 3 && systemctl reboot\")\n  , ((modm .|. controlMask, xK_h     ), spawn \"~/scripts/close_all.sh && sleep 3 && systemctl poweroff\")\n\n  -- bookmarks\n  , ((mod1Mask,   xK_m  ), spawn \"xdg-open https://mail.google.com/\")\n  , ((mod1Mask,   xK_r  ), spawn \"xdg-open http://www.google.com/reader/view/\")\n\n  -- resizing\n  , ((modm .|. shiftMask,   xK_Left  ), sendMessage Shrink)\n  , ((modm .|. shiftMask,   xK_Right ), sendMessage Expand)\n  , ((modm .|. shiftMask,   xK_Down  ), sendMessage MirrorShrink)\n  , ((modm .|. shiftMask,   xK_Up    ), sendMessage MirrorExpand)\n\n  -- navigation\n  , ((modm,                 xK_Right ), sendMessage $ Go R)\n  , ((modm,                 xK_Left  ), sendMessage $ Go L)\n  , ((modm,                 xK_Up    ), sendMessage $ Go U)\n  , ((modm,                 xK_Down  ), sendMessage $ Go D)\n  , ((modm .|. controlMask, xK_Right ), sendMessage $ Swap R)\n  , ((modm .|. controlMask, xK_Left  ), sendMessage $ Swap L)\n  , ((modm .|. controlMask, xK_Up    ), sendMessage $ Swap U)\n  , ((modm .|. controlMask, xK_Down  ), sendMessage $ Swap D)\n\n     --take a screenshot of entire display \n   , ((modm, xK_F9), spawn \"scrot 'screen_%Y-%m-%d-%H-%M-%S.png' -d 1\")\n\n   --take a screenshot of focused window \n   , ((modm, xK_F10), spawn \"scrot 'window_%Y-%m-%d-%H-%M-%S.png' -d 1-u\")\n\n  -- custom\n  , ((modm, xK_f), sendMessage ToggleLayout)\n\n  , ((modm, xK_F1 ), namedScratchpadAction scratchpads \"terminal\")\n  , ((modm, xK_F2 ), namedScratchpadAction scratchpads \"htop\")\n  , ((modm, xK_F3 ), namedScratchpadAction scratchpads \"wicd-curses\")\n  , ((modm, xK_F4 ), namedScratchpadAction scratchpads \"alsamixer\")\n\n\n  --, ((modm, xK_r), namedScratchpadAction scratchpads \"ranger\")\n  , ((modm, xK_s), namedScratchpadAction scratchpads \"spacefm\")\n\n  , ((0,    xK_Print), spawn \"scrot\")\n  , ((modm, xK_Print), spawn \"scrot -d 3\")\n\n  -- XF86AudioLowerVolume\n  , ((0, 0x1008ff11), spawn \"amixer -q set Master 1%-\")\n  -- XF86AudioRaiseVolume\n  , ((0, 0x1008ff13), spawn \"amixer -q set Master 1%+\")\n\n  , ((modm, xK_comma),  spawn  \"ncmpcpp prev\"  )\n  , ((modm, xK_period), spawn  \"ncmpcpp next\"  )\n  , ((modm, xK_slash),  spawn  \"ncmpcpp toggle\")\n\n  -- XF86AudioMute\n  --, ((0            , 0x1008ff12), spawn \"amixer -q set Master toggle\")\n  -- XF86AudioNext\n  --, ((0            , 0x1008ff17), spawn \"mocp -f\")\n  -- XF86AudioPrev\n  --, ((0            , 0x1008ff16), spawn \"mocp -r\")\n  -- XF86AudioPlayic\n  --, ((0            , 0x1008ff14), spawn \"mocp -G\")\n\n  , ((modm .|. shiftMask,   xK_q     ), io (exitWith ExitSuccess)) -- Quit xmonad\n\n  , ((modm .|. controlMask, xK_q     ), spawn \"killall dzen2 && xmonad --recompile && xmonad --restart\") -- Restart xmonad\n  ]\n\n\n  ++\n\n  -- mod-[1..9], Switch to workspace N\n  -- mod-shift-[1..9], Move client to workspace N\n  --\n  --[((m .|. modm, k), windows $ f i)\n  --    | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]\n  --    , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]!!\n\n  [((m .|. modm, k), windows $ f i)\n           | (i, k) <- zip myWorkspaces [xK_quoteleft,xK_1,xK_2,xK_3,xK_4,xK_5,xK_6,xK_7,xK_8,xK_9,xK_0,xK_minus,xK_equal]\n         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]\n  ++\n\n  --\n  -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3\n  -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3\n  --\n  [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))\n      | (key, sc) <- zip [xK_Insert, xK_End, xK_r] [0..]\n      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]\n\n-- Mouse bindings: default actions bound to mouse events -----------------------\n\nmyMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $\n\n  -- mod-button1, Set the window to floating mode and move by dragging\n  [ ((modm, button1), (\\w -> focus w >> mouseMoveWindow w\n                                     >> windows W.shiftMaster))\n\n  -- mod-button2, Raise the window to the top of the stack\n  , ((modm, button2), (\\w -> focus w >> windows W.shiftMaster))\n\n  -- mod-button3, Set the window to floating mode and resize by dragging\n  , ((modm, button3), (\\w -> focus w >> mouseResizeWindow w\n                                     >> windows W.shiftMaster))\n\n  -- you may also bind events to the mouse scroll wheel (button4 and button5)\n  ]\n\n",
-			"file": "env-xmonad/xmonad.hs",
-			"file_size": 18232,
-			"file_write_time": 1413825366000000,
-			"settings":
-			{
-				"buffer_size": 16684,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "env-roxterm/Colours/solarized",
-			"settings":
-			{
-				"buffer_size": 483,
+				"buffer_size": 217,
 				"line_ending": "Unix"
 			}
 		},
@@ -58,16 +31,25 @@
 			"file": "env-xinitrc/.xinitrc",
 			"settings":
 			{
-				"buffer_size": 2175,
+				"buffer_size": 2212,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "env-dzen/status_checks/status_mail.sh",
+			"file": "/home/marek/.private/env-screen-lenka.sh",
 			"settings":
 			{
-				"buffer_size": 457,
+				"buffer_size": 264,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": ";IF(K46=\"-\";0;K46);IF(K47=\"-\";0;K47);IF(K48=\"-\";0;K48);IF(K49=\"-\";0;K49);IF(K50=\"-\";0;K50);IF(K51=\"-\";0;K51);IF(K52=\"-\";0;K52);IF(K53=\"-\";0;K53);IF(K54=\"-\";0;K54);IF(K55=\"-\";0;K55);IF(K56=\"-\";0;K56);IF(K57=\"-\";0;K57);IF(K58=\"-\";0;K58);IF(K59=\"-\";0;K59);IF(K60=\"-\";0;K60)",
+			"settings":
+			{
+				"buffer_size": 270,
+				"line_ending": "Unix",
+				"name": ";IF(H46=\"-\";0;H46);IF(H47=\"-\";0;H47);IF(H48=\"-\";0;"
 			}
 		}
 	],
@@ -95,8 +77,14 @@
 	},
 	"file_history":
 	[
-		"/home/marek/app/apache-tomcat/webapps/convergeEMS/main/sc/skins/Transition/skin_styles.css",
+		"/home/marek/projects/private/env/env-utils/setup-crontab.sh",
+		"/home/marek/projects/private/env/env-dzen/status_checks/status_packages.sh",
+		"/home/marek/projects/private/env/env-xmonad/xmonad.hs",
+		"/home/marek/projects/private/env/env-roxterm/Colours/solarized",
 		"/home/marek/projects/private/env/env-xinitrc/.xinitrc",
+		"/home/marek/projects/private/env/env-dzen/status_checks/status_mail.sh",
+		"/home/marek/Downloads/Lucy.2014.V2.HC.HDRip.XviD.AC3-EVO.txt",
+		"/home/marek/app/apache-tomcat/webapps/convergeEMS/main/sc/skins/Transition/skin_styles.css",
 		"/home/marek/projects/private/cv/MAREK_PROCHERA_CV_EN.tex",
 		"/home/marek/projects/amartus/snmp-simualator/virtual-ip-archlinux.sh",
 		"/home/marek/app/apache-tomcat/logs/catalina.out",
@@ -107,7 +95,6 @@
 		"/home/marek/projects/private/env/env-utils/setup-base.sh",
 		"/home/marek/projects/private/env/env-bash/.bashrc",
 		"/home/marek/projects/private/env/env-bash/clenup_bash_history",
-		"/home/marek/projects/private/env/env-xmonad/xmonad.hs",
 		"/home/marek/projects/private/env/env-roxterm/Colours/coffee_bear.tpl.sh",
 		"/home/marek/app/apache-tomcat/webapps/convergeEMS/main/sc/skins/Transition/load_skin.js",
 		"/home/marek/app/apache-tomcat/webapps/convergeEMS/login.jsp",
@@ -172,6 +159,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"H",
 			"sbt",
 			"worker-2",
 			"dispatcher-4",
@@ -210,6 +198,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"K",
 			"enp0s25",
 			"\\n",
 			"Arial",
@@ -224,22 +213,22 @@
 	"groups":
 	[
 		{
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "env-utils/setup-crontab.sh",
 					"settings":
 					{
-						"buffer_size": 126,
+						"buffer_size": 217,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								126,
-								126
+								1,
+								1
 							]
 						],
 						"settings":
@@ -254,18 +243,18 @@
 				},
 				{
 					"buffer": 1,
-					"file": "env-dzen/status_checks/status_packages.sh",
+					"file": "env-xinitrc/.xinitrc",
 					"settings":
 					{
-						"buffer_size": 990,
+						"buffer_size": 2212,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								695,
-								695
+								237,
+								192
 							]
 						],
 						"settings":
@@ -280,103 +269,49 @@
 				},
 				{
 					"buffer": 2,
-					"file": "env-xmonad/xmonad.hs",
+					"file": "/home/marek/.private/env-screen-lenka.sh",
 					"settings":
 					{
-						"buffer_size": 16684,
+						"buffer_size": 264,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9537,
-								9537
+								45,
+								45
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Haskell/Haskell.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 3532.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "env-roxterm/Colours/solarized",
 					"settings":
 					{
-						"buffer_size": 483,
+						"buffer_size": 270,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								77,
-								77
+								270,
+								270
 							]
 						],
 						"settings":
 						{
+							"auto_name": ";IF(H46=\"-\";0;H46);IF(H47=\"-\";0;H47);IF(H48=\"-\";0;",
 							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "env-xinitrc/.xinitrc",
-					"settings":
-					{
-						"buffer_size": 2175,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1391,
-								1391
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "env-dzen/status_checks/status_mail.sh",
-					"settings":
-					{
-						"buffer_size": 457,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								299,
-								299
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,

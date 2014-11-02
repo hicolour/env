@@ -37,7 +37,7 @@ alias gr='grep --color -E'
 
 if [ -f ~/.private/priv-bashrc ];
 then
-   ~/.private/priv-bashrc
+   source ~/.private/priv-bashrc
 fi
  
 
