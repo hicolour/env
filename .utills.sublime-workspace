@@ -19,39 +19,6 @@
 	},
 	"buffers":
 	[
-		{
-			"contents": "\nxrandr | grep -w $EXTERNAL_OUTPUT | grep \" connected \"\nif [ $? -eq 0 ]; then\n  xrandr --output $INTERNAL_OUTPUT --off --output DP1 --auto --right-of DP2 --auto \nelse\n xrandr --output $INTERNAL_OUTPUT --on --auto \nfi\n",
-			"settings":
-			{
-				"buffer_size": 217,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "env-xinitrc/.xinitrc",
-			"settings":
-			{
-				"buffer_size": 2212,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/marek/.private/env-screen-lenka.sh",
-			"settings":
-			{
-				"buffer_size": 264,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": ";IF(K46=\"-\";0;K46);IF(K47=\"-\";0;K47);IF(K48=\"-\";0;K48);IF(K49=\"-\";0;K49);IF(K50=\"-\";0;K50);IF(K51=\"-\";0;K51);IF(K52=\"-\";0;K52);IF(K53=\"-\";0;K53);IF(K54=\"-\";0;K54);IF(K55=\"-\";0;K55);IF(K56=\"-\";0;K56);IF(K57=\"-\";0;K57);IF(K58=\"-\";0;K58);IF(K59=\"-\";0;K59);IF(K60=\"-\";0;K60)",
-			"settings":
-			{
-				"buffer_size": 270,
-				"line_ending": "Unix",
-				"name": ";IF(H46=\"-\";0;H46);IF(H47=\"-\";0;H47);IF(H48=\"-\";0;"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -77,11 +44,21 @@
 	},
 	"file_history":
 	[
+		"/home/marek/.private/amartus/scripts/go",
+		"/home/marek/.private/amartus/scripts/transition.sh",
+		"/home/marek/.private/amartus/scripts/amartus-demo-deploy-cluster.sh",
+		"/home/marek/.private/priv-bashrc",
+		"/home/marek/.private/amartus/scripts/amartus-demo-deploy-performance.sh",
+		"/home/marek/projects/private/env/env-bash/.bashrc",
+		"/home/marek/.private/amartus/scripts/amartus-vpn.sh",
+		"/home/marek/projects/private/env/env-xinitrc/.xinitrc",
+		"/home/marek/.private/amartus/scripts/amartus-shuttle.sh",
+		"/home/marek/.private/env-screen-lenka.sh",
+		"/home/marek/.bashrc",
 		"/home/marek/projects/private/env/env-utils/setup-crontab.sh",
 		"/home/marek/projects/private/env/env-dzen/status_checks/status_packages.sh",
 		"/home/marek/projects/private/env/env-xmonad/xmonad.hs",
 		"/home/marek/projects/private/env/env-roxterm/Colours/solarized",
-		"/home/marek/projects/private/env/env-xinitrc/.xinitrc",
 		"/home/marek/projects/private/env/env-dzen/status_checks/status_mail.sh",
 		"/home/marek/Downloads/Lucy.2014.V2.HC.HDRip.XviD.AC3-EVO.txt",
 		"/home/marek/app/apache-tomcat/webapps/convergeEMS/main/sc/skins/Transition/skin_styles.css",
@@ -89,11 +66,9 @@
 		"/home/marek/projects/amartus/snmp-simualator/virtual-ip-archlinux.sh",
 		"/home/marek/app/apache-tomcat/logs/catalina.out",
 		"/home/marek/alivve.log",
-		"/home/marek/.bashrc",
 		"/tmp/test-ping",
 		"/tmp/connection-status",
 		"/home/marek/projects/private/env/env-utils/setup-base.sh",
-		"/home/marek/projects/private/env/env-bash/.bashrc",
 		"/home/marek/projects/private/env/env-bash/clenup_bash_history",
 		"/home/marek/projects/private/env/env-roxterm/Colours/coffee_bear.tpl.sh",
 		"/home/marek/app/apache-tomcat/webapps/convergeEMS/main/sc/skins/Transition/load_skin.js",
@@ -159,6 +134,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"sudo",
 			"H",
 			"sbt",
 			"worker-2",
@@ -213,112 +189,8 @@
 	"groups":
 	[
 		{
-			"selected": 3,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"settings":
-					{
-						"buffer_size": 217,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1,
-								1
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "env-xinitrc/.xinitrc",
-					"settings":
-					{
-						"buffer_size": 2212,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								237,
-								192
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/home/marek/.private/env-screen-lenka.sh",
-					"settings":
-					{
-						"buffer_size": 264,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								45,
-								45
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"settings":
-					{
-						"buffer_size": 270,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								270,
-								270
-							]
-						],
-						"settings":
-						{
-							"auto_name": ";IF(H46=\"-\";0;H46);IF(H47=\"-\";0;H47);IF(H48=\"-\";0;",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -378,6 +250,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 294.0,
+	"side_bar_width": 300.0,
 	"status_bar_visible": true
 }

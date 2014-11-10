@@ -25,7 +25,9 @@ INTERNAL_OUTPUT="eDP1"
 
 ~/.private/env-screen.sh
 
-# xrandr --output DP2 --mode 1024x768 --rate 60 --left-of  eDP1 --auto 
+
+# --mode 1024x768
+xrandr --output DP2 --mode 1152x864 --rate 60 --left-of  eDP1 --auto 
 
 # DP2 1024x768_60.00 
 # xrandr --output eDP1 --auto --right-of DP1 --auto 

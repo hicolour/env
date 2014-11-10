@@ -4,9 +4,14 @@ source $HOME/.dzen/colors.sh
 source $HOME/.dzen/icons.sh
 source $HOME/.dzen/utils.sh
 
+echo "Chekcing pkg at:"$(date) >> /tmp/pkg
+
 yaourt -Sy --devel --aur > /dev/null 2>&1
 
 status=$(pacman -Qu | wc -l)
+
+echo "Result pkg at:"$status >> /tmp/pkg
+
 
 
 
