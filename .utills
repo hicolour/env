@@ -6,6 +6,9 @@
 		},
 		{
 			"path": "/home/marek/.private"
+		},
+		{
+			"path": "/home/marek/projects/private/docker-grafana-graphite-statsd-elasticsearch"
 		}
 	]
 }

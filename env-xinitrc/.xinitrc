@@ -73,6 +73,13 @@ feh --bg-tile  ~/.wallpaper/w003.jpg &
 
 xbacklight -set 8 &
 
+
+# hotot-gtk2 &
+skype &
+turpial &
+
+
+
 #feh --bg-center ~/.wallpaper/thyon-04.jpg &
 
 # notification engine -old

@@ -19,6 +19,50 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/home/marek/projects/private/docker-grafana-graphite-statsd-elasticsearch/Dockerfile",
+			"settings":
+			{
+				"buffer_size": 3671,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/marek/.private/private/scripts/aws-002.sh",
+			"settings":
+			{
+				"buffer_size": 69,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "#! /bin/bash\n\ndocker kill anthracite\ndocker rm anthracite\ndocker kill gfdev\ndocker rm gfdev\n\ndocker run -d \\\n	-v /var/docker/gfdev/elastic:/var/lib/elasticsearch \\\n	-v /var/docker/gfdev/graphite:/opt/graphite/storage/whisper \\\n	-v /var/docker/gfdev/supervisor:/var/log/supervisor \\\n	-p 8080:80 \\\n  -p 8081:81 \\\n  -p 8125:8125 \\\n  -p 2003:2003/tcp \\\n  --name gfdev gfdev\n\nsleep 10\n# start anthracite\ndocker run -d --link gfdev:es -p 8082:8081 --name anthracite anthracite\n",
+			"file": "/home/marek/projects/private/docker-grafana-graphite-statsd-elasticsearch/start",
+			"file_size": 475,
+			"file_write_time": 1416771887000000,
+			"settings":
+			{
+				"buffer_size": 471,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/marek/.private/priv-bashrc",
+			"settings":
+			{
+				"buffer_size": 2332,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "*.mkv,*.avi,\nems-server-log-${BUILD_NUMBER}-${SYSTEM_UNDER_TEST_NODE_1_IP}.log,ems-server-log-errors-${BUILD_NUMBER}-${SYSTEM_UNDER_TEST_NODE_1_IP}.log,ems-server-log-exceptions-${BUILD_NUMBER}-${SYSTEM_UNDER_TEST_NODE_1_IP}.log,ems-server-log-${BUILD_NUMBER}-${SYSTEM_UNDER_TEST_NODE_2_IP}.log,ems-server-log-errors-${BUILD_NUMBER}-${SYSTEM_UNDER_TEST_NODE_2_IP}.log,ems-server-log-exceptions-${BUILD_NUMBER}-${SYSTEM_UNDER_TEST_NODE_2_IP}.log,ems-build-info-${BUILD_NUMBER},target/surefire-reports/*, metamodel-dump.log, logs/*",
+			"settings":
+			{
+				"buffer_size": 529,
+				"line_ending": "Unix",
+				"name": "*.mkv,*.avi,"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -44,10 +88,13 @@
 	},
 	"file_history":
 	[
+		"/home/marek/.private/priv-bashrc",
+		"/home/marek/projects/private/env/env-dzen/status_checks/status_packages.sh",
+		"/home/marek/projects/public/akka/akka-docs/rst/scala/persistence.rst",
+		"/home/marek/.private/private/scripts/aws-001.sh",
 		"/home/marek/.private/amartus/scripts/go",
 		"/home/marek/.private/amartus/scripts/transition.sh",
 		"/home/marek/.private/amartus/scripts/amartus-demo-deploy-cluster.sh",
-		"/home/marek/.private/priv-bashrc",
 		"/home/marek/.private/amartus/scripts/amartus-demo-deploy-performance.sh",
 		"/home/marek/projects/private/env/env-bash/.bashrc",
 		"/home/marek/.private/amartus/scripts/amartus-vpn.sh",
@@ -56,7 +103,6 @@
 		"/home/marek/.private/env-screen-lenka.sh",
 		"/home/marek/.bashrc",
 		"/home/marek/projects/private/env/env-utils/setup-crontab.sh",
-		"/home/marek/projects/private/env/env-dzen/status_checks/status_packages.sh",
 		"/home/marek/projects/private/env/env-xmonad/xmonad.hs",
 		"/home/marek/projects/private/env/env-roxterm/Colours/solarized",
 		"/home/marek/projects/private/env/env-dzen/status_checks/status_mail.sh",
@@ -134,6 +180,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"${VERSION_GRAFANA}",
+			"VERSION_GRAFANA",
 			"sudo",
 			"H",
 			"sbt",
@@ -174,6 +222,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"1.9.0-rc1",
 			"K",
 			"enp0s25",
 			"\\n",
@@ -189,8 +238,139 @@
 	"groups":
 	[
 		{
+			"selected": 4,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/home/marek/projects/private/docker-grafana-graphite-statsd-elasticsearch/Dockerfile",
+					"settings":
+					{
+						"buffer_size": 3671,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2875,
+								2875
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 253.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/marek/.private/private/scripts/aws-002.sh",
+					"settings":
+					{
+						"buffer_size": 69,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								49,
+								49
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/marek/projects/private/docker-grafana-graphite-statsd-elasticsearch/start",
+					"settings":
+					{
+						"buffer_size": 471,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								93,
+								93
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/marek/.private/priv-bashrc",
+					"settings":
+					{
+						"buffer_size": 2332,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2332,
+								2332
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"settings":
+					{
+						"buffer_size": 529,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								529,
+								529
+							]
+						],
+						"settings":
+						{
+							"auto_name": "*.mkv,*.avi,",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
