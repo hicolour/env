@@ -56,3 +56,6 @@ p xorg-xprop
 
 # Network time protocol
 p ntp
+
+#Json parser
+y jq

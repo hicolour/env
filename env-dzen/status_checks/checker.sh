@@ -16,7 +16,7 @@ source ~/.private/passwords.sh
 ~/.dzen/status_checks/status_clock.sh
 ~/.dzen/status_checks/status_cpu.sh 
 ~/.dzen/status_checks/status_memory.sh 
-~/.dzen/status_checks/status_wireless.sh
+~/.dzen/status_checks/status_net.sh
 ) &
 
 #===
@@ -47,13 +47,21 @@ sleep 1m; done ) &
 #===
 (while :; do
 
-~/.dzen/status_checks/status_cpu.sh &
-~/.dzen/status_checks/status_memory.sh &
-~/.dzen/status_checks/status_power.sh &
-~/.dzen/status_checks/status_wireless.sh &
 ~/.dzen/status_checks/status_currency.sh &
 
 sleep 30s; done ) &
+
+#===
+(while :; do
+
+~/.dzen/status_checks/status_cpu.sh &
+~/.dzen/status_checks/status_memory.sh &
+~/.dzen/status_checks/status_power.sh &
+~/.dzen/status_checks/status_net.sh &
+
+
+sleep 10s; done ) &
+
 
 
 # #===

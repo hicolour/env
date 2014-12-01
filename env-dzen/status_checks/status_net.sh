@@ -38,6 +38,5 @@ else
 	wireless="${c15}${wireless_disconnected_icon} ${BLACK_BRIGHT}disconnected"
 fi
 
-echo $wireless
 
-sample "wireless" "$wireless"
+sample "net" "$wireless"
