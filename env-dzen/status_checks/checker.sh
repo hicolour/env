@@ -51,6 +51,7 @@ sleep 1m; done ) &
 ~/.dzen/status_checks/status_memory.sh &
 ~/.dzen/status_checks/status_power.sh &
 ~/.dzen/status_checks/status_wireless.sh &
+~/.dzen/status_checks/status_currency.sh &
 
 sleep 30s; done ) &
 

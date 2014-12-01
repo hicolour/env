@@ -196,10 +196,11 @@ memory="$(ifexist memory)"
 date="$(ifexist date)"
 clock="$(ifexist clock)"
 wireless="$(ifexist wireless)"
+currency="$(ifexist currency)"
 
 
 
-echo "${wireless}${memory}${cpu}${power}${dropbox}${net_balance}${packages}${mail}${rss}${weather}${date}${clock}"
+echo "${currency}${wireless}${memory}${cpu}${power}${dropbox}${net_balance}${packages}${mail}${rss}${weather}${date}${clock}"
 
 sleep 1; done
 

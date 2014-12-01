@@ -435,15 +435,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   [((m .|. modm, k), windows $ f i)
            | (i, k) <- zip myWorkspaces [xK_quoteleft,xK_1,xK_2,xK_3,xK_4,xK_5,xK_6,xK_7,xK_8,xK_9,xK_0,xK_minus,xK_equal]
          , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-  ++
 
-  --
-  -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
-  -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-  --
-  [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-      | (key, sc) <- zip [xK_Insert, xK_End, xK_r] [0..]
-      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+  ---- mod-{w,e,r} %! Switch to physical/Xinerama screens 1, 2, or 3
+  ---- mod-shift-{w,e,r} %! Move client to screen 1, 2, or 3
+  --[((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+  --      | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+  --      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 -- Mouse bindings: default actions bound to mouse events -----------------------
 
