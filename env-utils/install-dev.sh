@@ -5,10 +5,10 @@
 
 
 # Latest JDK
-y jdk7
+#y jdk7
 
 
-y intellij-idea-13-ultimate
+y intellij-idea-14-ultimate
 
 
 # Building
@@ -16,7 +16,7 @@ p maven
 y gradle
 
 # App Container
-p tomcat7
+#p tomcat7
 
 # Scala Stack
 p scala
@@ -32,4 +32,4 @@ p mongodb
 # mysql
 p mariadb
 
-y mysql-workbench
+#y mysql-workbench

@@ -17,15 +17,18 @@ s env-dzen	.dzen
 mkdir -p ~/.config
 
 # s .config/dunst 
-# s .config/gtk-2.0
-# s .config/gtk-3.0
+# s gtk-2.0 .config/gtk-2.0
+#s .gtk-3.0 .config/gtk-3.0
 # s .config/htop
+
+s env-gtk/.gtkrc-2.0 .gtkrc-2.0
+s env-gtk/.gtkrc-3.0 .gtkrc-3.0
 
 # Dunst Config
 s env-dunst .config/dunst 
 
 # Midnight Commander
-s env-mc .config/mc
+#s env-mc .config/mc
 
 # Roxterm
 s env-roxterm .config/roxterm.sourceforge.net

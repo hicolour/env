@@ -32,8 +32,10 @@ y(){
 s(){
       line
       color '34;1' "setup : $1" 
-      line
+      color '35;1' "linking : $var/$1 to ~/$2" 
       rm -rf ~/$2
+      
+      line
       ln -s $var/$1 ~/$2
       }
 

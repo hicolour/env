@@ -35,6 +35,9 @@ y gtk-engine-murrine  gtk-engines
 y zukitwo-themes
 y faience-icon-theme
 
+# Fonts
+y ttf-google-fonts-hg
+
 # Screenshoots
 p scrot
 
@@ -58,4 +61,4 @@ p xorg-xprop
 p ntp
 
 #Json parser
-y jq
+#y jq
