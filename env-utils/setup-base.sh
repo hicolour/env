@@ -33,11 +33,19 @@ s env-dunst .config/dunst
 # Roxterm
 s env-roxterm .config/roxterm.sourceforge.net
 
+# wallpaper
+
+s env-wallpaper/.wallpaper .wallpaper
+
 
 # Base slim theme
 sudo systemctl enable slim.service
+sudo rm /usr/share/slim/themes/slim-typesafe
+dir=$(pwd)
+sudo ln -s  $dir/env-slim/slim-typesafe /usr/share/slim/themes/
 #echo 'current_theme       archlinux-simplyblack' >> /etc/slim.conf
-echo 'current_theme       archlinux-simplyblack' | sudo tee --append /etc/slim.conf
+#echo 'current_theme       archlinux-simplyblack' | sudo tee --append /etc/slim.conf
+echo 'current_theme       slim-typesafe' | sudo tee --append /etc/slim.conf
 
 # Wicd
 sudo systemctl enable wicd.service

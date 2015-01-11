@@ -34,6 +34,7 @@ y gtk-engine-murrine  gtk-engines
 
 y zukitwo-themes
 y faience-icon-theme
+y numix-themes
 
 # Fonts
 y ttf-google-fonts-hg

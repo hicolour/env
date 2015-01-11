@@ -69,7 +69,7 @@ _JAVA_AWT_WM_NONREPARENTING=1; export _JAVA_AWT_WM_NONREPARENTING
 #-fullscreen
 #xloadimage -onroot 
 #imlibsetroot  --composite    ~/.wallpaper/w004.png &
-feh --bg-tile  ~/.private/wallpaper/bg-001.jpg &
+feh --bg-tile  ~/.wallpaper/bg-003.jpg &
 
 xbacklight -set 8 &
 
@@ -77,6 +77,7 @@ xbacklight -set 8 &
 # hotot-gtk2 &
 skype &
 turpial &
+spotify &
 
 
 

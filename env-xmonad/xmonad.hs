@@ -115,13 +115,15 @@ myBorderWidth       = 1
 myModMask           = mod4Mask
 
 myNormalBorderColor  = "#111111"
-myFocusedBorderColor = "#5a676b"
+myFocusedBorderColor = "#16A085"
+-- sdss #2ECC71" "#1ABC9C" "#95A5A6" "#27AE60"
+--myFocusedBorderColor = "#5a676b"
 --myNormalBorderColor  = "#111111"
 --myFocusedBorderColor = "#353b3e"
 
 
 
-myWorkspaces= ["~:","1:t","2:t","3:w","4:w","5:n","6:i","7:i","8:?","9:tw","0:n","-:m","=:im"]
+myWorkspaces= ["\\:","/:","ins:","~:","1:t","2:t","3:w","4:w","5:n","6:i","7:i","8:?","9:tw","0:n","-:mail","=:im","[:twitt","]:music"]
 
 -- Layouts ---------------------------------------------------------------------
 
@@ -170,8 +172,9 @@ myManageHook = (composeAll . concat $
   [
     [resource  =? r --> doIgnore              | r <- myIgnores    ]
   , [className =? c --> viewShift "=:im"      | c <- myIm         ]
-  , [className =? c --> viewShift "-:m"      | c <- myTwitt      ]
+  , [className =? c --> viewShift "[:twitt"      | c <- myTwitt      ]
   , [className =? c --> viewShift "5:n"      | c <- myNote      ]
+  , [className =? c --> viewShift "]:music"     |  c <- myMusic ]
 
 
 
@@ -212,6 +215,7 @@ myManageHook = (composeAll . concat $
   myIm          = ["Pidgin", "Mumble", "Skype"]
   myTwitt       = ["Hotot", "Turpial"]
   myGfxs        = ["Inkscape", "Gimp"]
+  myMusic       = ["Spotify"]
 
   -- Gerally IntelliJ
   myDevIde      = ["sun-awt-X11-XFramePeer,", "jetbrains-idea-ce"]
@@ -246,24 +250,34 @@ myLogHook h = dynamicLogWithPP $ myDzenPP { ppOutput = hPutStrLn h }
 
 -- b8a761
 
+    --ppCurrent          = wrap "^fg(#c4a000)[^fg(#b8a761)" "^fg(#c4a000)]"
 --  { ppCurrent          = wrap "^fg(#72aca9)[^fg(#d3d0c8)" "^fg(#72aca9)]"
 --   , ppLayout           = wrap "^fg(#72aca9)[^fg(#72aca9)" "^fg(#72aca9)]"
 
+-- COLORS  #2ECC71" "#1ABC9C" "#95A5A6" "#27AE60" 
+-- COLOR TURQ "#1ABC9C" "#16A085"
+-- COLOR YELLOW "#F1C40F" "#F39C12"
+-- COLOR ORANGE "#E67E22" "#D35400"
+-- COLOR BLUE "#34495E" "#E67E22"
+
+
 myDzenPP = dzenPP
-  { ppCurrent          = wrap "^fg(#c4a000)[^fg(#b8a761)" "^fg(#c4a000)]"
+  { 
+    ppCurrent          = wrap "^fg(#F39C12)[^fg(#F1C40F)" "^fg(#F39C12)]"
+  , ppVisible          = wrap "^fg(#E67E22)[^fg(#d3d0c8)" "^fg(#E67E22)]"
   , ppHidden           = wrap " ^fg(#d3d0c8)" " "
   , ppHiddenNoWindows  = wrap " ^fg(#747369)" " "
   , ppUrgent           = wrap "^fg(#8ab3b5)[^fg(#cdc5b3)" "^fg(#8ab3b5)]"
 
   , ppSep              = "  "
-  , ppLayout           = wrap "^fg(#775681)[^fg(#8e5276)" "^fg(#775681)]"
+  , ppLayout           = wrap "^fg(#8E44AD)[^fg(#9B59B6)" "^fg(#8E44AD)]"
   , ppTitle            = (" " ++) . dzenColor "#5b709b" "" . dzenEscape
   , ppSort             = fmap (.namedScratchpadFilterOutWorkspace) $ ppSort defaultPP
   }
 
 
 --myDzenXmonad="dzen2 -y 1030 -x 0 -w 1280 -ta l " ++ myDzenStyle
-myDzenXmonad="dzen2 -y 0 -x 0 -w 800 -ta l " ++ myDzenStyle
+myDzenXmonad="dzen2 -y 0 -x 0 -w 1200 -ta l " ++ myDzenStyle
 
 myDzenMonitoring="~/.dzen/dzen_xmonad.sh"
 
@@ -273,7 +287,7 @@ myDzenStyle = "-fg '" ++ myFgColor ++
               "' -fn '" ++ myFont ++
               "' -h 20"
 
-myFgColor = "#d3d0c8"
+myFgColor = "#E74C3C"
 --myBgColor = "#0f0f0f"
 myBgColor = "#1B1B1B"
 
@@ -333,6 +347,9 @@ scratchpads = [
 
   ]
   where role = stringProperty "WM_WINDOW_ROLE"
+
+
+
 
 -- Bindings --------------------------------------------------------------------
 
@@ -433,14 +450,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   --    , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]!!
 
   [((m .|. modm, k), windows $ f i)
-           | (i, k) <- zip myWorkspaces [xK_quoteleft,xK_1,xK_2,xK_3,xK_4,xK_5,xK_6,xK_7,xK_8,xK_9,xK_0,xK_minus,xK_equal]
+           | (i, k) <- zip myWorkspaces [xK_backslash,xK_slash,xK_Insert,xK_quoteleft,xK_1,xK_2,xK_3,xK_4,xK_5,xK_6,xK_7,xK_8,xK_9,xK_0,xK_minus,xK_equal,xK_bracketleft,xK_bracketright]
          , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
-  ---- mod-{w,e,r} %! Switch to physical/Xinerama screens 1, 2, or 3
-  ---- mod-shift-{w,e,r} %! Move client to screen 1, 2, or 3
-  --[((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-  --      | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-  --      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+
+  --[
+  --  ((m .|. myModMask, key), screenWorkspace sc
+  --    >>= flip whenJust (windows . f))
+  --    | (key, sc) <- zip [xK_w, xK_e, xK_r] [1,0,2]
+  --    , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
+  --]
 
 -- Mouse bindings: default actions bound to mouse events -----------------------
 
