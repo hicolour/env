@@ -277,7 +277,7 @@ myDzenPP = dzenPP
 
 
 --myDzenXmonad="dzen2 -y 1030 -x 0 -w 1280 -ta l " ++ myDzenStyle
-myDzenXmonad="dzen2 -y 0 -x 0 -w 1200 -ta l " ++ myDzenStyle
+myDzenXmonad="dzen2 -y 0 -x 0 -w 1000 -ta l " ++ myDzenStyle
 
 myDzenMonitoring="~/.dzen/dzen_xmonad.sh"
 
