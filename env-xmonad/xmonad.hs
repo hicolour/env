@@ -14,6 +14,7 @@ import qualified Data.Map        as M -- mouse bindings
 import Control.Monad (liftM2)
 
 -- hooks --
+import XMonad.Actions.SpawnOn
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
@@ -165,8 +166,12 @@ myLayout = windowNavigation $
                                  reflectHoriz $
                                  withIM (0.25) (ClassName "Mumble") grid
 
+ 
+
+
 
 -- Window Management -----------------------------------------------------------
+
 
 myManageHook = (composeAll . concat $
   [
@@ -237,6 +242,7 @@ myManageHook = (composeAll . concat $
   -- names
   myNames   = ["Google Chrome Options", "Chromium Options", "Firefox Preferences"]
 
+ -- myGmailTitle = ["Inbox - marek.prochera@gmail.com - Gmail - Google Chrome"]
 
 -- Event handling --------------------------------------------------------------
 
@@ -306,7 +312,26 @@ myFont = "-*-envypn-medium-*-*--14-*-*-*-*-*-*-1"
 
 -- Startup hook ----------------------------------------------------------------
 -- Fix for Java GUI
-myStartupHook = setWMName "LG3D"
+-- myStartupHook = setWMName "LG3D"
+
+-- #skype &
+-- #turpial &
+-- #spotify &
+
+-- #google-chrome-stable https://mail.google.com/mail/u/0/#inbox &
+
+
+myStartupHook = composeAll
+  [
+    setWMName "LG3D"
+  , spawnOn "=:im" "skype"
+  , spawnOn "=:]music" "spotify"
+  , spawnOn "-:mail" "google-chrome-stable https://mail.google.com/mail/u/0/#inbox"
+  , spawnOn "-:mail" "google-chrome-stable https://portal.microsoftonline.com"
+  , spawnOn "=:[twitt" "turpial"
+  ]
+
+
 
 -- Scratchpads -----------------------------------------------------------------
 

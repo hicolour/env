@@ -75,9 +75,11 @@ xbacklight -set 8 &
 
 
 # hotot-gtk2 &
-skype &
-turpial &
-spotify &
+#skype &
+#turpial &
+#spotify &
+
+#google-chrome-stable https://mail.google.com/mail/u/0/#inbox &
 
 
 
