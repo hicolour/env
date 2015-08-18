@@ -51,3 +51,23 @@ echo 'current_theme       slim-typesafe' | sudo tee --append /etc/slim.conf
 sudo systemctl enable wicd.service
 
 
+# SETUP KVM
+sudo modprobe kvm-intel
+sudo modprobe kvm
+sudo systemctl enable libvirtd.service 
+sudo systemctl start libvirtd.service
+
+sudo rm -rf /etc/polkit-1/rules.d/50-org.libvirt.unix.manage.rules 
+sudo touch /etc/polkit-1/rules.d/50-org.libvirt.unix.manage.rules 
+sudo cat <<EOF > /etc/polkit-1/rules.d/50-org.libvirt.unix.manage.rules 
+polkit.addRule(function(action, subject) {
+if (action.id == "org.libvirt.unix.manage" &&
+  subject.user == "tu_usuario") {
+  return polkit.Result.YES;
+}
+});
+EOF
+
+
+
+

@@ -54,6 +54,11 @@ p vpnc
 # SSH tunel
 
 
+# Sound addons
+
+y  pulseaudio-alsa
+
+
 # Messangers 
 p skype
 p pidgin

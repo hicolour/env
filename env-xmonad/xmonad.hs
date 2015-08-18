@@ -326,9 +326,9 @@ myStartupHook = composeAll
     setWMName "LG3D"
   , spawnOn "=:im" "skype"
   , spawnOn "=:]music" "spotify"
+  , spawnOn "=:[twitt" "turpial"
   , spawnOn "-:mail" "google-chrome-stable https://mail.google.com/mail/u/0/#inbox"
   , spawnOn "-:mail" "google-chrome-stable https://portal.microsoftonline.com"
-  , spawnOn "=:[twitt" "turpial"
   ]
 
 
@@ -424,7 +424,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
    , ((modm, xK_F9), spawn "scrot 'screen_%Y-%m-%d-%H-%M-%S.png' -d 1")
 
    --take a screenshot of focused window 
-   , ((modm, xK_F10), spawn "scrot 'window_%Y-%m-%d-%H-%M-%S.png' -d 1-u")
+   , ((modm, xK_F10), spawn "scrot 'window_%Y-%m-%d-%H-%M-%S.png' -d 1 -u")
 
   -- custom
   , ((modm, xK_f), sendMessage ToggleLayout)

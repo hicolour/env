@@ -35,6 +35,7 @@ y gtk-engine-murrine  gtk-engines
 y zukitwo-themes
 y faience-icon-theme
 y numix-themes
+y gtk-theme-xgtk
 
 # Fonts
 y ttf-google-fonts-hg
@@ -53,6 +54,11 @@ p libnotify
 
 # Fonts
 p envypn-font
+y ttf-envy-code-r
+
+#Windows fonts
+y fontconfig-ttf-ms-fonts
+# http://nodehead.com/5-beautiful-gtk-themes-for-ubuntu/
 
 
 # Windows Utils
@@ -63,3 +69,8 @@ p ntp
 
 #Json parser
 #y jq
+
+
+y thunar
+# smb for thunar
+y gvfs-smb

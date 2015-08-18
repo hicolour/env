@@ -28,7 +28,7 @@ export PROMPT_COMMAND="history -a"        # update histfile after every command
 shopt -s histappend                       # append history file
  
 alias hg='history | gr'
-alias su='yaourt -Suya --noconfirm'
+alias su='yaourt -Suya --noconfirm; yaourt -Qtd'
 
 #Grep
  
@@ -54,7 +54,8 @@ MAVEN_OPTS="-Xmx2048m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled -Dfile.
 alias m="mvn clean install -DskipTests"
  
  
-
+# '[r]emove [o]rphans' - recursively remove ALL orphaned packages
+alias pacro="/usr/bin/pacman -Qtdq > /dev/null && sudo /usr/bin/pacman -Rns \$(/usr/bin/pacman -Qtdq | sed -e ':a;N;\$!ba;s/\n/ /g')"
 
 
 #
