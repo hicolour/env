@@ -13,7 +13,7 @@ EXTERNAL_OUTPUT="DP1"
 INTERNAL_OUTPUT="eDP1"
 
 
-# xrandr --output eDP1 --mode 1920x1080 --left-of DP2 
+#xrandr --output eDP1 --mode 1920x1080 --left-of DP2 
 # xrandr --output DP2 --mode 1152x864
 
 # xrandr | grep -w $EXTERNAL_OUTPUT | grep " connected "
@@ -27,7 +27,7 @@ INTERNAL_OUTPUT="eDP1"
 
 
 # --mode 1024x768
-xrandr --output DP2 --mode 1152x864 --rate 60 --left-of  eDP1 --auto 
+#xrandr --output DP2 --mode 1152x864 --rate 60 --left-of  eDP1 --auto 
 
 # DP2 1024x768_60.00 
 # xrandr --output eDP1 --auto --right-of DP1 --auto 

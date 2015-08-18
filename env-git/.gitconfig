@@ -37,7 +37,7 @@
 
     jp = log origin/master@{\"1 hour ago\"}..origin/master
 
-
+    pl = pull --rebase
     
     #core 
     st = status -s
