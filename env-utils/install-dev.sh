@@ -15,6 +15,8 @@ y intellij-idea-14-ultimate
 p maven
 y gradle
 
+y npm
+
 # App Container
 #p tomcat7
 

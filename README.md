@@ -83,3 +83,11 @@ Hardware addons:
  ### How To:
 
  Is there any package which shows PID of a window by clicking on it? xprop
+
+
+
+### Tools
+
+#### Network scanning
+* nmap
+* zenmap [G]

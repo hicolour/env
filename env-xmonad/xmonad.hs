@@ -327,8 +327,8 @@ myStartupHook = composeAll
   , spawnOn "=:im" "skype"
   , spawnOn "=:]music" "spotify"
   , spawnOn "=:[twitt" "turpial"
-  , spawnOn "-:mail" "google-chrome-stable https://mail.google.com/mail/u/0/#inbox"
-  , spawnOn "-:mail" "google-chrome-stable https://portal.microsoftonline.com"
+  --, spawnOn "-:mail" "google-chrome-stable https://mail.google.com/mail/u/0/#inbox"
+  --, spawnOn "-:mail" "google-chrome-stable https://portal.microsoftonline.com"
   ]
 
 
@@ -381,6 +381,9 @@ scratchpads = [
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
   [ ((modm,                 xK_Return), spawn $ XMonad.terminal conf) -- launch a terminal
+  --, ((modm,                 xF86XK_MonBrightnessUp     ), spawn "xbacklight +20")
+  --, ((modm,                 xF86XK_MonBrightnessDown     ), spawn "xbacklight -20")
+  , ((modm,                 xK_l     ), spawn "slimlock")
   , ((modm,                 xK_c     ), spawn "google-chrome-stable")
   , ((modm,                 xK_b     ), spawn "subl")
   , ((modm,                 xK_o     ), spawn "dmenu_run -nb '#242424' -nf '#ccc' -sb '#909090'")

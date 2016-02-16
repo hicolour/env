@@ -27,6 +27,15 @@ p gitk
 y bash-completion-git
 
 
+# Sound addons
+y pulseaudio-alsa
+y pavucontrol
+
+# blue
+y bluez 
+y blueman
+y pulseaudio-bluetooth
+
 
 # Network 
 p wicd
@@ -54,9 +63,7 @@ p vpnc
 # SSH tunel
 
 
-# Sound addons
 
-y  pulseaudio-alsa
 
 
 # Messangers 

@@ -10,6 +10,8 @@ p yaourt
 p xmonad 
 p xmonad-contrib
 
+y xcompmgr
+
 # Toolbar
 p dzen2
 
