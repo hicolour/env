@@ -28,24 +28,24 @@ export PROMPT_COMMAND="history -a"        # update histfile after every command
 shopt -s histappend                       # append history file
  
 alias hg='history | gr'
-alias su='yaourt -Suya --noconfirm'
+alias su='yaourt -Suya --noconfirm; yaourt -Qtd'
 
 #Grep
  
 alias gr='grep --color -E'
  
 
-if [ -f ~/.private/priv-bashrc ];
+if [ -f ~/.private/priv-bashrc.sh ];
 then
-   source ~/.private/priv-bashrc
+   source ~/.private/priv-bashrc.sh
 fi
  
 
 # ---------- @jdk
-export JAVA_HOME=/usr/lib/jvm/oraclejdk8-64
+#export JAVA_HOME=/usr/lib/jvm/oraclejdk8-64
 
-PATH=$PATH:/$JAVA_HOME/bin/
-export PATH
+#PATH=$PATH:/$JAVA_HOME/bin/
+#export PATH
 
 # ---------- @sbt
 export SBT_OPTS="-Dscala.color -server -Xms512M -Xmx3000M -Xss1M"
@@ -53,12 +53,13 @@ export SBT_OPTS="-Dscala.color -server -Xms512M -Xmx3000M -Xss1M"
 # export SBT_OPTS="$SBT_OPTS -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled"
 
 # ---------- @maven
-MAVEN_OPTS="-Xmx2048m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled -Dfile.encoding=UTF-8 -Djava.security.egd=file:///dev/urandom"
+#MAVEN_OPTS="-Xmx2048m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled -Dfile.encoding=UTF-8 -Djava.security.egd=file:///dev/urandom"
  
 alias m="mvn clean install -DskipTests"
  
  
-
+# '[r]emove [o]rphans' - recursively remove ALL orphaned packages
+alias pacro="/usr/bin/pacman -Qtdq > /dev/null && sudo /usr/bin/pacman -Rns \$(/usr/bin/pacman -Qtdq | sed -e ':a;N;\$!ba;s/\n/ /g')"
 
 
 #

@@ -283,7 +283,7 @@ myDzenPP = dzenPP
 
 
 --myDzenXmonad="dzen2 -y 1030 -x 0 -w 1280 -ta l " ++ myDzenStyle
-myDzenXmonad="dzen2 -y 0 -x 0 -w 1200 -ta l " ++ myDzenStyle
+myDzenXmonad="dzen2 -y 0 -x 0 -w 1000 -ta l " ++ myDzenStyle
 
 myDzenMonitoring="~/.dzen/dzen_xmonad.sh"
 
@@ -326,9 +326,9 @@ myStartupHook = composeAll
     setWMName "LG3D"
   , spawnOn "=:im" "skype"
   , spawnOn "=:]music" "spotify"
-  , spawnOn "-:mail" "google-chrome-stable https://mail.google.com/mail/u/0/#inbox"
-  , spawnOn "-:mail" "google-chrome-stable https://portal.microsoftonline.com"
   , spawnOn "=:[twitt" "turpial"
+  --, spawnOn "-:mail" "google-chrome-stable https://mail.google.com/mail/u/0/#inbox"
+  --, spawnOn "-:mail" "google-chrome-stable https://portal.microsoftonline.com"
   ]
 
 
@@ -381,6 +381,9 @@ scratchpads = [
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
   [ ((modm,                 xK_Return), spawn $ XMonad.terminal conf) -- launch a terminal
+  --, ((modm,                 xF86XK_MonBrightnessUp     ), spawn "xbacklight +20")
+  --, ((modm,                 xF86XK_MonBrightnessDown     ), spawn "xbacklight -20")
+  , ((modm,                 xK_l     ), spawn "slimlock")
   , ((modm,                 xK_c     ), spawn "google-chrome-stable")
   , ((modm,                 xK_b     ), spawn "subl")
   , ((modm,                 xK_o     ), spawn "dmenu_run -nb '#242424' -nf '#ccc' -sb '#909090'")
@@ -424,7 +427,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
    , ((modm, xK_F9), spawn "scrot 'screen_%Y-%m-%d-%H-%M-%S.png' -d 1")
 
    --take a screenshot of focused window 
-   , ((modm, xK_F10), spawn "scrot 'window_%Y-%m-%d-%H-%M-%S.png' -d 1-u")
+   , ((modm, xK_F10), spawn "scrot 'window_%Y-%m-%d-%H-%M-%S.png' -d 1 -u")
 
   -- custom
   , ((modm, xK_f), sendMessage ToggleLayout)

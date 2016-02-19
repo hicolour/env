@@ -10,10 +10,10 @@ cursor_shape=2
 
 scroll_on_keystroke=1
 scroll_on_output=1
-scrollback_lines=2000
+scrollback_lines=12000
 
 
-font=envypn 10
+font=envypn 8
 
 allow_bold=0
 

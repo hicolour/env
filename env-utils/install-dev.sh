@@ -15,6 +15,8 @@ y intellij-idea-14-ultimate
 p maven
 y gradle
 
+y npm
+
 # App Container
 #p tomcat7
 
@@ -33,3 +35,14 @@ p mongodb
 p mariadb
 
 #y mysql-workbench
+
+y python-sphinx 
+
+
+y docker
+sudo systemctl enable docker.service
+sudo systemctl start docker.service
+
+
+# KVM 
+p qemu dmidecode ebtables dnsmasq libvirt bridge-utils openbsd-netcat radvd urlgrabber virtviewer virt-manager ifplugd ifenslave tcl

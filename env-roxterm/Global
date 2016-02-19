@@ -1,7 +1,7 @@
 [roxterm options]
 profile=Main
 shortcut_scheme=Main
-colour_scheme=coffee_bear
+colour_scheme=coffee_bear01
 
 warn_close=0
 only_warn_running=0
