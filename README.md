@@ -91,3 +91,13 @@ Hardware addons:
 #### Network scanning
 * nmap
 * zenmap [G]
+
+
+# Xmonad setup
+
+### Dzen
+
+#### Dzen icons
+
+Sm4tik icons icons pack
+![Sm4tik icons] (meta/sm4tik.png)

@@ -84,3 +84,7 @@ y hotot
 # Web
 p firefox
 
+
+# Subtitle editor
+y subtitleeditor
+

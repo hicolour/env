@@ -76,3 +76,10 @@ p ntp
 y thunar
 # smb for thunar
 y gvfs-smb
+
+
+# exFat utilities
+y exfat-utils
+
+# vfat
+y dosfstools

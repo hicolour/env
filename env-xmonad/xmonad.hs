@@ -384,6 +384,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   --, ((modm,                 xF86XK_MonBrightnessUp     ), spawn "xbacklight +20")
   --, ((modm,                 xF86XK_MonBrightnessDown     ), spawn "xbacklight -20")
   , ((modm,                 xK_l     ), spawn "slimlock")
+  , ((modm,                 xK_y     ), spawn "terminal")
   , ((modm,                 xK_c     ), spawn "google-chrome-stable")
   , ((modm,                 xK_b     ), spawn "subl")
   , ((modm,                 xK_o     ), spawn "dmenu_run -nb '#242424' -nf '#ccc' -sb '#909090'")
@@ -436,6 +437,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm, xK_F2 ), namedScratchpadAction scratchpads "htop")
   , ((modm, xK_F3 ), namedScratchpadAction scratchpads "wicd-curses")
   , ((modm, xK_F4 ), namedScratchpadAction scratchpads "alsamixer")
+  , ((modm, xK_F9 ), namedScratchpadAction scratchpads "termianal")
+
+
+--curl -4 http://wttr.in/Cracow
 
 
   --, ((modm, xK_r), namedScratchpadAction scratchpads "ranger")
