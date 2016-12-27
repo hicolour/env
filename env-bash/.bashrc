@@ -47,6 +47,10 @@ fi
 #PATH=$PATH:/$JAVA_HOME/bin/
 #export PATH
 
+# --- scala 
+alias scala="scala -Dscala.color=true"
+
+
 # ---------- @sbt
 export SBT_OPTS="-Dscala.color -server -Xms512M -Xmx3000M -Xss1M"
 #-XX:+UseConcMarkSweepGC -XX:NewRatio=8"
