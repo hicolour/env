@@ -46,3 +46,12 @@ sudo systemctl start docker.service
 
 # KVM 
 p qemu dmidecode ebtables dnsmasq libvirt bridge-utils openbsd-netcat radvd urlgrabber virtviewer virt-manager ifplugd ifenslave tcl
+
+
+
+y iotop
+
+y nmon
+
+# Offline documentation browser
+y zeal
