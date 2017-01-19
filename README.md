@@ -95,6 +95,12 @@ Hardware addons:
 
 # Xmonad setup
 
+```
+xmonad --recompile
+xmonad --recstart
+```
+
+
 ### Dzen
 
 #### Dzen icons

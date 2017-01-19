@@ -13,7 +13,7 @@ scroll_on_output=1
 scrollback_lines=12000
 
 
-font=envypn 8
+font=ypn envypn 8
 
 allow_bold=0
 

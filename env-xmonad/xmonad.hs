@@ -308,7 +308,10 @@ myColorHN = "#686868"
 -- myFont = "misc-ohsnap-medium-r-normal--12-87-100-100-c-70-iso8859-1"
 --myFont = "-xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso8859-1"
 --myFont = "-*-envypn-medium-*-*--13-*-*-*-*-*-*-1"
-myFont = "-*-envypn-medium-*-*--14-*-*-*-*-*-*-1"
+--myFont = "-*-envypn-medium-*-*--14-*-*-*-*-*-*-1"
+--myFont = "*ypn*envypn*8"
+
+myFont = "-ypn-envypn-Medium-R-Normal--13-130-75-75-C-90-ISO8859-1"
 
 -- Startup hook ----------------------------------------------------------------
 -- Fix for Java GUI
