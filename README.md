@@ -89,12 +89,12 @@ Hardware addons:
 ### Tools
 
 #### Network
-* [nmap](https://nmap.org/) - #Console - Network Browser
-* [zenmap](https://nmap.org/zenmap/) - #GUI - Newtwork Browser
+* [nmap](https://nmap.org/) - `#Console` - Network Browser
+* [zenmap](https://nmap.org/zenmap/) - `#GUI` - Newtwork Browser
 
 
 ### Dev 
-* [zeal](https://zealdocs.org/) - #Console - API Browser 
+* [zeal](https://zealdocs.org/) - `#Console` - API Browser 
 
 # Xmonad setup
 
