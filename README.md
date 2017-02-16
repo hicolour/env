@@ -88,10 +88,13 @@ Hardware addons:
 
 ### Tools
 
-#### Network scanning
-* nmap
-* zenmap [G]
+#### Network
+* [nmap](https://nmap.org/) - #Console - Network Browser
+* [zenmap](https://nmap.org/zenmap/) - #GUI - Newtwork Browser
 
+
+### Dev 
+* [zeal](https://zealdocs.org/) - #Console - API Browser 
 
 # Xmonad setup
 
