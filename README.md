@@ -88,6 +88,11 @@ Hardware addons:
 
 ### Tools
 
+### Base
+
+* [htop](http://hisham.hm/htop/) - [?](https://peteris.rocks/blog/htop/) - ```#console``` - Interactive process viewer
+
+
 #### Network
 * [nmap](https://nmap.org/) - `#Console` - Network Browser
 * [zenmap](https://nmap.org/zenmap/) - `#GUI` - Newtwork Browser
