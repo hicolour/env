@@ -90,7 +90,8 @@ Hardware addons:
 
 ### Base
 
-* [htop](http://hisham.hm/htop/) - [?](https://peteris.rocks/blog/htop/) - ```#console``` - Interactive process viewer
+* [htop](http://hisham.hm/htop/) - ```#console``` - Interactive process viewer
+  * [htop explained](https://peteris.rocks/blog/htop/) 
 
 
 #### Network
