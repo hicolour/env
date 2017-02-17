@@ -88,6 +88,8 @@ Hardware addons:
 
 ### Tools
 
+Place to collect the best information/tutotrials about tools.
+
 ### Base
 
 * [htop](http://hisham.hm/htop/) - ```#console``` - Interactive process viewer
