@@ -118,3 +118,8 @@ xmonad --recstart
 
 Sm4tik icons icons pack
 ![Sm4tik icons] (meta/sm4tik.png)
+
+
+### How To
+
+1. Check window props: ```xprop ```
