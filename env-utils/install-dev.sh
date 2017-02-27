@@ -8,7 +8,7 @@
 #y jdk7
 
 
-y intellij-idea-14-ultimate
+y intellij-idea-ultimate-edition
 
 
 # Building
