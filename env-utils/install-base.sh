@@ -83,3 +83,6 @@ y exfat-utils
 
 # vfat
 y dosfstools
+
+#alsi system info
+y alsi
