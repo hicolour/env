@@ -52,7 +52,7 @@ alias scala="scala -Dscala.color=true"
 
 
 # ---------- @sbt
-export SBT_OPTS="-Dscala.color -server -Xms512M -Xmx3000M -Xss1M"
+#export SBT_OPTS="-Dscala.color -server -Xms512M -Xmx3000M -Xss1M"
 #-XX:+UseConcMarkSweepGC -XX:NewRatio=8"
 # export SBT_OPTS="$SBT_OPTS -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled"
 

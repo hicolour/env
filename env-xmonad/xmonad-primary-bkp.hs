@@ -54,9 +54,7 @@ main = do
   myDzenMonitoring_ <- spawnPipe myDzenMonitoring
   myDzenXmonad_     <- spawnPipe myDzenXmonad
 
-
--- $ ewmh defaultConfig
-  xmonad $ withUrgencyHook NoUrgencyHook   $ docks defaultConfig {
+  xmonad $ withUrgencyHook NoUrgencyHook $ ewmh defaultConfig {
 
     -- simple stuff
     terminal           = myTerminal,

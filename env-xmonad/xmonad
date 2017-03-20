@@ -44,7 +44,7 @@ import XMonad.Layout.Reflect
 import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import XMonad.Layout.PerWorkspace (onWorkspace)
-import XMonad.Layout.Gaps
+--import XMonad.Layout.Gaps
 import XMonad.Layout.IndependentScreens
 
 
@@ -54,9 +54,7 @@ main = do
   myDzenMonitoring_ <- spawnPipe myDzenMonitoring
   myDzenXmonad_     <- spawnPipe myDzenXmonad
 
-
--- $ ewmh defaultConfig
-  xmonad $ withUrgencyHook NoUrgencyHook   $ docks defaultConfig {
+  xmonad $ withUrgencyHook NoUrgencyHook $ ewmh defaultConfig {
 
     -- simple stuff
     terminal           = myTerminal,
@@ -102,7 +100,7 @@ myLayout = windowNavigation $
            avoidStruts $
            smartBorders $
            full $
-           gaps [(U,20),(D,0),(L,0),(R,0)]  $  -- leave gaps at the top and right
+          -- gaps [(U,20),(D,0),(L,0),(R,0)]  $  -- leave gaps at the top and right
            onWorkspace "dev"  (gtile ||| grid ||| tile ||| mtile) $
            onWorkspace "=:im"   im $
            onWorkspace "serv" (grid ||| tile) $
