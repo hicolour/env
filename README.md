@@ -88,10 +88,21 @@ Hardware addons:
 
 ### Tools
 
-#### Network scanning
-* nmap
-* zenmap [G]
+Place to collect the best information/tutotrials about tools.
 
+### Base
+
+* [htop](http://hisham.hm/htop/) - ```#console``` - Interactive process viewer
+  * [htop explained](https://peteris.rocks/blog/htop/) 
+
+
+#### Network
+* [nmap](https://nmap.org/) - `#Console` - Network Browser
+* [zenmap](https://nmap.org/zenmap/) - `#GUI` - Newtwork Browser
+
+
+### Dev 
+* [zeal](https://zealdocs.org/) - `#Console` - API Browser 
 
 # Xmonad setup
 
@@ -107,3 +118,8 @@ xmonad --recstart
 
 Sm4tik icons icons pack
 ![Sm4tik icons] (meta/sm4tik.png)
+
+
+### How To
+
+1. Check window props: ```xprop ```
