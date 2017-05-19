@@ -48,6 +48,8 @@ import XMonad.Layout.Gaps
 import XMonad.Layout.IndependentScreens
 
 
+
+
 main = do
 
 
@@ -349,6 +351,24 @@ scratchpads = [
 
 
 
+--withOtherOf2 :: (WorkspaceId -> WindowSet -> WindowSet) -> X ()
+--withOtherOf2 fn = do
+--             tag <- join . gets $ screenWorkspace . (1 -) . W.screen . W.current . windowset
+--             whenJust tag (windows . fn)
+ 
+withOtherOf2 :: (WorkspaceId -> WindowSet -> WindowSet) -> X ()
+withOtherOf2 fn = do
+             tag <- gets $ screenWorkspace . (1 -) . W.screen . W.current . windowset
+             tag2 <- tag
+             flip whenJust (windows . fn) tag2
+
+
+onOtherOf2 :: (WindowSet -> WindowSet) -> X ()
+onOtherOf2 fn' = do
+   wset <- gets windowset
+   other <- screenWorkspace . (1 -) . W.screen . W.current $ wset
+   windows $ W.view (W.currentTag wset) . fn' . maybe id W.view other
+
 
 -- Bindings --------------------------------------------------------------------
 
@@ -375,6 +395,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm .|. shiftMask,   xK_comma ), sendMessage (IncMasterN 1))                    -- Increment the number of windows in the master area
   , ((modm .|. shiftMask,   xK_period), sendMessage (IncMasterN (-1)))                 -- Deincrement the number of windows in the master area
 
+-- Foxus  ---------------------------------------------------------------------------------
+ 
+
+  , ((modm,                 xK_v     ), withOtherOf2 W.view)  -- focus other visible screen
+  , ((modm,                 xK_g     ), withOtherOf2 W.greedyView)  -- swap workspaces on screens
+  , ((modm,                 xK_f     ), withOtherOf2 W.shift) -- move current window to other screen
+  , ((modm,                 xK_u     ), onOtherOf2 W.focusUp) -- focus up on other screen
 -- Window Resizing  -------------------------------------------------------------------------
   , ((modm .|. shiftMask,   xK_Left  ), sendMessage Shrink)
   , ((modm .|. shiftMask,   xK_Right ), sendMessage Expand)

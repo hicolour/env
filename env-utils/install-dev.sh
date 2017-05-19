@@ -44,6 +44,11 @@ sudo systemctl enable docker.service
 sudo systemctl start docker.service
 
 
+# kubernetes
+y minikube-bin
+y kubectl-bin
+
+
 # KVM 
 p qemu dmidecode ebtables dnsmasq libvirt bridge-utils openbsd-netcat radvd urlgrabber virtviewer virt-manager ifplugd ifenslave tcl
 
