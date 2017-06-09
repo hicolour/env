@@ -380,6 +380,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm,                 xK_l     ), spawn "slimlock")
   , ((modm,                 xK_y     ), spawn "terminal")
   , ((modm,                 xK_c     ), spawn "google-chrome-stable")
+  , ((modm,                 xK_a     ), spawn "google-chrome-stable --profile-directory=Amartus")
   , ((modm,                 xK_b     ), spawn "subl")
   , ((modm,                 xK_o     ), spawn "dmenu_run -nb '#242424' -nf '#ccc' -sb '#909090'")
   , ((modm,                 xK_p     ), spawn "dmenu_run -fn '-ypn-envypn-Medium-R-Normal--13-130-75-75-C-90-ISO8859-1' -nb '#242424' -nf '#ccc' -sb '#909090' -sf '#111'") 
@@ -396,12 +397,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm .|. shiftMask,   xK_period), sendMessage (IncMasterN (-1)))                 -- Deincrement the number of windows in the master area
 
 -- Foxus  ---------------------------------------------------------------------------------
- 
-
-  , ((modm,                 xK_v     ), withOtherOf2 W.view)  -- focus other visible screen
-  , ((modm,                 xK_g     ), withOtherOf2 W.greedyView)  -- swap workspaces on screens
-  , ((modm,                 xK_f     ), withOtherOf2 W.shift) -- move current window to other screen
-  , ((modm,                 xK_u     ), onOtherOf2 W.focusUp) -- focus up on other screen
+  , ((modm,                 xK_v     ), withOtherOf2 W.view)                           -- focus other visible screen
+  , ((modm,                 xK_g     ), withOtherOf2 W.greedyView)                     -- swap workspaces on screens
+  , ((modm,                 xK_f     ), withOtherOf2 W.shift)                          -- move current window to other screen
+  , ((modm,                 xK_u     ), onOtherOf2 W.focusUp)                          -- focus up on other screen
 -- Window Resizing  -------------------------------------------------------------------------
   , ((modm .|. shiftMask,   xK_Left  ), sendMessage Shrink)
   , ((modm .|. shiftMask,   xK_Right ), sendMessage Expand)
