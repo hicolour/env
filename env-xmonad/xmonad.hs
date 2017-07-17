@@ -298,7 +298,7 @@ myFont = "-ypn-envypn-Medium-R-Normal--13-130-75-75-C-90-ISO8859-1"
 myStartupHook = composeAll
   [
     setWMName "LG3D"
-  , spawnOn "=:im" "skype"
+ -- , spawnOn "=:im" "skype"
   , spawnOn "=:]music" "spotify"
   , spawnOn "=:[twitt" "turpial"
   --, spawnOn "-:mail" "google-chrome-stable https://mail.google.com/mail/u/0/#inbox"
