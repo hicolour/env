@@ -35,9 +35,9 @@ alias su='yaourt -Suya --noconfirm; yaourt -Qtd'
 alias gr='grep --color -E'
  
 
-if [ -f ~/.private/priv-bashrc.sh ];
+if [ -f ~/.private/.private-bashrc ];
 then
-   source ~/.private/priv-bashrc.sh
+   source ~/.private/.private-bashrc
 fi
  
 

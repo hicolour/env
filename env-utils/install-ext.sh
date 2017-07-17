@@ -81,6 +81,9 @@ p calibre
 # Twitter
 y hotot
 
+y turpial
+y pywebkitgtk
+
 # Web
 p firefox
 
