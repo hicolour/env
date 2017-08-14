@@ -1,0 +1,3 @@
+sudo pacman -Sc
+sudo pacman -Qtdq
+sudo pacman -Rs
