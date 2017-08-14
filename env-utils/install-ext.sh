@@ -6,7 +6,7 @@
 
 
 
-# Bash 
+# Bash
 p bash-completion
 p mlocate
 p xclip
@@ -32,12 +32,12 @@ y pulseaudio-alsa
 y pavucontrol
 
 # blue
-y bluez 
+y bluez
 y blueman
 y pulseaudio-bluetooth
 
 
-# Network 
+# Network
 p wicd
 
 
@@ -66,7 +66,7 @@ p vpnc
 
 
 
-# Messangers 
+# Messangers
 p skype
 p pidgin
 y google-talkplugin
@@ -75,7 +75,7 @@ y google-talkplugin
 
 
 # Ebooks
-p calibre 
+p calibre
 
 
 # Twitter
@@ -96,3 +96,6 @@ y subtitleeditor
 #mindmapping
 y xmind
 
+
+# Display graphical dialog boxes from shell scripts
+y zenity

@@ -16,7 +16,7 @@ s env-dzen	.dzen
 # Config dir
 mkdir -p ~/.config
 
-# s .config/dunst 
+# s .config/dunst
 # s gtk-2.0 .config/gtk-2.0
 #s .gtk-3.0 .config/gtk-3.0
 # s .config/htop
@@ -25,7 +25,7 @@ s env-gtk/.gtkrc-2.0 .gtkrc-2.0
 s env-gtk/.gtkrc-3.0 .gtkrc-3.0
 
 # Dunst Config
-s env-dunst .config/dunst 
+s env-dunst .config/dunst
 
 # Midnight Commander
 #s env-mc .config/mc
@@ -51,16 +51,25 @@ echo 'current_theme       slim-typesafe' | sudo tee --append /etc/slim.conf
 sudo systemctl enable wicd.service
 
 
+# Bin setup
+for d in env-bin/* ; do
+    echo Removing $(basename $d)
+    # rm -rf $HOME/.bin/$(basename $d)/
+    s env-bin/$(basename $d) .bin/$(basename $d)
+done
+
+
+
 # FIXME
 # SETUP KVM
 #sudo modprobe kvm-intel
 #sudo modprobe kvm
-#sudo systemctl enable libvirtd.service 
+#sudo systemctl enable libvirtd.service
 #sudo systemctl start libvirtd.service
 
-# sudo rm -rf /etc/polkit-1/rules.d/50-org.libvirt.unix.manage.rules 
-# sudo touch /etc/polkit-1/rules.d/50-org.libvirt.unix.manage.rules 
-# sudo cat <<EOF > /etc/polkit-1/rules.d/50-org.libvirt.unix.manage.rules 
+# sudo rm -rf /etc/polkit-1/rules.d/50-org.libvirt.unix.manage.rules
+# sudo touch /etc/polkit-1/rules.d/50-org.libvirt.unix.manage.rules
+# sudo cat <<EOF > /etc/polkit-1/rules.d/50-org.libvirt.unix.manage.rules
 # polkit.addRule(function(action, subject) {
 # if (action.id == "org.libvirt.unix.manage" &&
 #   subject.user == "tu_usuario") {
@@ -68,7 +77,3 @@ sudo systemctl enable wicd.service
 # }
 # });
 # EOF
-
-
-
-
