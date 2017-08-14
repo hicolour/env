@@ -56,3 +56,18 @@ Xmonad
 		
 
 
+
+
+
+
+
+
+
+----
+
+
+
+https://www.youtube.com/watch?v=70IxjLEmomg
+
+https://github.com/altercation/dotfiles-tilingwm
+https://github.com/altercation/dotfiles-tilingwm/blob/master/.xmonad/xmonad.hs
