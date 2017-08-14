@@ -1,1 +1,1 @@
-fromList [("Run or Raise: ",["subl","google-chrome-stable"])]
+fromList [("Run or Raise: ",["subl","google-chrome-stable"]),("Switch or Create Project: ",["DMO"])]
