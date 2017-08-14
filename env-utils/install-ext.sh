@@ -91,3 +91,8 @@ p firefox
 # Subtitle editor
 y subtitleeditor
 
+
+
+#mindmapping
+y xmind
+
