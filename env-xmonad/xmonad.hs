@@ -400,7 +400,7 @@ projects =
 myTerminal          = "roxterm"
 myAltTerminal       = "cool-retro-term"
 myBrowser           = "browser" -- chrome with WS profile dirs
-myBrowserClass      = "Google-chrome-beta"
+myBrowserClass      = "Google-chrome-stable"
 myStatusBar         = "dzen2 -y 0 -x 0 -w 1000 -ta l "
 -- myStatusBar         = "xmobar -x0 /home/ethan/.xmonad/xmobar.conf"
 --myLauncher          = "dmenu_run"
@@ -543,17 +543,20 @@ cyan    = "#2aa198"
 green       = "#859900"
 
 -- sizes
--- gap         = 0
--- topbar      = 10
--- border      = 0
--- prompt      = 20
--- status      = 20
-
 gap         = 0
-topbar      = 0
+topbar      = 10
 border      = 0
-prompt      = 0
-status      = 0
+prompt      = 20
+status      = 20
+
+-- cusotmization
+topGap     = 20
+
+-- gap         = 0
+-- topbar      = 0
+-- border      = 0
+-- prompt      = 0
+-- status      = 0
 
 myNormalBorderColor     = "#000000"
 myFocusedBorderColor    = active
@@ -660,6 +663,7 @@ barFull = avoidStruts $ Simplest
 
 myLayoutHook = showWorkspaceName
              $ onWorkspace wsFLOAT floatWorkSpace
+             $ gaps [(U,20),(D,0),(L,0),(R,0)] --default gap rule krogulec
              $ fullscreenFloat -- fixes floating windows going full screen, while retaining "bounded" fullscreen
              $ fullScreenToggle
              $ fullBarToggle
@@ -849,11 +853,11 @@ myLayoutHook = showWorkspaceName
               $ subLayout [] (Simplest ||| Accordion)
               $ ifWider smallMonResWidth wideLayouts standardLayouts
               where
-                  wideLayouts = myGaps $ mySpacing
+                  wideLayouts = mySpacing --myGaps $
                       $ (suffixed "Wide 3Col" $ ThreeColMid 1 (1/20) (1/2))
                     ||| (trimSuffixed 1 "Wide BSP" $ hiddenWindows emptyBSP)
                   --  ||| fullTabs
-                  standardLayouts = myGaps $ mySpacing
+                  standardLayouts = mySpacing--myGaps $
                       $ (suffixed "Std 2/3" $ ResizableTall 1 (1/20) (2/3) [])
                     ||| (suffixed "Std 1/2" $ ResizableTall 1 (1/20) (1/2) [])
 

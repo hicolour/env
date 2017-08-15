@@ -7,7 +7,7 @@ p yaourt
 
 # Xmonad
 
-p xmonad 
+p xmonad
 p xmonad-contrib
 
 y xcompmgr
@@ -21,6 +21,7 @@ p dmenu
 # General Utils
 p roxterm
 p htop
+p glances
 p mc
 p unzip
 p unarar

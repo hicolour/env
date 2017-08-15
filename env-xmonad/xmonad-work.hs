@@ -19,7 +19,7 @@
 {-|
 
  GENERAL
- 
+
  * look into X.H.Scripts -- there are things I want to run at startup, for example
  * X.U.SpawnNamedPipe? xmobars. multiple screens.
  * X.U.WindowState
@@ -44,7 +44,7 @@
  * audio tweaking ... volume working in all cases? output selected intelligently
  * ssd cloning via btrfs
  * go through sections of https://wiki.archlinux.org/index.php/List_of_applications and identify category selections, adding them to personal wiki
- 
+
  ACTIVE
 
  * try out XMonad.Layout.Hidden
@@ -86,7 +86,7 @@
  * any utility in XMonad-Hooks-ServerMode (tested briefly, couldn't get it working properly)
  * work on my handling of x selection for utility functions ... timer/delay issue?
 
- DONE 
+ DONE
 
  * DynamicWorkspaces ... will DynamicProjects replace it entirely? Do I not need it
  * keybindings for unmerge are weird... sublayout not great for what might be a common op
@@ -260,7 +260,7 @@ import XMonad.Layout.NoBorders
 -- import XMonad.Layout.TrackFloating
 -- testing
 -- import XMonad.Hooks.ServerMode
--- import XMonad.Actions.Commands 
+-- import XMonad.Actions.Commands
 -- import Control.Concurrent (threadDelay)
 
 ------------------------------------------------------------------------}}}
@@ -280,7 +280,7 @@ main = do
 
     -- for taffybar, add pagerHints below
 
-    xmonad 
+    xmonad
         $ dynamicProjects projects
         $ withNavigation2DConfig myNav2DConf
         -- $ withUrgencyHook NoUrgencyHook
@@ -470,7 +470,7 @@ scratchpads =
     ,   (NS "plex"  plexCommand isPlex defaultFloating)
     ,   (NS "console"  myConsole isConsole nonFloating)
     ,   (NS "xawtv" "xawtv" (resource =? "xawtv") (customFloating $ W.RationalRect (2/3) (1/6) (1/5) (1/3)) )
-    ] 
+    ]
 
 
 ------------------------------------------------------------------------}}}
@@ -793,7 +793,7 @@ myLayoutHook = showWorkspaceName
     --  myLayout = addTabs shrinkText def
     --           $ subLayout [0,1,2] (Simplest ||| Tall 1 0.2 0.5 ||| Circle)
     --                    $ Tall 1 0.2 0.5 ||| Full
-   
+
     -- this is a flexible sublayout layout that has only one container
     -- layout style (depending on screen)
     --     flexiSub = named "Flexi SubLayouts"
@@ -812,7 +812,7 @@ myLayoutHook = showWorkspaceName
     -- retained during development: safe to remove later
 
     flex = trimNamed 5 "Flex"
-              $ avoidStruts
+            --  $ avoidStruts
               -- don't forget: even though we are using X.A.Navigation2D
               -- we need windowNavigation for merging to sublayouts
               $ windowNavigation
@@ -846,7 +846,7 @@ myLayoutHook = showWorkspaceName
                   -- Using "Full" here (instead of Simplest) will retain the
                   -- tabbed sublayout structure and allow paging through each
                   -- group/window in full screen mode. However my preference
-                  -- is to just see all the windows as tabs immediately.  
+                  -- is to just see all the windows as tabs immediately.
                   -- Using "Simplest" here will do this: display all windows
                   -- as tabs across the top, no "paging" required. However
                   -- this is misleading as the sublayouts are of course still
@@ -872,7 +872,7 @@ myLayoutHook = showWorkspaceName
               $ mySpacing
               $ myGaps
               $ ResizableTall 1 (1/300) (2/3) []
-              
+
     simpleThree = named "Three Col"
               $ avoidStruts
               $ addTopBar
@@ -1145,7 +1145,7 @@ showKeybindings x = addName "Show Keybindings" $ io $ do
     hClose h
     return ()
 
--- some of the structure of the following cribbed from 
+-- some of the structure of the following cribbed from
 -- https://github.com/SimSaladin/configs/blob/master/.xmonad/xmonad.hs
 -- https://github.com/paul-axe/dotfiles/blob/master/.xmonad/xmonad.hs
 -- https://github.com/pjones/xmonadrc (+ all the dyn project stuff)
@@ -1177,7 +1177,7 @@ getSortByIndexNoSP =
         fmap (.namedScratchpadFilterOutWorkspace) getSortByIndex
 
 -- toggle any workspace but scratchpad
-myToggle = windows $ W.view =<< W.tag . head . filter 
+myToggle = windows $ W.view =<< W.tag . head . filter
         ((\x -> x /= "NSP" && x /= "SP") . W.tag) . W.hidden
 
 myKeys conf = let
@@ -1282,7 +1282,7 @@ myKeys conf = let
     , ("M-p"                    , addName "Hide window to stack"            $ withFocused hideWindow)
     , ("M-S-p"                  , addName "Restore hidden window (FIFO)"    $ popOldestHiddenWindow)
 
-    , ("M-b"                    , addName "Promote"                         $ promote) 
+    , ("M-b"                    , addName "Promote"                         $ promote)
 
     , ("M-g"                    , addName "Un-merge from sublayout"         $ withFocused (sendMessage . UnMerge))
     , ("M-S-g"                  , addName "Merge all into sublayout"        $ withFocused (sendMessage . MergeAll))
@@ -1411,7 +1411,7 @@ myKeys conf = let
     --
     -- The "sequence_" wrapper is needed because for some reason the windows weren't resizing till
     -- I moved to a different window or refreshed, so I added that here. Shrug.
-    
+
     -- mnemonic: less than / greater than
     --, ("M4-<L>"       , addName "Expand (L on BSP)"     $ sequence_ [(tryMessage_ (ExpandTowards L) (Expand)), refresh])
 
@@ -1471,7 +1471,7 @@ myKeys conf = let
 --    [
 --    ("<XF86AudioMicMute>"      , addName "Mic Mute"                    $ spawn "notify-send mic mute")
 --    ]
-    
+
 
 -- Mouse bindings: default actions bound to mouse events
 -- Includes window snapping on move/resize using X.A.FloatSnap
@@ -1560,8 +1560,8 @@ myLogHook h = do
         , ppWsSep               = " "
         , ppLayout              = xmobarColor yellow ""
         , ppOrder               = id
-        , ppOutput              = hPutStrLn h  
-        , ppSort                = fmap 
+        , ppOutput              = hPutStrLn h
+        , ppSort                = fmap
                                   (namedScratchpadFilterOutWorkspace.)
                                   (ppSort def)
                                   --(ppSort defaultPP)
@@ -1573,7 +1573,7 @@ myFadeHook = composeAll
     , (className =? "Terminator") <&&> (isUnfocused) --> opacity 0.9
     , (className =? "URxvt") <&&> (isUnfocused) --> opacity 0.9
     , fmap ("Google" `isPrefixOf`) className --> opaque
-    , isDialog --> opaque 
+    , isDialog --> opaque
     --, isUnfocused --> opacity 0.55
     --, isFloating  --> opacity 0.75
     ]
@@ -1584,7 +1584,7 @@ myFadeHook = composeAll
 
 
 ---------------------------------------------------------------------------
--- Urgency Hook                                                            
+-- Urgency Hook
 ---------------------------------------------------------------------------
 -- from https://pbrisbin.com/posts/using_notify_osd_for_xmonad_notifications/
 data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
