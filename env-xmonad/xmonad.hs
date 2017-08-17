@@ -317,21 +317,25 @@ wsCOM   = "COM"
 wsDOM   = "DOM"
 wsDMO   = "DMO"
 wsFLOAT = "FLT"
-wsGEN   = "GEN"
+wsGEN   = "1:GEN"
 wsGCC   = "GCC"
-wsMON   = "MON"
+wsMON   = "4:MON"
 wsOSS   = "OSS"
 wsRAD   = "RAD"
 wsRW    = "RW"
 wsSYS   = "SYS"
 wsTMP   = "TMP"
 wsVIX   = "VIX"
-wsWRK   = "WRK"
-wsWRK2  = "WRK:2"
+wsWRK1  = "WRK1"
+wsWRK2  = "WRK2"
 wsGGC   = "GGC"
+-- wsWRK_MAIL =
+-- wsPRIV_MAIL =
 
 -- myWorkspaces = map show [1..9]
-myWorkspaces = [wsGEN, wsWRK, wsWRK2, wsSYS, wsMON, wsFLOAT, wsRW, wsTMP]
+
+-- myWorkspaces = [wsGEN, wsWRK, wsWRK2, wsSYS, wsMON, wsFLOAT, wsRW, wsTMP]
+myWorkspaces = [wsGEN, wsWRK1, wsWRK2, wsSYS, wsMON, wsRW, wsTMP]
 
 projects :: [Project]
 projects =
@@ -346,6 +350,8 @@ projects =
                 , projectStartHook  = Just $ do spawnOn wsSYS myTerminal
                                                 spawnOn wsSYS myTerminal
                                                 spawnOn wsSYS myTerminal
+                                                spawnOn wsSYS myTerminal
+                                                spawnOn wsSYS myBrowser
                 }
 
     , Project   { projectName       = wsDMO
@@ -371,10 +377,10 @@ projects =
                 , projectStartHook  = Just $ do runInTerm "-name glances" "glances"
                 }
 
-    , Project   { projectName       = wsWRK
+    , Project   { projectName       = wsWRK1
                 , projectDirectory  = "~/wrk"
-                , projectStartHook  = Just $ do spawnOn wsWRK myTerminal
-                                                spawnOn wsWRK myBrowser
+                , projectStartHook  = Just $ do spawnOn wsWRK1 myTerminal
+                                                spawnOn wsWRK1 myBrowser
                 }
 
     , Project   { projectName       = wsRAD
@@ -1256,7 +1262,7 @@ myKeys conf = let
     [ ("M-q"                    , addName "Restart XMonad"                  $ spawn "xmonad --restart")
     , ("M-C-q"                  , addName "Rebuild & restart XMonad"        $ spawn "xmonad --recompile && xmonad --restart")
     , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
-    , ("M-x"                    , addName "Lock screen"                     $ spawn "xset s activate")
+    , ("M-x"                    , addName "Lock screen"                     $ spawn "slimlock")  -- "xset s activate"
     , ("M-<F4>"                 , addName "Print Screen"                    $ return ())
   --, ("M-F1"                   , addName "Show Keybindings"                $ return ())
     ] ^++^
@@ -1286,10 +1292,10 @@ myKeys conf = let
     subKeys "Launchers"
     [ ("M-<Space>"              , addName "Launcher"                        $ spawn myLauncher)
     , ("M-<Return>"             , addName "Terminal"                        $ spawn myTerminal)
-    , ("M-c"                   , addName "Browser"                         $ spawn "google-chrome-stable")   --myBrowser
-    , ("M-\\"                    , addName "NSP Chat"                        $ bindOn WS [(wsWRK, namedScratchpadAction scratchpads "hangoutsWork"),
+    , ("M-c"                    , addName "Browser"                          $ spawn "google-chrome-stable")   --myBrowser
+    , ("M-\\"                    , addName "NSP Chat"                       $ bindOn WS [(wsWRK1, namedScratchpadAction scratchpads "hangoutsWork"),
                                                                               ("", namedScratchpadAction scratchpads "hangoutsPersonal")])
-    , ("M-t"                    , addName "NSP Tasks"                       $ bindOn WS [(wsWRK, namedScratchpadAction scratchpads "trelloWork"),
+    , ("M-t"                    , addName "NSP Tasks"                       $ bindOn WS [(wsWRK1, namedScratchpadAction scratchpads "trelloWork"),
                                                                               ("", namedScratchpadAction scratchpads "trello")])
     , ("M-m"                    , addName "NSP Music"                       $ namedScratchpadAction scratchpads "googleMusic")
     , ("M-v"                    , addName "NSP Video"                       $ namedScratchpadAction scratchpads "plex")
@@ -1333,10 +1339,10 @@ myKeys conf = let
     , ("M-C-S-m"                , addName "Combo swap"                      $ sendMessage $ SwapWindow)
     ]
 
-    ++ zipM' "M-"               "Navigate window"                           dirKeys dirs windowGo True
+    ++ zipM' "M1-"               "Navigate window"                           arrowKeys dirs windowGo True
     -- ++ zipM' "M-S-"               "Move window"                               dirKeys dirs windowSwap True
     -- TODO: following may necessitate use of a "passthrough" binding that can send C- values to focused w
-    ++ zipM' "C-"             "Move window"                               dirKeys dirs windowSwap True
+    ++ zipM' "M1-C-"               "Move window"                               dirKeys dirs windowSwap True
     ++ zipM  "M-C-"             "Merge w/sublayout"                         dirKeys dirs (sendMessage . pullGroup)
     ++ zipM' "M-"               "Navigate screen"                           arrowKeys dirs screenGo True
     -- ++ zipM' "M-S-"             "Move window to screen"                     arrowKeys dirs windowToScreen True

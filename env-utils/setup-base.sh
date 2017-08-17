@@ -50,6 +50,7 @@ echo 'current_theme       slim-typesafe' | sudo tee --append /etc/slim.conf
 # Wicd
 sudo systemctl enable wicd.service
 
+mkdir -p $HOME/.bin
 
 # Bin setup
 for d in env-bin/* ; do
