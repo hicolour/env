@@ -1,0 +1,4 @@
+1:GEN -n -e s/^[1-9]: //p
+1:GEN -n -e s/: //p
+1:GEN -n -e s///p
+1:GEN -n -e s/1:GEN//p

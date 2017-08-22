@@ -36,7 +36,7 @@ p mariadb
 
 #y mysql-workbench
 
-y python-sphinx 
+y python-sphinx
 
 
 y docker
@@ -49,14 +49,17 @@ y minikube-bin
 y kubectl-bin
 
 
-# KVM 
+# KVM
 p qemu dmidecode ebtables dnsmasq libvirt bridge-utils openbsd-netcat radvd urlgrabber virtviewer virt-manager ifplugd ifenslave tcl
 
 
 
 y iotop
-
 y nmon
+
+#   A console-based network traffic monitor
+y vnstat
+
 
 # Offline documentation browser
 y zeal

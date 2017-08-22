@@ -1292,7 +1292,7 @@ myKeys conf = let
     subKeys "Launchers"
     [ ("M-<Space>"              , addName "Launcher"                        $ spawn myLauncher)
     , ("M-<Return>"             , addName "Terminal"                        $ spawn myTerminal)
-    , ("M-c"                    , addName "Browser"                          $ spawn "google-chrome-stable")   --myBrowser
+    , ("M-c"                    , addName "Browser"                          $ spawn myBrowser)   --myBrowser
     , ("M-\\"                    , addName "NSP Chat"                       $ bindOn WS [(wsWRK1, namedScratchpadAction scratchpads "hangoutsWork"),
                                                                               ("", namedScratchpadAction scratchpads "hangoutsPersonal")])
     , ("M-t"                    , addName "NSP Tasks"                       $ bindOn WS [(wsWRK1, namedScratchpadAction scratchpads "trelloWork"),
