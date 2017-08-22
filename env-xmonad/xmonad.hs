@@ -504,6 +504,15 @@ googleMusicInfix    = "Google Play Music"
 googleMusicResource = "crx_ioljlgoncmlkbcepmminebblkddfjofl"
 isGoogleMusic       = (resource =? googleMusicResource)
 
+spotifyCommand      = "spotify"
+spotifyClassName    = "Spotify"
+isSpotify           = (className =? spotifyClassName)
+
+
+
+
+
+
 plexCommand         = "dex $HOME/.local/share/applications/Plex.desktop"
 plexInfix           = "Plex"
 plexResource        = "crx_fpniocchabmgenibceglhnfeimmdhdfm"
@@ -514,16 +523,18 @@ isConsole           = (className =? "Terminator")
 myConsole           = "terminator -T console -p console --role=Scratchpad"
 
 scratchpads =
-    [   (NS "hangoutsPersonal"  hangoutsCommand isPersonalHangouts defaultFloating)
+    [   (NS "terminal"  "roxterm --role scratchpad" (role =? "scratchpad")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    ,   (NS "hangoutsPersonal"  hangoutsCommand isPersonalHangouts defaultFloating)
     ,   (NS "hangoutsWork"  hangoutsCommand isWorkHangouts defaultFloating)
     ,   (NS "trello"  trelloCommand isTrello nonFloating)
     ,   (NS "trelloWork"  trelloWorkCommand isTrelloWork nonFloating)
     ,   (NS "googleMusic"  googleMusicCommand isGoogleMusic nonFloating)
+    ,   (NS "spotify"  spotifyCommand isSpotify (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "plex"  plexCommand isPlex defaultFloating)
     ,   (NS "console"  myConsole isConsole nonFloating)
     ,   (NS "xawtv" "xawtv" (resource =? "xawtv") (customFloating $ W.RationalRect (2/3) (1/6) (1/5) (1/3)) )
     ]
-
+    where role = stringProperty "WM_WINDOW_ROLE"
 ------------------------------------------------------------------------}}}
 -- Theme                                                                {{{
 ---------------------------------------------------------------------------
@@ -1298,6 +1309,8 @@ myKeys conf = let
     , ("M-t"                    , addName "NSP Tasks"                       $ bindOn WS [(wsWRK1, namedScratchpadAction scratchpads "trelloWork"),
                                                                               ("", namedScratchpadAction scratchpads "trello")])
     , ("M-m"                    , addName "NSP Music"                       $ namedScratchpadAction scratchpads "googleMusic")
+    , ("M-<F12>"                    , addName "NSP Music"                       $ namedScratchpadAction scratchpads "spotify")
+    , ("M-<F2>"                    , addName "NSP Music"                       $ namedScratchpadAction scratchpads "terminal")
     , ("M-v"                    , addName "NSP Video"                       $ namedScratchpadAction scratchpads "plex")
     , ("M1-x"                   , addName "NSP Xawtv"                       $ namedScratchpadAction scratchpads "xawtv")
     , ("M-n"                    , addName "NSP Console"                     $ namedScratchpadAction scratchpads "console")
@@ -1680,6 +1693,7 @@ myManageHook =
             , resource =? trelloResource -?> doFullFloat
             , resource =? trelloWorkResource -?> doFullFloat
             , resource =? googleMusicResource -?> doFullFloat
+            , className =? spotifyClassName -?> doFloat
             , resource =? plexResource -?> doCenterFloat
             , resource =? hangoutsResource -?> insertPosition End Newer
             , transience

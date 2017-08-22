@@ -67,6 +67,11 @@ y fontconfig-ttf-ms-fonts
 # Windows Utils
 p xorg-xprop
 
+# Control your EWMH compliant window manager from command line
+y wmctrl
+
+
+
 # Network time protocol
 p ntp
 
