@@ -1285,6 +1285,7 @@ myKeys conf = let
     , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
     , ("M-x"                    , addName "Lock screen"                     $ spawn "slimlock")  -- "xset s activate"
     , ("M-<F4>"                 , addName "Print Screen"                    $ return ())
+    , ("M-<F4>"                 , addName "Print Screen"                    $ return ())
   --, ("M-F1"                   , addName "Show Keybindings"                $ return ())
     ] ^++^
 
@@ -1296,6 +1297,8 @@ myKeys conf = let
   --, ("M-7"                    , addName "TESTING"                         $ runInTerm "-name glances" "glances" )
     , ("M-u"                    , addName "Copy current browser URL"        $ spawn "with-url copy")
     , ("M-o"                    , addName "Display (output) launcher"       $ spawn "displayctl menu")
+    , ("<XF86XK_MonBrightnessUp>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -inc 5")
+    , ("<XF86XK_MonBrightnessDown>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -dec 5")
     , ("M-<XF86Display>"        , addName "Display - force internal"        $ spawn "displayctl internal")
     , ("S-<XF86Display>"        , addName "Display - force internal"        $ spawn "displayctl internal")
     , ("M-i"                    , addName "Network (Interface) launcher"    $ spawn "nmcli_dmenu")
