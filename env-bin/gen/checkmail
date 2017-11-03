@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# crontab example line
+# */4 * * * * /home/username/check-gmail.sh
+
+export DISPLAY=:0
+
+
+
+/usr/bin/curl -u $GMAIL_USERNAME:$GMAIL_PASSWORD --silent "https://mail.google.com/mail/feed/atom" | \
+  grep -oPm1 "(?<=<title>)[^<]+" | sed '1d' | \
+  while read line; do
+    /usr/bin/notify-send -i xfce-newmail "You've got new mail!" "$line" -t 5000
+  done

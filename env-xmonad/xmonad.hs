@@ -269,6 +269,10 @@ import XMonad.Layout.NoBorders
 
 main = do
 
+
+    --privateWorkspaces <- readFile "~/.private/current_workspaces"
+    --let myWorkspaces = words $ privateWorkspaces
+
     -- xmproc <- spawnPipe myStatusBar
     xmproc <- spawnPipe myDzenXmonad
     myDzenMonitoring_ <- spawnPipe myDzenMonitoring
@@ -288,6 +292,8 @@ main = do
         $ ewmh
         $ addDescrKeys' ((myModMask, xK_F1), showKeybindings) myKeys
         $ myConfig xmproc
+
+
 
 myConfig p = def
         { borderWidth        = border
@@ -311,6 +317,7 @@ myConfig p = def
 -- Workspaces                                                           {{{
 ---------------------------------------------------------------------------
 
+
 wsAV    = "AV"
 wsBSA   = "BSA"
 wsCOM   = "COM"
@@ -326,8 +333,8 @@ wsRW    = "RW"
 wsSYS   = "SYS"
 wsTMP   = "TMP"
 wsVIX   = "VIX"
-wsWRK1  = "WRK1"
-wsWRK2  = "WRK2"
+wsWRK1  = "2:WRK"
+wsWRK2  = "3:WRK"
 wsGGC   = "GGC"
 -- wsWRK_MAIL =
 -- wsPRIV_MAIL =
@@ -335,6 +342,9 @@ wsGGC   = "GGC"
 -- myWorkspaces = map show [1..9]
 
 -- myWorkspaces = [wsGEN, wsWRK, wsWRK2, wsSYS, wsMON, wsFLOAT, wsRW, wsTMP]
+
+
+--myWorkspaces = privateWorkspacesLits
 myWorkspaces = [wsGEN, wsWRK1, wsWRK2, wsSYS, wsMON, wsRW, wsTMP]
 
 projects :: [Project]
@@ -379,8 +389,8 @@ projects =
 
     , Project   { projectName       = wsWRK1
                 , projectDirectory  = "~/wrk"
-                , projectStartHook  = Just $ do spawnOn wsWRK1 myTerminal
-                                                spawnOn wsWRK1 myBrowser
+                , projectStartHook  = Just $ do spawnOn wsWRK1 myBrowser
+                                                --spawnOn wsWRK1 myBrowser
                 }
 
     , Project   { projectName       = wsRAD
