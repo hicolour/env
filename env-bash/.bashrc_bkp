@@ -324,14 +324,14 @@ function get_prompt_symbol() {
   fi
 }
 
-#\[$prompt_device_color\]\h\[$prompt_reset\] \
-#\[$prompt_preposition_color\]\h\[$prompt_reset\] \
-
 # Define the sexy-bash-prompt
-PS1="\[$prompt_dir_color\] •\[$prompt_git_status_color\] •\[$prompt_device_color\] •\[$prompt_reset\]\[$prompt_reset\]  \
+PS1="\[$prompt_user_color\]\u\[$prompt_reset\] \
+\[$prompt_preposition_color\]at\[$prompt_reset\] \
+\[$prompt_device_color\]\h\[$prompt_reset\] \
+\[$prompt_preposition_color\]\h\[$prompt_reset\] \
 \[$prompt_dir_color\]\w\[$prompt_reset\]\
 \$( is_on_git && \
-  echo -n \" \[$prompt_preposition_color\]ᄉ\[$prompt_reset\]\" && \
+  echo -n \" \[$prompt_preposition_color\]on\[$prompt_reset\] \" && \
   echo -n \"\[$prompt_git_status_color\]\$(get_git_info)\" && \
   echo -n \"\[$prompt_preposition_color\]\") \[$prompt_reset\]\
 \[$prompt_symbol_color\]$(get_prompt_symbol) \[$prompt_reset\]"
@@ -424,12 +424,12 @@ PS1="\[$prompt_dir_color\] •\[$prompt_git_status_color\] •\[$prompt_device_c
 # shopt -s histappend
 
 # case ${TERM} in
-#   xterm*|rxvt*|Eterm|aterm|kterm|gnome*)
-#     PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
-#     ;;
-#   screen)
-#     PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033_%s@%s:%s\033\\" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
-#     ;;
+# 	xterm*|rxvt*|Eterm|aterm|kterm|gnome*)
+# 		PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
+# 		;;
+# 	screen)
+# 		PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033_%s@%s:%s\033\\" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
+# 		;;
 # esac
 
 # # fortune is a simple program that displays a pseudorandom message
@@ -452,44 +452,44 @@ PS1="\[$prompt_dir_color\] •\[$prompt_git_status_color\] •\[$prompt_device_c
 # [[ -f ~/.dir_colors ]] && match_lhs="${match_lhs}$(<~/.dir_colors)"
 # [[ -f /etc/DIR_COLORS ]] && match_lhs="${match_lhs}$(</etc/DIR_COLORS)"
 # [[ -z ${match_lhs} ]] \
-#   && type -P dircolors >/dev/null \
-#   && match_lhs=$(dircolors --print-database)
+# 	&& type -P dircolors >/dev/null \
+# 	&& match_lhs=$(dircolors --print-database)
 
 # if [[ $'\n'${match_lhs} == *$'\n'"TERM "${safe_term}* ]] ; then
 
-#   # we have colors :-)
+# 	# we have colors :-)
 
-#   # Enable colors for ls, etc. Prefer ~/.dir_colors
-#   if type -P dircolors >/dev/null ; then
-#     if [[ -f ~/.dir_colors ]] ; then
-#       eval $(dircolors -b ~/.dir_colors)
-#     elif [[ -f /etc/DIR_COLORS ]] ; then
-#       eval $(dircolors -b /etc/DIR_COLORS)
-#     fi
-#   fi
+# 	# Enable colors for ls, etc. Prefer ~/.dir_colors
+# 	if type -P dircolors >/dev/null ; then
+# 		if [[ -f ~/.dir_colors ]] ; then
+# 			eval $(dircolors -b ~/.dir_colors)
+# 		elif [[ -f /etc/DIR_COLORS ]] ; then
+# 			eval $(dircolors -b /etc/DIR_COLORS)
+# 		fi
+# 	fi
 
-#   PS1="$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h'; else echo '\[\033[01;32m\]\u@\h'; fi)\[\033[01;34m\] \w \$([[ \$? != 0 ]] && echo \"\[\033[01;31m\]:(\[\033[01;34m\] \")\\$\[\033[00m\] "
+# 	PS1="$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h'; else echo '\[\033[01;32m\]\u@\h'; fi)\[\033[01;34m\] \w \$([[ \$? != 0 ]] && echo \"\[\033[01;31m\]:(\[\033[01;34m\] \")\\$\[\033[00m\] "
 
-#   # Use this other PS1 string if you want \W for root and \w for all other users:
-#   # PS1="$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h\[\033[01;34m\] \W'; else echo '\[\033[01;32m\]\u@\h\[\033[01;34m\] \w'; fi) \$([[ \$? != 0 ]] && echo \"\[\033[01;31m\]:(\[\033[01;34m\] \")\\$\[\033[00m\] "
+# 	# Use this other PS1 string if you want \W for root and \w for all other users:
+# 	# PS1="$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h\[\033[01;34m\] \W'; else echo '\[\033[01;32m\]\u@\h\[\033[01;34m\] \w'; fi) \$([[ \$? != 0 ]] && echo \"\[\033[01;31m\]:(\[\033[01;34m\] \")\\$\[\033[00m\] "
 
-#   alias ls="ls --color=auto"
-#   alias dir="dir --color=auto"
-#   alias grep="grep --color=auto"
-#   alias dmesg='dmesg --color'
+# 	alias ls="ls --color=auto"
+# 	alias dir="dir --color=auto"
+# 	alias grep="grep --color=auto"
+# 	alias dmesg='dmesg --color'
 
-#   # Uncomment the "Color" line in /etc/pacman.conf instead of uncommenting the following line...!
+# 	# Uncomment the "Color" line in /etc/pacman.conf instead of uncommenting the following line...!
 
-#   # alias pacman="pacman --color=auto"
+# 	# alias pacman="pacman --color=auto"
 
 # else
 
-#   # show root@ when we do not have colors
+# 	# show root@ when we do not have colors
 
-#   PS1="\u@\h \w \$([[ \$? != 0 ]] && echo \":( \")\$ "
+# 	PS1="\u@\h \w \$([[ \$? != 0 ]] && echo \":( \")\$ "
 
-#   # Use this other PS1 string if you want \W for root and \w for all other users:
-#   # PS1="\u@\h $(if [[ ${EUID} == 0 ]]; then echo '\W'; else echo '\w'; fi) \$([[ \$? != 0 ]] && echo \":( \")\$ "
+# 	# Use this other PS1 string if you want \W for root and \w for all other users:
+# 	# PS1="\u@\h $(if [[ ${EUID} == 0 ]]; then echo '\W'; else echo '\w'; fi) \$([[ \$? != 0 ]] && echo \":( \")\$ "
 
 # fi
 

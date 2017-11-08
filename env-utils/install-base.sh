@@ -18,6 +18,13 @@ p dzen2
 # App Toolbar
 p dmenu
 
+#  Configure modifier keys to act as other keys when pressed and released on their own
+y xcape
+
+# inotify-tools is a C library and a set of command-line programs for Linux providing a  simple interface to inotify.
+y notify-tools
+
+
 # General Utils
 p roxterm
 p htop

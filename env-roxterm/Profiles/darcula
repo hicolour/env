@@ -1,0 +1,24 @@
+[roxterm profile]
+always_show_tabs=0
+disable_menu_access=1
+audible_bell=0
+hide_menubar=1
+scrollbar_pos=0
+
+cursor_blink_mode=2
+cursor_shape=2
+
+scroll_on_keystroke=1
+scroll_on_output=1
+scrollback_lines=12000
+
+
+font=ypn envypn 8
+
+allow_bold=0
+
+browser=/usr/bin/google-chrome-stable
+colour_scheme=darcula
+background_type=2
+saturation=0.901099
+full_screen=0

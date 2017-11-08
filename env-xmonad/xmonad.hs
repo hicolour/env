@@ -8,8 +8,7 @@
 --     _|      _|  _|      _|    _|_|    _|    _|    _|_|_|    _|_|_|    --
 --                                                                       --
 ---------------------------------------------------------------------------
--- Ethan Schoonover <es@ethanschoonover.com> @ethanschoonover            --
--- https://github.com/altercation                                        --
+--
 ---------------------------------------------------------------------------
 -- current as of XMonad 0.12
 
@@ -236,6 +235,8 @@ import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 
+import System.Environment
+
 -- taffybar specific
 -- import System.Taffybar.Hooks.PagerHints (pagerHints)
 -- to demo and comment out or remove
@@ -272,6 +273,7 @@ main = do
     -- xmproc <- spawnPipe myStatusBar
     xmproc <- spawnPipe myDzenXmonad
     myDzenMonitoring_ <- spawnPipe myDzenMonitoring
+    workspacesList <- lookupEnv "XMONAD_WORKSPACES"
     -- myDzenXmonad_     <- spawnPipe myDzenXmonad
 
 
@@ -329,6 +331,7 @@ wsVIX   = "VIX"
 wsWRK1  = "WRK1"
 wsWRK2  = "WRK2"
 wsGGC   = "GGC"
+-- wsX   = "GGC" + workspacesList
 -- wsWRK_MAIL =
 -- wsPRIV_MAIL =
 
