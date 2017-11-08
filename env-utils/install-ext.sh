@@ -31,10 +31,12 @@ y bash-completion-git
 y pulseaudio-alsa
 y pavucontrol
 
-# blue
+# Audio GTK control
+y pavucontrol
+
 y bluez
-y blueman
-y pulseaudio-bluetooth
+y bluez-utils
+
 
 
 # Network

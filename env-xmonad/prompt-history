@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 fromList [("Confirm Quit XMonad (esc/ENTER)",["","Q","","","","","","","","","","","","Q","","","","","","","Q","Q","","","","","","","","","","","","",""]),("Run or Raise: ",["subl","google-chrome-stable"]),("Send Window to Project: ",["MO"]),("Switch or Create Project: ",["RAD","DMO"])]
+=======
+fromList [("Confirm Quit XMonad (esc/ENTER)",["","","","",""]),("Run or Raise: ",["subl","google-chrome-stable"]),("Send Window to Project: ",["MO"]),("Switch or Create Project: ",["RAD","DMO"])]
+>>>>>>> b01d0736f481f8207fbe84fb723cf74725dc98ee

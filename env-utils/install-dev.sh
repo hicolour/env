@@ -28,6 +28,14 @@ p sbt
 # Play! Framework
 y playframework2
 
+
+
+# Haskell
+## The Haskell Tool Stack (linked statically)
+y stack-static
+
+
+
 # MongoDB
 p mongodb
 
