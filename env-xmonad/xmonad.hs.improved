@@ -1309,17 +1309,17 @@ myKeys conf = let
 
     subKeys "Media"
   -- XF86AudioMute
-    [ ("XF86AudioMute"          , addName "Restart XMonad"                 $ spawn "amixer -q set Master toggle")
+    [ ("XF86AudioMute"        , addName "Restart XMonad"                 $ spawn "amixer -q set Master toggle")
 --   -- XF86AudioMicMute
 --     , ((0, 0x1008FFB2)        , addName "Restart XMonad"                    $ spawn  "amixer -q set Capture toggle")
 --   -- XF86AudioLowerVolume
-    , ("M1-]"        , addName "Restart XMonad"                    $ spawn "amixer -q set Master 1%-")
+--     , ((0, 0x1008ff11)        , addName "Restart XMonad"                    $ spawn "amixer -q set Master 1%-")
 --   -- XF86AudioRaiseVolume
 --     , ((0, 0x1008ff13)        , addName "Restart XMonad"                    $ spawn  "amixer -q set Master 1%+")
 -- --XF86XK_MonBrightnessDown
-    , ("M1--"                   , addName "Restart XMonad"                   $ spawn "/usr/bin/xbacklight -inc 5  & notify-send  $(/usr/bin/xbacklight -get)  \"Bright Up $()/usr/bin/xbacklight -get)\" ")
+    , ("M-<XF86XK_MonBrightnessDown>"        , addName "Restart XMonad"                    $ spawn  "/usr/bin/xbacklight -dec 5")
 --   --XF86XK_MonBrightnessUp
-    , ("M1-="                   , addName "Restart XMonad"                   $ spawn  "/usr/bin/xbacklight -dec 5 & notify-send  $(/usr/bin/xbacklight -get) \"Bright Down $()/usr/bin/xbacklight -get)\" ")
+    , ("M-<XF86XK_MonBrightnessUp>"        , addName "Restart XMonad"                    $ spawn  "/usr/bin/xbacklight -inc 5")
 
      ] ^++^
 
@@ -1331,8 +1331,8 @@ myKeys conf = let
   --, ("M-7"                    , addName "TESTING"                         $ runInTerm "-name glances" "glances" )
     , ("M-u"                    , addName "Copy current browser URL"        $ spawn "with-url copy")
     , ("M-o"                    , addName "Display (output) launcher"       $ spawn "displayctl menu")
-    , ("<XF86XK_MonBrightnessUp>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -inc 5  & notify-send  \"Bright Up\"")
-    , ("<xF86XK_MonBrightnessDown>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -dec 5")
+    , ("<XF86XK_MonBrightnessUp>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -inc 5")
+    , ("<XF86XK_MonBrightnessDown>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -dec 5")
     , ("M-<XF86Display>"        , addName "Display - force internal"        $ spawn "displayctl internal")
     , ("S-<XF86Display>"        , addName "Display - force internal"        $ spawn "displayctl internal")
     , ("M-i"                    , addName "Network (Interface) launcher"    $ spawn "nmcli_dmenu")
