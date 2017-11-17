@@ -53,6 +53,7 @@ declare -A WORKSPACE_CONTEXT_MAPPING
 WORKSPACE_TAG_MAPPING=(
   ["wrk"]="WORK"            \
   ["tmp"]="INCOGNITO"       \
+  ["priv"]="PERSONAL"       \
   ["gen"]="PERSONAL")
 
 : <<EOF
@@ -61,6 +62,7 @@ MAP OF WORKSPACES
 
 NAME    BROWSER-TAG    TASK-TAG    TASK-CONTEXT
 GEN     per            per         per
+PRIV    per            per         per
 WRK     wrk            wrk         wrk
 WRK:2   wrk            wrk         wrk
 SYS     -              sys         per
