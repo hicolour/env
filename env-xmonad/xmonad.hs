@@ -531,7 +531,7 @@ googleMusicInfix    = "Google Play Music"
 googleMusicResource = "crx_ioljlgoncmlkbcepmminebblkddfjofl"
 isGoogleMusic       = (resource =? googleMusicResource)
 
-spotifyCommand      = "spotify"
+spotifyCommand      = "spotify --role scratchpad "
 spotifyClassName    = "Spotify"
 isSpotify           = (className =? spotifyClassName)
 
@@ -551,13 +551,13 @@ myConsole           = "terminator -T console -p console --role=Scratchpad"
 
 scratchpads =
     [   (NS "terminal"  "roxterm --role scratchpad" (role =? "scratchpad")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
-    ,   (NS "htop"  "htop" (role =? "scratchpad")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    ,   (NS "htop"  "roxterm --role scratchpad -e htop" (role =? "scratchpad")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "hangoutsPersonal"  hangoutsCommand isPersonalHangouts defaultFloating)
     ,   (NS "hangoutsWork"  hangoutsCommand isWorkHangouts defaultFloating)
     ,   (NS "trello"  trelloCommand isTrello nonFloating)
     ,   (NS "trelloWork"  trelloWorkCommand isTrelloWork nonFloating)
     ,   (NS "googleMusic"  googleMusicCommand isGoogleMusic nonFloating)
-    ,   (NS "spotify"  spotifyCommand isSpotify (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    ,   (NS "spotify"  spotifyCommand  isSpotify defaultFloating)
     ,   (NS "plex"  plexCommand isPlex defaultFloating)
     ,   (NS "console"  myConsole isConsole nonFloating)
     ,   (NS "xawtv" "xawtv" (resource =? "xawtv") (customFloating $ W.RationalRect (2/3) (1/6) (1/5) (1/3)) )
@@ -1335,7 +1335,7 @@ myKeys conf = let
     , ("<xF86XK_MonBrightnessDown>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -dec 5")
     , ("M-<XF86Display>"        , addName "Display - force internal"        $ spawn "displayctl internal")
     , ("S-<XF86Display>"        , addName "Display - force internal"        $ spawn "displayctl internal")
-    , ("M-i"                    , addName "Network (Interface) launcher"    $ spawn "nmcli_dmenu")
+    , ("M-i"                    , addName "Network (Interface) launcher"    $ spawn "wicd-gtk")
     , ("M-/"                    , addName "On-screen keys"                  $ spawn "killall screenkey &>/dev/null || screenkey --no-systray")
     , ("M-S-/"                  , addName "On-screen keys settings"         $ spawn "screenkey --show-settings")
     , ("M1-p"                   , addName "Capture screen"                  $ spawn "screenshot" )
@@ -1358,7 +1358,7 @@ myKeys conf = let
     , ("M-m"                    , addName "NSP Music"                       $ namedScratchpadAction scratchpads "googleMusic")
     , ("M-<F12>"                , addName "NSP Music"                       $ namedScratchpadAction scratchpads "spotify")
     , ("M-<F2>"                 , addName "Terminal"                        $ namedScratchpadAction scratchpads "terminal")
-    , ("M-<F3>"                 , addName "NSP Htop"                        $ namedScratchpadAction scratchpads "htop")
+    , ("M-<F3>"                 , addName "Htop"                            $ namedScratchpadAction scratchpads "htop")
     , ("M-v"                    , addName "NSP Video"                       $ namedScratchpadAction scratchpads "plex")
     , ("M1-x"                   , addName "NSP Xawtv"                       $ namedScratchpadAction scratchpads "xawtv")
     , ("M-n"                    , addName "NSP Console"                     $ namedScratchpadAction scratchpads "console")
@@ -1623,7 +1623,7 @@ myStartupHook = do
     -- init-tilingwm sets up all major "desktop environment" like components
     -- spawnOnce "$HOME/bin/wm/init-tilingwm"
     -- spawn "/home/ethan/bin/wm/init-tilingwm"
-    spawn "/home/ethan/bin/wm/init-wallpaper"
+  ---  spawn "/home/ethan/bin/wm/init-wallpaper"
 
     -- init-tray kills and restarts stalone tray, hence just "spawn" so it
     -- runs on restart and will suffice to reposition tray on display changes
