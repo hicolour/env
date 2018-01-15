@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.private/passwords.sh
+#source ~/.private/passwords.sh
 
 # ----------------
 # Initial check
