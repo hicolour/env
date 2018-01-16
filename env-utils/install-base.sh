@@ -106,4 +106,4 @@ y alsi
 y screenkey
 
 # Cheat allows you to create and view interactive cheatsheets on the command-line
-y cheat-git
+#y cheat-git
