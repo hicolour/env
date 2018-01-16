@@ -22,7 +22,7 @@ p dmenu
 y xcape
 
 # inotify-tools is a C library and a set of command-line programs for Linux providing a  simple interface to inotify.
-y notify-tools
+y inotify-tools
 
 
 # General Utils
@@ -42,7 +42,7 @@ p archlinux-themes-slim
 # Gtk Themes
 y gtk-engine-murrine  gtk-engines
 
-y zukitwo-themes
+y zukitwo-themes-git
 y faience-icon-theme
 y numix-themes
 y gtk-theme-xgtk
@@ -60,10 +60,11 @@ y imlibsetroot
 
 # MNotification Manager
 p dunst
+# Library for sending desktop notifications
 p libnotify
 
 # Fonts
-p envypn-font
+y envypn-font
 y ttf-envy-code-r
 
 #Windows fonts

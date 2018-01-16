@@ -68,9 +68,8 @@ p vpnc
 
 
 
-# Messangers
-p skype
-p pidgin
+# Communication
+y skypeforlinux-bin
 y google-talkplugin
 
 

@@ -40,12 +40,11 @@ echo $SUFFIX
 [ "$WSTAG" = "INCOGNITO" ] && INCOGNITO=" --incognito " || INCOGNITO=""
 
 if [[ -z $SUFFIX ]]; then
-   INCOGNITO=" --incognito " 
+   INCOGNITO=" --incognito "
 fi
 
-
-
-
+echo "wstag "$WSTAG
+echo "launching browser for" $SUFFIX
 
 # echo ${CONFIGDIR}/${BROWSER}/${SUFFIX}
 # echo $INCOGNITO
