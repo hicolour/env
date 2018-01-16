@@ -103,7 +103,7 @@ y alsi
 
 
 # Screencast tool to show your keys inspired by Screenflick, based on key-mon. Active fork with new features.
-y screenkey
+#y screenkey
 
 # Cheat allows you to create and view interactive cheatsheets on the command-line
 #y cheat-git
