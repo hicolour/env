@@ -1,6 +1,6 @@
-base: install-base setup-base 
+base: install-base setup-base
 
-ext: 
+ext:
 	./env-utils/install-ext.sh
 	./env-utils/setup-ext.sh
 
@@ -11,7 +11,7 @@ design:
 	./env-utils/install-ps.sh
 	./env-utils/setup-ps.sh
 
-dev: 
+dev:
 	./env-utils/install-dev.sh
 	./env-utils/setup-dev.sh
 
@@ -20,10 +20,14 @@ all: base ext dev
 
 
 
-setup-base: 
+setup-base:
 	./env-utils/setup-base.sh
-	
-install-base: 
+
+setup-dev:
+		./env-utils/setup-dev.sh
+
+setup-ext:
+	./env-utils/setup-ext.sh
+
+install-base:
 	./env-utils/install-base.sh
-
-

@@ -13,34 +13,34 @@ EXTERNAL_OUTPUT="DP1"
 INTERNAL_OUTPUT="eDP1"
 
 
-#xrandr --output eDP1 --mode 1920x1080 --left-of DP2 
+#xrandr --output eDP1 --mode 1920x1080 --left-of DP2
 # xrandr --output DP2 --mode 1152x864
 
 # xrandr | grep -w $EXTERNAL_OUTPUT | grep " connected "
 # if [ $? -eq 0 ]; then
-#   xrandr --output $INTERNAL_OUTPUT --off --output DP1 --auto --right-of DP2 --auto 
+#   xrandr --output $INTERNAL_OUTPUT --off --output DP1 --auto --right-of DP2 --auto
 # else
-#  xrandr --output $INTERNAL_OUTPUT --on --auto 
+#  xrandr --output $INTERNAL_OUTPUT --on --auto
 # fi
 
-~/.private/env-screen.sh
+~/.personal/env-screen.sh
 
 
 # --mode 1024x768
-#xrandr --output DP2 --mode 1152x864 --rate 60 --left-of  eDP1 --auto 
+#xrandr --output DP2 --mode 1152x864 --rate 60 --left-of  eDP1 --auto
 
-# DP2 1024x768_60.00 
-# xrandr --output eDP1 --auto --right-of DP1 --auto 
+# DP2 1024x768_60.00
+# xrandr --output eDP1 --auto --right-of DP1 --auto
 
 
 
-#xrandr --output eDP1 --auto --left-of DP1 --auto --left-of DP2 --auto  
+#xrandr --output eDP1 --auto --left-of DP1 --auto --left-of DP2 --auto
 
 xset m 6/1 1
 xsetroot -cursor_name left_ptr
 
 
-# Notifications 
+# Notifications
 dunst &
 
 
@@ -67,7 +67,7 @@ _JAVA_AWT_WM_NONREPARENTING=1; export _JAVA_AWT_WM_NONREPARENTING
 # wallpaper
 #sh ~/.fehbg &
 #-fullscreen
-#xloadimage -onroot 
+#xloadimage -onroot
 #imlibsetroot  --composite    ~/.wallpaper/w004.png &
 feh --bg-tile  ~/.wallpaper/bg-005.jpg &
 
@@ -115,7 +115,7 @@ xcompmgr  &
 #roxterm --role rails_dobroserver -e bash -c "cd /data/projects/dobroserver && rails s -p 2000" &
 #roxterm --role rails_fitlog      -e bash -c "cd /data/projects/fitlog      && rails s -p 2001" &
 
-#roxterm --role roxterm_startup & roxterm --role roxterm_startup & 
+#roxterm --role roxterm_startup & roxterm --role roxterm_startup &
 
 #sleep 1
 #roxterm --role ranger_startup -e ranger &

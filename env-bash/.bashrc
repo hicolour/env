@@ -42,9 +42,9 @@ alias la='ls -lah'
 alias gr='grep --color -E'
 
 # Add PRIVATE scripts to PATH
-if [ -f ~/.private/.private-bashrc ];
+if [ -f ~/.personal/.private-bashrc ];
 then
-   source ~/.private/.private-bashrc
+   source ~/.personal/.private-bashrc
 fi
 
 # Add ENV scripts to PATH

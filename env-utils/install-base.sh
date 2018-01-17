@@ -42,10 +42,15 @@ p archlinux-themes-slim
 # Gtk Themes
 y gtk-engine-murrine  gtk-engines
 
+# Gtk theme switcher - only needed if problems with theme
+p gtk-theme-switch2
+
 y zukitwo-themes-git
 y faience-icon-theme
-y numix-themes
-y gtk-theme-xgtk
+
+
+#y numix-themes
+#y gtk-theme-xgtk
 
 # Fonts
 y ttf-google-fonts-hg

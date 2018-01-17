@@ -1,5 +1,5 @@
 # -- THEME AUTO-WRITTEN DO NOT EDIT
-include "/usr/share/themes/XGTK-3.14/gtk-2.0/gtkrc"
+include "/usr/share/themes/Zukitwo/gtk-2.0/gtkrc"
 
 include "/home/marek/.gtkrc.mine"
 
