@@ -77,3 +77,6 @@ yaourt -R --noconfirm jre7-openjdk
 yaourt -R --noconfirm jre7-openjdk-headless
 
 y jdk
+
+# Command-line JSON processor
+p jq

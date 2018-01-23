@@ -107,3 +107,7 @@ y xmind
 
 # Display graphical dialog boxes from shell scripts
 y zenity
+
+
+# XBM Grpahic viewer // An efficient multimedia viewer, browser and converter
+y xnviewmp

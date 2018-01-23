@@ -19,5 +19,9 @@ mail_icon="^i($icon_path/mail.xbm)"
 
 wireless_high_icon="^i($icon_path/wireless_high.xbm)"
 wireless_disconnected_icon="^i($icon_path/wireless_disconnected.xbm)"
+net_wired_icon="^i($icon_path/net_wired.xbm)"
 
 pacman_icon="^i($icon_path/pacman.xbm)"
+
+euro_icon="^i($icon_path/euro.xbm)"
+crypto_eth_icon="^i($icon_path/crypto_eth.xbm)"

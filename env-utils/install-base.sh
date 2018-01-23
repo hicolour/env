@@ -106,7 +106,8 @@ y dosfstools
 #alsi system info
 y alsi
 
-
+# Calculate in bash
+p bc
 
 # Screencast tool to show your keys inspired by Screenflick, based on key-mon. Active fork with new features.
 #y screenkey
