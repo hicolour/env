@@ -19,28 +19,33 @@ p sshpass
 
 # Editors
 p vim
-y sublime-text
+p atom
+
+#y sublime-text
 
 # Git
 p git
 p gitk
-y bash-completion-git
+
+# Not exists
+#y bash-completion-git
 
 
 # Sound addons
-y pulseaudio-alsa
-y pavucontrol
+## Base Sound controller
+p pulseaudio-alsa
+## GUI control for audio I/O
+p pavucontrol
+## Gui control for ALSA
+p gnome-alsamixer
 
-# Audio GTK control
-y pavucontrol
-
+# Bluetoooth
 y bluez
 y bluez-utils
 
-
-
 # Network
 p wicd
+p wicd-gtk
 
 
 # Netstat
@@ -68,13 +73,14 @@ p vpnc
 
 
 
-# Messangers
-p skype
-p pidgin
+# Communication
+y skypeforlinux-bin
 y google-talkplugin
+p slack-desktop
 
 
-
+# Music
+y spotify
 
 # Ebooks
 p calibre
@@ -101,3 +107,7 @@ y xmind
 
 # Display graphical dialog boxes from shell scripts
 y zenity
+
+
+# XBM Grpahic viewer // An efficient multimedia viewer, browser and converter
+y xnviewmp

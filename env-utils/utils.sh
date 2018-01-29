@@ -16,24 +16,30 @@ line(){
 
 
 p(){
-      line  
+      line
       color '32;1' "pacman install : $@"
       line
       sudo pacman -S --noconfirm $@
       }
 
 y(){
-      line  
+      line
       color '32;1' "yaourt install : $@"
       line
-      sudo yaourt -S --noconfirm $@
+      yaourt -S --noconfirm $@
       }
 
 s(){
       line
-      color '34;1' "setup : $1" 
-      color '35;1' "linking : $var/$1 to ~/$2" 
+      color '34;1' "setup : $1"
+      color '35;1' "linking : $var/$1 to ~/$2"
       rm -rf ~/$2
       ln -s $var/$1 ~/$2
       }
 
+
+info(){
+  line
+  color '32;1' "info : $@"
+  line
+}

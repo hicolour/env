@@ -197,10 +197,10 @@ date="$(ifexist date)"
 clock="$(ifexist clock)"
 net="$(ifexist net)"
 currency="$(ifexist currency)"
+crypto="$(ifexist crypto)"
 
 
-
-echo "${currency}${net}${memory}${cpu}${power}${dropbox}${net_balance}${packages}${mail}${rss}${weather}${date}${clock}"
+echo "${crypto}${currency}${net}${memory}${cpu}${power}${dropbox}${net_balance}${packages}${mail}${rss}${weather}${date}${clock}"
 
 sleep 1; done
 

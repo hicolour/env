@@ -14,6 +14,7 @@ RAW_WIRELESS_IVALID=`wicd-cli --wireless -d | grep Invalid`
 
 RAW_WIRELESS_IVALID=`wicd-cli --wireless -d | grep Invalid`
 
+RAW_WIRED_CONNECTED=`wicd-cli --wired -i | grep Connected`
 
 if [[ "$RAW_WIRELESS" != "" && "$RAW_WIRELESS_IVALID" = "" ]]; then
     ip=`wicd-cli --wireless -d | grep "IP:" \
@@ -32,11 +33,17 @@ if [[ "$RAW_WIRELESS" != "" && "$RAW_WIRELESS_IVALID" = "" ]]; then
 	    color=$YELLOW_BRIGHT
 	fi
 
-   	wireless="${c15}${wireless_high_icon} ${color}${quality}% ${BLACK_BRIGHT}$ip"
+   	net="${c15}${wireless_high_icon} ${color}${quality}% ${BLACK_BRIGHT}$ip"
 
 else
-	wireless="${c15}${wireless_disconnected_icon} ${BLACK_BRIGHT}disconnected"
+  if [[ "$RAW_WIRED_CONNECTED" != "" ]]; then
+    echo WIRED
+    wired_net_ip=`wicd-cli --wired -i | grep "IP:" | grep -oE "([0-9]*\.){3}[0-9]?{3}"`
+    net=${c15}${net_wired_icon}" "${GREEN_BRIGHT}$wired_net_ip
+    echo $net
+  else
+    net="${c15}${wireless_disconnected_icon} ${BLACK_BRIGHT}disconnected"
+  fi
 fi
 
-
-sample "net" "$wireless"
+sample "net" "$net"

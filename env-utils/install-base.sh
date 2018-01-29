@@ -22,7 +22,7 @@ p dmenu
 y xcape
 
 # inotify-tools is a C library and a set of command-line programs for Linux providing a  simple interface to inotify.
-y notify-tools
+y inotify-tools
 
 
 # General Utils
@@ -42,10 +42,15 @@ p archlinux-themes-slim
 # Gtk Themes
 y gtk-engine-murrine  gtk-engines
 
-y zukitwo-themes
+# Gtk theme switcher - only needed if problems with theme
+p gtk-theme-switch2
+
+y zukitwo-themes-git
 y faience-icon-theme
-y numix-themes
-y gtk-theme-xgtk
+
+
+#y numix-themes
+#y gtk-theme-xgtk
 
 # Fonts
 y ttf-google-fonts-hg
@@ -60,10 +65,11 @@ y imlibsetroot
 
 # MNotification Manager
 p dunst
+# Library for sending desktop notifications
 p libnotify
 
 # Fonts
-p envypn-font
+y envypn-font
 y ttf-envy-code-r
 
 #Windows fonts
@@ -100,10 +106,11 @@ y dosfstools
 #alsi system info
 y alsi
 
-
+# Calculate in bash
+p bc
 
 # Screencast tool to show your keys inspired by Screenflick, based on key-mon. Active fork with new features.
-y screenkey
+#y screenkey
 
 # Cheat allows you to create and view interactive cheatsheets on the command-line
-y cheat-git
+#y cheat-git

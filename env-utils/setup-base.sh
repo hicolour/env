@@ -59,6 +59,21 @@ for d in env-bin/* ; do
     s env-bin/$(basename $d) .bin/$(basename $d)
 done
 
+#Disable systems peaker
+info "Disable systems speaker"
+echo "blacklist pcspkr 1" > /tmp/nobeep.conf
+sudo -s -- mv -f /tmp/nobeep.conf /etc/modprobe.d/nobeep.conf
+
+
+#Enable USB headsets
+info "Enable USB head sets"
+echo "options snd slots=snd-usb-audio,snd-hda-intel" > /tmp/alsa.conf
+sudo -s -- mv -f /tmp/alsa.conf /etc/modprobe.d/alsa.conf
+
+
+
+
+
 
 
 # FIXME

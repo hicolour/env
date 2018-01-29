@@ -71,3 +71,12 @@ y vnstat
 
 # Offline documentation browser
 y zeal
+
+yaourt -R --noconfirm jdk7-openjdk
+yaourt -R --noconfirm jre7-openjdk
+yaourt -R --noconfirm jre7-openjdk-headless
+
+y jdk
+
+# Command-line JSON processor
+p jq
