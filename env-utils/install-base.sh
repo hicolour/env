@@ -100,8 +100,12 @@ y gvfs-smb
 # exFat utilities
 y exfat-utils
 
-# vfat
+
+# Managment of the DOS filesystem - msotly mkfs.vfat, mkfs.msdos
 y dosfstools
+
+# Managment of the NTFS filesystem - msotly mkfs.ntsf
+p ntfsprogs
 
 #alsi system info
 y alsi

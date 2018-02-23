@@ -17,6 +17,9 @@ p openssh
 p sshpass
 
 
+# Utility for network discovery and security auditing
+p nmap
+
 # Editors
 p vim
 p atom
