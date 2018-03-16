@@ -89,6 +89,9 @@ Hardware addons:
 ####
 * [simplenotes](https://github.com/insanum/sncli) `yaourt sncli-git`
 
+#### Browser
+* yaourt qutebrowser
+
 #### music
 * [sconsify](https://github.com/fabiofalci/sconsify)
 
