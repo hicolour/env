@@ -199,8 +199,9 @@ net="$(ifexist net)"
 currency="$(ifexist currency)"
 crypto="$(ifexist crypto)"
 
+#${mail}${rss}${weather}${crypto_miner}
 
-echo "${crypto}${currency}${net}${memory}${cpu}${power}${dropbox}${net_balance}${packages}${mail}${rss}${weather}${date}${clock}"
+echo "${crypto_market}${currency}${net}${memory}${cpu}${power}${dropbox}${net_balance}${packages}${date}${clock}"
 
 sleep 1; done
 

@@ -5,6 +5,9 @@ source $HOME/.dzen/utils.sh
 #reportedHashrate=$(curl -s $ETHERMINE_WALLET | jq '.data.reportedHashrate' |  tr -d '\"' )
 
 
+
+#https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=EUR
+
 function handleCrypto(){
   reportedHashrate=$1
   currentHashrate=$2
@@ -44,25 +47,26 @@ function handleCrypto(){
 
 }
 
-initialCryptoMarker=${c15}${crypto_eth_icon}
-unit=1000000
-unitDscr="MH/s"
-#Etherminer
-reportedHashrate=$(curl -s https://api.ethermine.org/miner/$ETH_WALLET/currentStats | jq '.data.reportedHashrate' |  tr -d '\"' )
-currentHashrate=$(curl -s https://api.ethermine.org/miner/$ETH_WALLET/currentStats | jq '.data.currentHashrate' |  tr -d '\"' )
-
-result=$(handleCrypto $reportedHashrate $currentHashrate $unit $unitDscr)
-echo $result
-crypto=${initialCryptoMarker}${result}
-echo $crypto
+# initialCryptoMarker=${c15}${crypto_eth_icon}
+# unit=1000000
+# unitDscr="MH/s"
+# #Etherminer
+# reportedHashrate=$(curl -s https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=EUR | jq '.[].price_usd' |  tr -d '\"')
+# currentHashrate=$(curl -s https://api.ethermine.org/miner/$ETH_WALLET/currentStats | jq '.data.currentHashrate' |  tr -d '\"' )
+#
+# result=$(handleCrypto $reportedHashrate $currentHashrate $unit $unitDscr)
+# echo $result
+# crypto=${initialCryptoMarker}${result}
+# echo $crypto
 #
 #
 # reportedHashrate=$(curl -s https://api.nanopool.org/v1/eth/reportedhashrate/$ETH_WALLET | jq '.data' )
 # currentHashrate=$(curl -s https://api.nanopool.org/v1/eth/user/$ETH_WALLET | jq '.data.hashrate' )
 # crypto=$crypto$(handleCrypto $reportedHashrate $currentHashrate $unit $unitDscr)
 #
-
-
+price=$(curl -s https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=EUR | jq '.[].price_usd' |  tr -d '\"')
+crypto_market=${c15}${price}
+#${crypto_eth_icon}
 #crypto=${c15}${crypto_eth_icon}" "${colorReportedReference}$reportedHashrateUnit" ~ "${colorReportedCurrent}$currentHashrateUnit" "${unitDscr}${c15}
 
-sample "crypto" "$crypto"
+sample "crypto_market" "$crypto_market"

@@ -1,0 +1,443 @@
+-----------------------------------------------------------------------
+-- Flexi SubLayouts                                                  --
+-----------------------------------------------------------------------
+--
+-- In many ways the best solution. Acts like ThreeColumns, Tall, BSP,
+-- or any other container layout style. Can use this layout just as you
+-- would those without tabs at all, or you can easily merge any windows
+-- into a tabbed group.
+--
+-- Diagrams:
+--
+-- (examples only... this is a very flexible layout and as such the
+-- layout style and arrangement isn't limited as much as the other
+-- attempts below)
+--
+-- Ultrawide:
+-- --------------------------------------------
+-- |          |                    |          |
+-- |          |                    |   Tabs   |
+-- |          |                    |          |
+-- |----------|       Master       |----------|
+-- |          |                    |          |
+-- |   Tabs   |                    |          |
+-- |          |                    |          |
+-- --------------------------------------------
+--
+-- Standard:
+-- ---------------------------------
+-- |                    |          |
+-- |                    |          |
+-- |                    |          |
+-- |       Master       |----------|
+-- |                    |          |
+-- |                    |   Tabs   |
+-- |                    |          |
+-- ---------------------------------
+--
+--
+-- Advantages
+--
+--   * tab group is movable as a unit and acts like any other window
+--
+--   * this is the "cleanest" of the dynamic layouts I've worked with
+--     and leaves no "pixel dust" on the screen when switching to a WS
+--     on a different monitor
+--
+--   * navigation and window/group movement is trivial with
+--     X.A.Navigation2D
+--
+--   * master window remains master when switching screens (unlike
+--     the "X.L.Master" based solution below)
+--
+--   * unlike some of the other solutions, it is trivial to change
+--     the exterior layout format and so I could potentially add in
+--     some layout change to BSP or other layout that I want to test
+--     while still retaining the tab functionality
+--
+-- Disadvantages
+--
+--   * layout starts without any tabs (could be considered a feature
+--     since in that case the layout performs exactly as the parent/
+--     container layout does)
+--
+--   * To move a window into or out of the tabbed group requires
+--     special key bindings unique to X.L.SubLayouts
+--
+--  Understanding XMonad.Layouts.SubLayouts
+--
+--  It took me a while to grok this.
+--
+--  the subLayout hook is used with the following format:
+--
+--    subLayout advanceInnerLayouts innerLayout outerLayout
+--
+--  It works like this: subLayout modifies an entire other layout (or
+--  layouts), enabling you to turn what would be a normal window into
+--  a little group of windows managed by an entirely different layout.
+--
+--  In my case, I'm using layouts like "Three Column" and "Tall" as the
+--  nominal "container" layout (what SubLayouts calls the "outerLayout").
+--
+--  The "inner layout" in my case is just "Simplest". I'm also adding tabs
+--  which are only applied to my sublayouts. Not sure how that works
+--  but it's apparent from the X.L.SubLayouts documentation that this is
+--  the intended use/behavior. Essential X.L.SubLayouts is hijacking these
+--  added tabs and applying them just to the Simplest layout, and then that
+--  in turn is stuck inside the rectangle that would normally hold a window
+--  in my normal layouts.
+--
+--  One of the confusing things for me at first was that the layout doesn't
+--  start with any subLayouts. So it appears to just be a normal layout.
+--  You have to "merge all" to suck everything up into a Simplest tabbed
+--  group and then you can add other windows normally and you'll
+--  have a sublayout with tabs.
+--
+--  Note: subLayouts has some other features. For example, you can give it
+--  a list of layouts to work through and it will advance through them in
+--  series (or possibly in an order your provide) and will apply different
+--  layouts to different subLayout groups. Each time you add a new window
+--  to your layout, it acquires the sublayout, even if you don't know it.
+--
+--  In my case, my list is one long and is just the first window I add.
+--
+--  Ex. The second group is Tall, the third is Circle, all others are
+--  tabbed with:
+--
+--  myLayout = addTabs shrinkText def
+--           $ subLayout [0,1,2] (Simplest ||| Tall 1 0.2 0.5 ||| Circle)
+--                    $ Tall 1 0.2 0.5 ||| Full
+
+-- this is a flexible sublayout layout that has only one container
+-- layout style (depending on screen)
+--     flexiSub = named "Flexi SubLayouts"
+--               $ avoidStruts
+--               $ windowNavigation
+--               $ addTopBar
+--               $ myGaps
+--               $ addTabs shrinkText myTabTheme
+--               $ mySpacing
+--               $ subLayout [] Simplest
+--               $ ifWider smallMonResWidth wideLayout standardLayout
+--               where
+--                   wideLayout = ThreeColMid 1 (1/100) (1/2)
+--                   standardLayout = ResizableTall 1 (1/50) (2/3) []
+
+-- retained during development: safe to remove later
+
+flex = trimNamed 5 "Flex"
+          $ avoidStruts
+          -- don't forget: even though we are using X.A.Navigation2D
+          -- we need windowNavigation for merging to sublayouts
+          $ windowNavigation
+          $ addTopBar
+          $ addTabs shrinkText myTabTheme
+          -- $ subLayout [] (Simplest ||| (mySpacing $ Accordion))
+          $ subLayout [] (Simplest ||| Accordion)
+          $ ifWider smallMonResWidth wideLayouts standardLayouts
+          where
+              wideLayouts = mySpacing --myGaps $
+                  $ (suffixed "Wide 3Col" $ ThreeColMid 1 (1/20) (1/2))
+                ||| (trimSuffixed 1 "Wide BSP" $ hiddenWindows emptyBSP)
+              --  ||| fullTabs
+              standardLayouts = mySpacing--myGaps $
+                  $ (suffixed "Std 2/3" $ ResizableTall 1 (1/20) (2/3) [])
+                ||| (suffixed "Std 1/2" $ ResizableTall 1 (1/20) (1/2) [])
+
+              --  ||| fullTabs
+              --fullTabs = suffixed "Tabs Full" $ Simplest
+              --
+              -- NOTE: removed this from the two (wide/std) sublayout
+              -- sequences. if inside the ifWider, the ||| combinator
+              -- from X.L.LayoutCombinators can't jump to it directly (
+              -- or I'm doing something wrong, either way, it's simpler
+              -- to solve it by just using a tabbed layout in the main
+              -- layoutHook). The disadvantage is that I lose the "per
+              -- screen" memory of which layout was where if using the
+              -- tabbed layout (if using the the ifWider construct as
+              -- I am currently, it seems to work fine)
+              --
+              -- Using "Full" here (instead of Simplest) will retain the
+              -- tabbed sublayout structure and allow paging through each
+              -- group/window in full screen mode. However my preference
+              -- is to just see all the windows as tabs immediately.
+              -- Using "Simplest" here will do this: display all windows
+              -- as tabs across the top, no "paging" required. However
+              -- this is misleading as the sublayouts are of course still
+              -- there and you will have to use the nornmal W.focusUp/Down
+              -- to successfully flip through them. Despite this
+              -- limitation I prefer this to the results with "Full".
+
+
+
+{-|
+    -----------------------------------------------------------------------
+    -- Simple Flexi                                                      --
+    -----------------------------------------------------------------------
+    --
+    -- Simple dynamically resizing layout as with the other variations in
+    -- this config. This layout has not tabs in it and simply uses
+    -- Resizable Tall and Three Column layouts.
+
+    simpleFlexi = named "Simple Flexible"
+              $ ifWider smallMonResWidth simpleThree simpleTall
+
+    simpleTall = named "Tall"
+              $ addTopBar
+              $ avoidStruts
+              $ mySpacing
+              $ myGaps
+              $ ResizableTall 1 (1/300) (2/3) []
+
+    simpleThree = named "Three Col"
+              $ avoidStruts
+              $ addTopBar
+              $ mySpacing
+              $ myGaps
+              $ ThreeColMid 1 (3/100) (1/2)
+
+    -----------------------------------------------------------------------
+    -- Other Misc Layouts                                                --
+    -----------------------------------------------------------------------
+    --
+    --
+
+    masterTabbedP   = named "MASTER TABBED"
+              $ addTopBar
+              $ avoidStruts
+              $ mySpacing
+              $ myGaps
+              $ mastered (1/100) (1/2) $ tabbed shrinkText myTabTheme
+
+    bsp       = named "BSP"
+              $ borderResize (avoidStruts
+              $ addTopBar
+              $ mySpacing
+              $ myGaps
+              $ emptyBSP )
+              -- $ borderResize (emptyBSP)
+
+    oneBig    = named "1BG"
+              $ avoidStruts
+              $ addTopBar
+              $ mySpacing
+              $ myGaps
+              $ OneBig (3/4) (3/4)
+
+    tiledP    = named "TILED"
+              $ addTopBar
+              $ avoidStruts
+              $ mySpacing
+              $ myGaps
+              $ consoleOn
+              $ tiled'
+
+    oneUp =   named "1UP"
+              $ avoidStruts
+              $ myGaps
+              $ combineTwoP (ThreeCol 1 (3/100) (1/2))
+                            (Simplest)
+                            (Tall 1 0.03 0.5)
+                            (ClassName "Google-chrome-beta")
+
+    -----------------------------------------------------------------------
+    -- Master-Tabbed Dymamic                                             --
+    -----------------------------------------------------------------------
+    --
+    -- Dynamic 3 pane layout with one tabbed panel using X.L.Master
+    -- advantage is that it can do a nice 3-up on both ultrawide and
+    -- standard (laptop in my case) screen sizes, where the layouts
+    -- look like this:
+    --
+    -- Ultrawide:
+    -- --------------------------------------------
+    -- |          |                    |          |
+    -- |          |                    |          |
+    -- |          |                    |          |
+    -- |  Master  |       Master       |   Tabs   |
+    -- |          |                    |          |
+    -- |          |                    |          |
+    -- |          |                    |          |
+    -- --------------------------------------------
+    -- \____________________ _____________________/
+    --                      '
+    --                 all one layout
+    --
+    -- Standard:
+    -- ---------------------------------
+    -- |                    |          |
+    -- |                    |          |
+    -- |                    |          |
+    -- |       Master       |   Tabs   |
+    -- |                    |          |
+    -- |                    |          |
+    -- |                    |          |
+    -- ---------------------------------
+    -- \_______________ _______________/
+    --                 '
+    --            all one layout
+    --
+    -- Advantages to this use of X.L.Master to created this dynamic
+    -- layout include:
+    --
+    --   * No fussing with special keys to swap windows between the
+    --     Tabs and Master zones
+    --
+    --   * Window movement and resizing is very straightforward
+    --
+    --   * Limited need to maintain a mental-map of the layout
+    --     (pretty easy to understand... it's just a layout)
+    --
+    -- Disadvantages include:
+    --
+    --   * Swapping a window from tabbed area will of necessity swap
+    --     one of the Master windows back into tabs (since there can
+    --     only be two master windows)
+    --
+    --   * Master area can have only one/two windows in std/wide modes
+    --     respectively
+    --
+    --   * When switching from wide to standard, the leftmost pane
+    --     (which is visually secondary to the large central master
+    --     window) becomes the new dominant master window on the
+    --     standard display (this is easy enough to deal with but
+    --     is a non-intuitive effect)
+
+    masterTabbedDynamic = named "Master-Tabbed Dynamic"
+              $ ifWider smallMonResWidth masterTabbedWide masterTabbedStd
+
+    masterTabbedStd = named "Master-Tabbed Standard"
+              $ addTopBar
+              $ avoidStruts
+              $ gaps [(U, gap*2),(D, gap*2),(L, gap*2),(R, gap*2)]
+              $ mastered (1/100) (2/3)
+              $ gaps [(U, 0),(D, 0),(L, gap*2),(R, 0)]
+              $ tabbed shrinkText myTabTheme
+
+    masterTabbedWide = named "Master-Tabbed Wide"
+              $ addTopBar
+              $ avoidStruts
+              $ gaps [(U, gap*2),(D, gap*2),(L, gap*2),(R, gap*2)]
+              $ mastered (1/100) (1/4)
+              $ gaps [(U, 0),(D, 0),(L, gap*2),(R, 0)]
+              $ mastered (1/100) (2/3)
+              $ gaps [(U, 0),(D, 0),(L, gap*2),(R, 0)]
+              $ tabbed shrinkText myTabTheme
+
+    -----------------------------------------------------------------------
+    -- Tall-Tabbed Dymamic                                               --
+    -----------------------------------------------------------------------
+    --
+    -- Dynamic 3 pane layout with one tabbed panel using X.L.ComboP
+    -- advantage is that it can do a nice 3-up on both ultrawide and
+    -- standard (laptop in my case) screen sizes, where the layouts
+    -- look like this:
+    --
+    -- Ultrawide:
+    -- --------------------------------------------
+    -- |          |                    |          |
+    -- |          |                    |          |
+    -- |          |                    |          |
+    -- |----------|       Master       |   Tabs   |
+    -- |          |                    |          |
+    -- |          |                    |          |
+    -- |          |                    |          |
+    -- --------------------------------------------
+    -- \______________ _______________/\____ _____/
+    --                '                     '
+    --        this set of panes is      This is a
+    --        its' own layout in a      separate
+    --        Tall configuration        tab format
+    --                                  layout
+    --
+    -- Standard:
+    -- ---------------------------------
+    -- |                    |          |
+    -- |                    |          |
+    -- |                    |          |
+    -- |       Master       |   Tabs   |
+    -- |                    |          |
+    -- |--------------------|          |
+    -- |         |          |          |
+    -- ---------------------------------
+    -- \_________ _________/\____ _____/
+    --           '               '
+    -- this set of panes is  This is a
+    -- its' own layout in a  separate
+    -- Tall configuration    tab format
+    --                       layout
+    --
+    -- Advantages to this use of ComboP to created this dynamic
+    -- layout include:
+    --
+    --   * the center Master stays the same when the layout
+    --     changes (unlike the X.L.Master based dyn. layout)
+    --
+    --   * the Master can have a set of panes under it on the
+    --     small screen (standard) layout
+    --
+    --   * on ultrawide the leftmost pane may be divided into
+    --     multiple windows
+    --
+    --   * possible to toss a tabbed window to the "Master" area
+    --     without swapping a window back into tabs
+    --
+    --   * use of ComboP allows redirection windows to either
+    --     left or right section
+    --
+    -- Disadvantages include:
+    --
+    --   * normal window swaps fail between the two separate
+    --     layouts. There must be a special swap-between-layouts
+    --     binding (normal window NAVIGATION works, at least using
+    --     X.A.Navigation2D).
+    --
+    --   * switching between screens can leave title bar clutter
+    --     that hasn't been cleaned up properly (restarting
+    --     XMonad works to clean this up, but that's hacky)
+    --
+    --   * somewhat greater need to maintain a mental-map of the
+    --     layout (you need to have a sense for the windows being
+    --     in separate sections of the different layouts)
+
+    smartTallTabbed = named "Smart Tall-Tabbed"
+            $ avoidStruts
+            $ ifWider smallMonResWidth wideScreen normalScreen
+            where
+            wideScreen   = combineTwoP (TwoPane 0.03 (3/4))
+                           (smartTall)
+                           (smartTabbed)
+                           (ClassName "Google-chrome-beta")
+            normalScreen = combineTwoP (TwoPane 0.03 (2/3))
+                           (smartTall)
+                           (smartTabbed)
+                           (ClassName "Google-chrome-beta")
+
+    smartTall = named "Smart Tall"
+            $ addTopBar
+        $ mySpacing
+            $ myGaps
+        $ boringAuto
+            $ ifWider smallMonResWidth wideScreen normalScreen
+            where
+                wideScreen = reflectHoriz $ Tall 1 0.03 (2/3)
+                normalScreen = Mirror $ Tall 1 0.03 (4/5)
+
+    smartTabbed = named "Smart Tabbed"
+              $ addTopBar
+              $ myCustomGaps
+              $ tabbed shrinkText myTabTheme
+-}
+    -----------------------------------------------------------------------
+    -- Flexi Combinators                                                 --
+    -----------------------------------------------------------------------
+    --
+    -- failed attempt. creates a nice looking layout but I'm not sure
+    -- how to actually direct tabs to the tabbed area
+    --
+    --     flexiCombinators = named "Flexi Combinators"
+    --             $ avoidStruts
+    --             $ ifWider smallMonResWidth wideScreen normalScreen
+    --             where
+    --             wideScreen   = smartTall ****||* smartTabbed
+    --             normalScreen = smartTall ***||** smartTabbed

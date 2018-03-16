@@ -1,12 +1,12 @@
-# Env! 
+# Env!
 
 Env! is a toolkit for configuration of the efficient work enviroment's for  [ArchLinux](http://xmonad.org/) distribution, based on [Xmonad](http://xmonad.org/)  tiling windows manager.
 
 ## Pre-requirements
 
-* Archlinux base base-devel instalaltion 
+* Archlinux base base-devel instalaltion
 * Working xorg, you need to be able to launch `startx`
-	
+
 
 ## Installation
 
@@ -15,7 +15,7 @@ Clone project:
 	git clone https://github.com/hicolour/env.git
 
 
-Base setup: 
+Base setup:
 
     make base
 
@@ -49,7 +49,7 @@ Hardware addons:
 ##### Xmonad - Tiling window manager ...
 
 
-###### Mod 
+###### Mod
 
  * `mod`: windows key
 
@@ -70,19 +70,38 @@ Hardware addons:
 		 ┃ ⇧          ┃ z   │ x   │ c   │ v   │ b   │ n   │ m   │ ,   │ .   │ /   ┃ ⇧             ┃
 		 ┣━━━━━━━┳━━━━┻━━┳━━┷━━━━┱┴─────┴─────┴─────┴─────┴─────┴─┲━━━┷━━━┳━┷━━━━━╋━━━━━━━┳━━━━━━━┫
 		 ┃       ┃ *mod* ┃       ┃         layout                 ┃       ┃       ┃       ┃       ┃
-		 ┃ Ctrl  ┃ super ┃ Alt   ┃ Space                          ┃ AltGr ┃ super ┃ menu  ┃ Ctrl  ┃ 
-		 ┗━━━━━━━┻━━━━━━━┻━━━━━━━┹────────────────────────────────┺━━━━━━━┻━━━━━━━┻━━━━━━━┻━━━━━━━┛ 
+		 ┃ Ctrl  ┃ super ┃ Alt   ┃ Space                          ┃ AltGr ┃ super ┃ menu  ┃ Ctrl  ┃
+		 ┗━━━━━━━┻━━━━━━━┻━━━━━━━┹────────────────────────────────┺━━━━━━━┻━━━━━━━┻━━━━━━━┻━━━━━━━┛
 
 
  * `mod-` to `mod-=`: workspace w1,w2,...,w13
  * `mod-space`: layout change
  * `mod-f`: window fullscreen
 
+### App candidates for mouse-less adventure
+
+* [xmonad] of course :)
 
 
- ### How To:
+#### luncher
+* [rofi](https://github.com/DaveDavenport/rofi)
 
- Is there any package which shows PID of a window by clicking on it? xprop
+####
+* [simplenotes](https://github.com/insanum/sncli) `yaourt sncli-git`
+
+#### music
+* [sconsify](https://github.com/fabiofalci/sconsify)
+
+
+
+
+
+#### lockscreen
+* slimlock
+* consider (https://github.com/i3/i3lock) &  (https://github.com/pavanjadhaw/betterlockscreen)
+
+
+
 
 
 
@@ -93,7 +112,7 @@ Place to collect the best information/tutotrials about tools.
 ### Base
 
 * [htop](http://hisham.hm/htop/) - ```#console``` - Interactive process viewer
-  * [htop explained](https://peteris.rocks/blog/htop/) 
+  * [htop explained](https://peteris.rocks/blog/htop/)
 
 
 #### Network
@@ -101,8 +120,8 @@ Place to collect the best information/tutotrials about tools.
 * [zenmap](https://nmap.org/zenmap/) - `#GUI` - Newtwork Browser
 
 
-### Dev 
-* [zeal](https://zealdocs.org/) - `#Console` - API Browser 
+### Dev
+* [zeal](https://zealdocs.org/) - `#Console` - API Browser
 
 # Xmonad setup
 

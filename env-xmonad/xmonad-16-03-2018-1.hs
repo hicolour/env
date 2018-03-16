@@ -715,9 +715,7 @@ myLayoutHook = showWorkspaceName
              $ fullBarToggle
              $ mirrorToggle
              $ reflectToggle
-             $ simpleTall
-             -- $ flex ||| tabs
-
+             $ flex ||| tabs
   where
 
 --    testTall = Tall 1 (1/50) (2/3)
@@ -749,14 +747,14 @@ myLayoutHook = showWorkspaceName
     --------------------------------------------------------------------------
     -- Tabs Layout                                                          --
     --------------------------------------------------------------------------
-    -- BORSUK
-    -- threeCol = named "Unflexed"
-    --      $ avoidStruts
-    --      $ addTopBar
-    --      $ myGaps
-    --      $ mySpacing
-    --      $ ThreeColMid 1 (1/10) (1/2)
-    --
+
+    threeCol = named "Unflexed"
+         $ avoidStruts
+         $ addTopBar
+         $ myGaps
+         $ mySpacing
+         $ ThreeColMid 1 (1/10) (1/2)
+
     tabs = named "Tabs"
          $ avoidStruts
          $ addTopBar
@@ -890,31 +888,24 @@ myLayoutHook = showWorkspaceName
 
     -- retained during development: safe to remove later
 
-    simpleTall = named "Tall"
-              $ addTopBar
+    flex = trimNamed 5 "Flex"
               $ avoidStruts
-              $ mySpacing
-              $ myGaps
-              $ ResizableTall 1 (1/300) (2/3) []
-
-    -- flex = trimNamed 5 "Flex"
-    --           $ avoidStruts
-    --           -- don't forget: even though we are using X.A.Navigation2D
-    --           -- we need windowNavigation for merging to sublayouts
-    --           -- $ windowNavigation
-    --           $ addTopBar
-    --           $ addTabs shrinkText myTabTheme
-    --           -- $ subLayout [] (Simplest ||| (mySpacing $ Accordion))
-    --           $ subLayout [] (Simplest ||| Accordion)
-    --           $ ifWider smallMonResWidth wideLayouts standardLayouts
-    --           where
-    --               wideLayouts = mySpacing --myGaps $
-    --                   $ (suffixed "Wide 3Col" $ ThreeColMid 1 (1/20) (1/2))
-    --                 ||| (trimSuffixed 1 "Wide BSP" $ hiddenWindows emptyBSP)
-    --               --  ||| fullTabs
-    --               standardLayouts = mySpacing--myGaps $
-    --                   $ (suffixed "Std 2/3" $ ResizableTall 1 (1/20) (2/3) [])
-    --                 ||| (suffixed "Std 1/2" $ ResizableTall 1 (1/20) (1/2) [])
+              -- don't forget: even though we are using X.A.Navigation2D
+              -- we need windowNavigation for merging to sublayouts
+              $ windowNavigation
+              $ addTopBar
+              $ addTabs shrinkText myTabTheme
+              -- $ subLayout [] (Simplest ||| (mySpacing $ Accordion))
+              $ subLayout [] (Simplest ||| Accordion)
+              $ ifWider smallMonResWidth wideLayouts standardLayouts
+              where
+                  wideLayouts = mySpacing --myGaps $
+                      $ (suffixed "Wide 3Col" $ ThreeColMid 1 (1/20) (1/2))
+                    ||| (trimSuffixed 1 "Wide BSP" $ hiddenWindows emptyBSP)
+                  --  ||| fullTabs
+                  standardLayouts = mySpacing--myGaps $
+                      $ (suffixed "Std 2/3" $ ResizableTall 1 (1/20) (2/3) [])
+                    ||| (suffixed "Std 1/2" $ ResizableTall 1 (1/20) (1/2) [])
 
                   --  ||| fullTabs
                   --fullTabs = suffixed "Tabs Full" $ Simplest

@@ -78,6 +78,9 @@ p vpnc
 
 # Communication
 y skypeforlinux-bin
+y gnome-keyring #required by skypleforlinux autologin
+
+
 y google-talkplugin
 p slack-desktop
 

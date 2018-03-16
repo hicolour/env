@@ -49,7 +49,8 @@ sleep 5m; done ) &
 ~/.dzen/status_checks/status_date.sh &
 ~/.dzen/status_checks/status_clock.sh &
 
-~/.dzen/status_checks/status_crypto.sh &
+~/.dzen/status_checks/status_crypto_miner.sh &
+~/.dzen/status_checks/status_crypto_market.sh &
 
 sleep 1m; done ) &
 
