@@ -235,21 +235,6 @@ import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 
--- layout --
-import XMonad.Layout.ToggleLayouts
-import XMonad.Layout.WindowNavigation
-import XMonad.Layout.ResizableTile
-
-import XMonad.Layout.NoBorders
-import XMonad.Layout.Renamed
-import XMonad.Layout.Reflect
-import XMonad.Layout.Grid
-import XMonad.Layout.IM
-import XMonad.Layout.PerWorkspace (onWorkspace)
-import XMonad.Layout.Gaps
-import XMonad.Layout.IndependentScreens
-
-
 import System.Environment
 
 -- taffybar specific
@@ -320,7 +305,7 @@ myConfig p = def
         , focusedBorderColor = myFocusedBorderColor
         , manageHook         = myManageHook
         , handleEventHook    = myHandleEventHook
-        , layoutHook         = myLayoutHook
+--        , layoutHook         = myLayoutHook
         , logHook            = myLogHook p
         , modMask            = myModMask
         , mouseBindings      = myMouseBindings
@@ -722,52 +707,6 @@ barFull = avoidStruts $ Simplest
 
 -- cf http://xmonad.org/xmonad-docs/xmonad-contrib/src/XMonad-Config-Droundy.html
 
-
-myLayoutHook = windowNavigation $
-           avoidStruts $
-           smartBorders $
-           full $
-           gaps [(U,20),(D,0),(L,0),(R,0)]  $  -- leave gaps at the top and right
-           onWorkspace "dev"  (gtile ||| grid ||| tile ||| mtile) $
-           onWorkspace "=:im"   im $
-           onWorkspace "serv" (grid ||| tile) $
-           tile ||| mtile ||| grid ||| Full
-
-  where
-  rt    = ResizableTall 1 (2/100) (1/2) []
-
-  grt   = ResizableTall 1 (2/100) goldenratio []
-  goldenratio  = 2/(1+(toRational(sqrt(5)::Double)))
-
-
-  tile    = renamed [Replace "tile" ] $ rt
-  mtile   = renamed [Replace "mtile"] $ Mirror rt
-
-  gtile   = renamed [Replace "gtile"] $ grt
-
-
-  --grid    = renamed [Replace "g" ] $ spacing 2 $ smartBorders Grid
-  grid    = renamed [Replace "grid" ] $ Grid
-
-  full    = toggleLayouts (renamed [Replace "full" ] $ noBorders Full)
-
-  skypeRoster     = (ClassName "Skype") `And` (Not (Title "Options")) `And` (Not (Role "ConversationsWindow")) `And` (Not (Role "CallWindowForm"))
-
-  pidginRoster     = (ClassName "Pidgin") `And` (Not (Title "Options")) `And` (Not (Role "ConversationsWindow")) `And` (Not (Role "CallWindowForm"))
-
-  hototRoster     = (ClassName "Hotot")
-
-
-  im = renamed [Replace "im" ] $ withIM (0.18) skypeRoster $ withIM (0.18) pidginRoster $
-                                 reflectHoriz $
-                                 withIM (0.25) (ClassName "Mumble") grid
-
-
---
---
---
---
---
 --myLayoutHook = showWorkspaceName
 --             $ onWorkspace wsFLOAT floatWorkSpace
 --             $ gaps [(U,20),(D,0),(L,0),(R,0)] --default gap rule krogulec
@@ -776,11 +715,12 @@ myLayoutHook = windowNavigation $
 --             $ fullBarToggle
 --             $ mirrorToggle
 --             $ reflectToggle
+             -- $ flex ||| simpleTall
 --             $ flex ||| tabs
 --  where
 --
-----    testTall = Tall 1 (1/50) (2/3)
-----    myTall = subLayout [] Simplest $ trackFloating (Tall 1 (1/20) (1/2))
+--    -- testTall = Tall 1 (1/50) (2/3)
+--    -- myTall = subLayout [] Simplest $ trackFloating (Tall 1 (1/20) (1/2))
 --
 --    floatWorkSpace      = simplestFloat
 --    fullBarToggle       = mkToggle (single FULLBAR)
@@ -948,7 +888,7 @@ myLayoutHook = windowNavigation $
     --                   standardLayout = ResizableTall 1 (1/50) (2/3) []
 
     -- retained during development: safe to remove later
---
+
 --    flex = trimNamed 5 "Flex"
 --              $ avoidStruts
 --              -- don't forget: even though we are using X.A.Navigation2D
@@ -968,7 +908,7 @@ myLayoutHook = windowNavigation $
 --                      $ (suffixed "Std 2/3" $ ResizableTall 1 (1/20) (2/3) [])
 --                    ||| (suffixed "Std 1/2" $ ResizableTall 1 (1/20) (1/2) [])
 
-                  --  ||| fullTabs
+                   -- ||| fullTabs
                   --fullTabs = suffixed "Tabs Full" $ Simplest
                   --
                   -- NOTE: removed this from the two (wide/std) sublayout
@@ -991,6 +931,10 @@ myLayoutHook = windowNavigation $
                   -- there and you will have to use the nornmal W.focusUp/Down
                   -- to successfully flip through them. Despite this
                   -- limitation I prefer this to the results with "Full".
+
+
+
+
 
 {-|
     -----------------------------------------------------------------------
@@ -1379,9 +1323,9 @@ myKeys conf = let
 --   -- XF86AudioRaiseVolume
 --     , ((0, 0x1008ff13)        , addName "Restart XMonad"                    $ spawn  "amixer -q set Master 1%+")
 -- --XF86XK_MonBrightnessDown
-    , ("M1--"                   , addName "Restart XMonad"                   $ spawn "/usr/bin/xbacklight -dec 5  & notify-send  $(/usr/bin/xbacklight -get)  \"Bright Up $()/usr/bin/xbacklight -get)\" ")
+    , ("M1--"                   , addName "Restart XMonad"                   $ spawn "/usr/bin/xbacklight -inc 5  & notify-send  $(/usr/bin/xbacklight -get)  \"Bright Up $()/usr/bin/xbacklight -get)\" ")
 --   --XF86XK_MonBrightnessUp
-    , ("M1-="                   , addName "Restart XMonad"                   $ spawn  "/usr/bin/xbacklight -inc 5 & notify-send  $(/usr/bin/xbacklight -get) \"Bright Down $()/usr/bin/xbacklight -get)\" ")
+    , ("M1-="                   , addName "Restart XMonad"                   $ spawn  "/usr/bin/xbacklight -dec 5 & notify-send  $(/usr/bin/xbacklight -get) \"Bright Down $()/usr/bin/xbacklight -get)\" ")
 
      ] ^++^
 

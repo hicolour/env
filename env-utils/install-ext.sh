@@ -99,6 +99,7 @@ y turpial
 y pywebkitgtk
 
 # Web
+y qutebrowser
 p firefox
 
 
