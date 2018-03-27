@@ -40,12 +40,13 @@ function handleCrypto(){
   fi
 
 
-  echo ${colorReportedReference}$reportedHashrateUnit" ~ "${colorReportedCurrent}$currentHashrateUnit" "${unitDscr}${c15}
+  echo "${colorReportedReference}${reportedHashrateUnit}~${colorReportedCurrent}${currentHashrateUnit}${unitDscr}${c15}"
 
 
 }
 
-initialCryptoMarker=${c15}${crypto_eth_icon}
+initialCryptoMarker="${WHITE}${crypto_eth_icon}"
+#${c15}${crypto_eth_icon}
 unit=1000000
 unitDscr="MH/s"
 #Etherminer
@@ -53,9 +54,9 @@ reportedHashrate=$(curl -s https://api.ethermine.org/miner/$ETH_WALLET/currentSt
 currentHashrate=$(curl -s https://api.ethermine.org/miner/$ETH_WALLET/currentStats | jq '.data.currentHashrate' |  tr -d '\"' )
 
 result=$(handleCrypto $reportedHashrate $currentHashrate $unit $unitDscr)
-echo $result
-crypto=${initialCryptoMarker}${result}
-echo $crypto
+
+crypto="${c15}${initialCryptoMarker}${result}"
+
 #
 #
 # reportedHashrate=$(curl -s https://api.nanopool.org/v1/eth/reportedhashrate/$ETH_WALLET | jq '.data' )

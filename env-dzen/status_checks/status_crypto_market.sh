@@ -64,8 +64,13 @@ function handleCrypto(){
 # currentHashrate=$(curl -s https://api.nanopool.org/v1/eth/user/$ETH_WALLET | jq '.data.hashrate' )
 # crypto=$crypto$(handleCrypto $reportedHashrate $currentHashrate $unit $unitDscr)
 #
-price=$(curl -s https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=EUR | jq '.[].price_usd' |  tr -d '\"')
-crypto_market=${c15}${price}
+price=$(curl -s https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=EUR | jq '.[].price_usd' |  tr -d '\"' | cut -f1 -d".")
+percent_change_1h=$(curl -s https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=EUR | jq '.[].percent_change_1h' |  tr -d '\"')
+percent_change_24h=$(curl -s https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=EUR | jq '.[].percent_change_24h' |  tr -d '\"')
+if [[ $percent_change_1h == -* ]]; then percent_change_color1h=$RED_BRIGHT; else percent_change_color1h=$GREEN_BRIGHT; fi
+if [[ $percent_change_24h == -* ]]; then percent_change_color24h=$RED_BRIGHT; else percent_change_color24h=$GREEN_BRIGHT; fi
+
+crypto_market="${GRAY}${price}/${percent_change_color1h}${percent_change_1h}${GRAY}/${percent_change_color24h}${percent_change_24h}"
 #${crypto_eth_icon}
 #crypto=${c15}${crypto_eth_icon}" "${colorReportedReference}$reportedHashrateUnit" ~ "${colorReportedCurrent}$currentHashrateUnit" "${unitDscr}${c15}
 

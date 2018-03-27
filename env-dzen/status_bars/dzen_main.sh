@@ -197,11 +197,13 @@ date="$(ifexist date)"
 clock="$(ifexist clock)"
 net="$(ifexist net)"
 currency="$(ifexist currency)"
-crypto="$(ifexist crypto)"
+crypto_miner="$(ifexist crypto_miner)"
+crypto_market="$(ifexist crypto_market)"
+
 
 #${mail}${rss}${weather}${crypto_miner}
 
-echo "${crypto_market}${currency}${net}${memory}${cpu}${power}${dropbox}${net_balance}${packages}${date}${clock}"
+echo "${crypto_miner}${crypto_market}${currency}${net}${memory}${cpu}${power}${dropbox}${net_balance}${packages}${date}${clock}"
 
 sleep 1; done
 

@@ -1,6 +1,6 @@
-background="^fg(#1B1B1B)" 
+background="^fg(#1B1B1B)"
 
-foreground="^fg(#b2a994)" 
+foreground="^fg(#b2a994)"
 
 #palette
 
@@ -74,9 +74,10 @@ c15="^fg(#d2d8d9)"   # white-bright
 # c14="^fg(#72aca9)"   # cyan-bright
 
 # c7="^fg(#dcd5c6)"    # white
+c7="^fg(#dcd5c6)"    # white
 c15="^fg(#cdc5b3)"   # white-bright
 
-cursor="^fg(#b2a994)" 
+cursor="^fg(#b2a994)"
 
 BLACK_BRIGHT=$c8
 RED_BRIGHT=$c9
@@ -95,3 +96,5 @@ MAGNETA=$c5
 CYAN=$c6
 WHITE=$c7
 
+GRAY_BRIGHT="^fg(#d3d0c8s)"
+GRAY="^fg(#747369)"

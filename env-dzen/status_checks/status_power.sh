@@ -12,7 +12,7 @@ source $HOME/.dzen/utils.sh
 # TMP_MESURE_FILE="/tmp/status_power.tmp"
 
 
-# if [ -f ${TMP_CPU_MESURE_FILE} ]; 
+# if [ -f ${TMP_CPU_MESURE_FILE} ];
 #     then
 #         source ${TMP_MESURE_FILE}
 #     else
@@ -22,7 +22,7 @@ source $HOME/.dzen/utils.sh
 
 
 VERBOSE=0
- 
+
 TIMEOUT=120
 DEVNAME_PATTERN='/org/freedesktop/UPower/devices/battery_BAT'
 
@@ -46,8 +46,8 @@ do
             batteryLevel=`upower -i $DEVNAME |grep 'percentage' |grep -o '[0-9]*[\.0-9]*'| cut -d '.' -f1`
             state=`upower -i $DEVNAME | grep "state" | cut -d ':' -f2 | grep -o "[a-z]*"`
             if [ $VERBOSE -eq 1 ]
-            then  
-              echo "Battery level: $batteryLevel" 
+            then
+              echo "Battery level: $batteryLevel"
               echo "Battery state:$state"
             fi
 
@@ -57,14 +57,14 @@ do
 
                    if [ "$state" == "discharging" ]
              then
-                   
+
                     echo ''
                     # if [[ "$PREV_REPORT" =~ ^[0-9]+$ ]] && [ $PREV_REPORT -lt 1 ]
                     #     then
                     #         notify-send "battery" "battery level is near ${batteryLevel}%!"
                     #         PREV_REPORT=1
                     # fi
-                   
+
              fi
             fi
 
@@ -94,7 +94,7 @@ do
                         color=$YELLOW_BRIGHT
 
                     fi
-                   
+
                     if [ $ALERTTHR -gt $batteryLevel ]
                     then
                         icon=$battery_crit_icon
@@ -103,7 +103,7 @@ do
             fi
 
             # space=""
-            # if [ $battery_count -gt 0 ] 
+            # if [ $battery_count -gt 0 ]
             #     then
             #     space=" "
             #     battery_count=1
@@ -111,10 +111,10 @@ do
             # else
             #     battery_count=$battery_count+1
             # fi
-            
-            
 
-            power=$power"${space}${WHITE_BRIGHT}${icon}${color} $(wrapper ${batteryLevel})% $battime "
+
+
+            power=$power"${WHITE_BRIGHT}${color} $(wrapper ${batteryLevel})% $battime"
 
             echo $timetoempty
 
@@ -124,5 +124,4 @@ done
 
 sample "power.tmp" "$PREV_REPORT"
 
-sample "power" "$power"
-
+sample "power" "${WHITE_BRIGHT}${icon}$power"

@@ -33,7 +33,7 @@ if [[ "$RAW_WIRELESS" != "" && "$RAW_WIRELESS_IVALID" = "" ]]; then
 	    color=$YELLOW_BRIGHT
 	fi
 
-   	net="${c15}${wireless_high_icon} ${color}${quality}% ${BLACK_BRIGHT}$ip"
+   	net="${c15}${wireless_high_icon} ${color}${quality}% ${GRAY}$ip"
 
 else
   if [[ "$RAW_WIRED_CONNECTED" != "" ]]; then
@@ -42,7 +42,7 @@ else
     net=${c15}${net_wired_icon}" "${GREEN_BRIGHT}$wired_net_ip
     echo $net
   else
-    net="${c15}${wireless_disconnected_icon} ${BLACK_BRIGHT}disconnected"
+    net="${c15}${wireless_disconnected_icon} ${GRAY}disconnected"
   fi
 fi
 
