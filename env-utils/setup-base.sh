@@ -37,19 +37,7 @@ s env-roxterm .config/roxterm.sourceforge.net
 
 s env-wallpaper/.wallpaper .wallpaper
 
-
-# Base slim theme
-sudo systemctl enable slim.service
-sudo rm /usr/share/slim/themes/slim-typesafe
-dir=$(pwd)
-sudo ln -s  $dir/env-slim/slim-typesafe /usr/share/slim/themes/
-#echo 'current_theme       archlinux-simplyblack' >> /etc/slim.conf
-#echo 'current_theme       archlinux-simplyblack' | sudo tee --append /etc/slim.conf
-echo 'current_theme       slim-typesafe' | sudo tee --append /etc/slim.conf
-
-# Wicd
-sudo systemctl enable wicd.service
-
+info "Re-create base executables (bin)"
 mkdir -p $HOME/.bin
 
 # Bin setup
@@ -58,6 +46,19 @@ for d in env-bin/* ; do
     # rm -rf $HOME/.bin/$(basename $d)/
     s env-bin/$(basename $d) .bin/$(basename $d)
 done
+
+
+
+# Base slim theme
+info "Enable and start login manager service"
+sudo systemctl enable slim.service
+sudo rm /usr/share/slim/themes/slim-typesafe
+dir=$(pwd)
+sudo ln -s  $dir/env-slim/slim-typesafe /usr/share/slim/themes/
+#echo 'current_theme       archlinux-simplyblack' >> /etc/slim.conf
+#echo 'current_theme       archlinux-simplyblack' | sudo tee --append /etc/slim.conf
+echo 'current_theme       slim-typesafe' | sudo tee --append /etc/slim.conf
+
 
 #Disable systems peaker
 info "Disable systems speaker"
@@ -71,8 +72,10 @@ echo "options snd slots=snd-usb-audio,snd-hda-intel" > /tmp/alsa.conf
 sudo -s -- mv -f /tmp/alsa.conf /etc/modprobe.d/alsa.conf
 
 
-
-
+info "Enable  and start network manager service"
+sudo systemctl enable wicd
+sudo systemctl start wicd
+sudo systemctl status wicd
 
 
 

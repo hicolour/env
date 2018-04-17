@@ -1,28 +1,47 @@
 #!/bin/sh
 
+###########################################################################
+# Set of base programs required to provide functional desktop enviroment
+#
+# * Login manager
+# * Tiling windows manager
+# * Status bar
+# * Application launcher
+# * Wallpaper launcher
+# * Basic file managment
+# * Network managment
+# * Actual time manager
+# * Basic web browsing
+###########################################################################
+
 . ./env-utils/utils.sh
 
 # Pkg Manager
 p yaourt
 
-# Xmonad
+#xorg
+p xorg-server
+p xorg-xinit
+p xterm
 
+# Xmonad
 p xmonad
 p xmonad-contrib
 
-y xcompmgr
+p xcompmgr
 
 # Toolbar
 p dzen2
 
 # App Toolbar
 p dmenu
+p rofi
 
 #  Configure modifier keys to act as other keys when pressed and released on their own
-y xcape
+p xcape
 
 # inotify-tools is a C library and a set of command-line programs for Linux providing a  simple interface to inotify.
-y inotify-tools
+p inotify-tools
 
 
 # General Utils
@@ -40,20 +59,20 @@ p slim-themes
 p archlinux-themes-slim
 
 # Gtk Themes
-y gtk-engine-murrine  gtk-engines
+p gtk-engine-murrine  gtk-engines
 
 # Gtk theme switcher - only needed if problems with theme
 p gtk-theme-switch2
 
-y zukitwo-themes-git
-y faience-icon-theme
+p zukitwo-themes-git
+p faience-icon-theme
 
 
 #y numix-themes
 #y gtk-theme-xgtk
 
 # Fonts
-y ttf-google-fonts-hg
+p ttf-google-fonts-hg
 
 # Screenshoots
 p scrot
@@ -61,10 +80,11 @@ p scrot
 
 # Wallpaper
 p feh
-y imlibsetroot
+
 
 # MNotification Manager
 p dunst
+
 # Library for sending desktop notifications
 p libnotify
 
@@ -73,7 +93,7 @@ y envypn-font
 y ttf-envy-code-r
 
 #Windows fonts
-y fontconfig-ttf-ms-fonts
+# y fontconfig-ttf-ms-fonts   !!not found!!!
 # http://nodehead.com/5-beautiful-gtk-themes-for-ubuntu/
 
 
@@ -81,37 +101,49 @@ y fontconfig-ttf-ms-fonts
 p xorg-xprop
 
 # Control your EWMH compliant window manager from command line
-y wmctrl
+p wmctrl
 
 
 
 # Network time protocol
 p ntp
 
-#Json parser
-#y jq
+
+# Graphical file manager
+p thunar
 
 
-y thunar
-# smb for thunar
-y gvfs-smb
+# Network manager
+
+# Web browser
+p qutebrowser
 
 
+## File systems managment
 # exFat utilities
-y exfat-utils
-
+p exfat-utils
 
 # Managment of the DOS filesystem - msotly mkfs.vfat, mkfs.msdos
-y dosfstools
+p dosfstools
 
 # Managment of the NTFS filesystem - msotly mkfs.ntsf
 p ntfsprogs
 
-#alsi system info
-y alsi
+# smb for thunar
+p gvfs-smb
 
+#alsi system info
+p alsi
+
+
+## Utitlities used in dozen status bars
 # Calculate in bash
 p bc
+
+# Json parser
+p jq
+
+
 
 # Screencast tool to show your keys inspired by Screenflick, based on key-mon. Active fork with new features.
 #y screenkey
