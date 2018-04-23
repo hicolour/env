@@ -94,10 +94,6 @@ PACKAGE_DATABASE_UPDATE=package-database-update
 sudo ln -sf  $ENVDIR/env-packagemanager/scheduled/$PACKAGE_DATABASE_UPDATE.service /etc/systemd/system/$PACKAGE_DATABASE_UPDATE.service
 sudo ln -sf  $ENVDIR/env-packagemanager/scheduled/$PACKAGE_DATABASE_UPDATE.timer /etc/systemd/system/$PACKAGE_DATABASE_UPDATE.timer
 
-sudo systemctl enable $PACKAGE_DATABASE_UPDATE.service
-sudo systemctl restart $PACKAGE_DATABASE_UPDATE.timer
-sudo systemctl status $PACKAGE_DATABASE_UPDATE.timer
-
 sudo systemctl enable $PACKAGE_DATABASE_UPDATE.timer
 sudo systemctl restart $PACKAGE_DATABASE_UPDATE.timer
 sudo systemctl status $PACKAGE_DATABASE_UPDATE.timer

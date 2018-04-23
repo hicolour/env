@@ -20,73 +20,73 @@
 p yaourt
 
 #xorg
-p xorg-server
-p xorg-xinit
-p xterm
+y xorg-server
+y xorg-xinit
+y xterm
 
 # Xmonad
-p xmonad
-p xmonad-contrib
+y xmonad
+y xmonad-contrib
 
-p xcompmgr
+y xcompmgr
 
 # Toolbar
-p dzen2
+y dzen2
 
 # App Toolbar
-p dmenu
-p rofi
+y dmenu
+y rofi
 
 #  Configure modifier keys to act as other keys when pressed and released on their own
-p xcape
+y xcape
 
 # inotify-tools is a C library and a set of command-line programs for Linux providing a  simple interface to inotify.
-p inotify-tools
+y inotify-tools
 
 
 # General Utils
-p roxterm
-p htop
-p glances
-p mc
-p unzip
-p unarar
+y roxterm
+y htop
+y glances
+y mc
+y unzip
+y unarar
 
 
 # Login Manager
-p slim
-p slim-themes
-p archlinux-themes-slim
+y slim
+y slim-themes
+y archlinux-themes-slim
 
 # Gtk Themes
-p gtk-engine-murrine  gtk-engines
+y gtk-engine-murrine  gtk-engines
 
 # Gtk theme switcher - only needed if problems with theme
-p gtk-theme-switch2
+y gtk-theme-switch2
 
-p zukitwo-themes-git
-p faience-icon-theme
+y zukitwo-themes-git
+y faience-icon-theme
 
 
 #y numix-themes
 #y gtk-theme-xgtk
 
 # Fonts
-p ttf-google-fonts-hg
+y ttf-google-fonts-hg
 
 # Screenshoots
-p scrot
+y scrot
 
 
 # Wallpaper
-p feh
+y feh
 
 
 # MNotification Manager
-p dunst
+y dunst
 
 # Library for sending desktop notifications
-p libnotify
+y libnotify
 
 # Fonts
 y envypn-font
@@ -118,6 +118,14 @@ p thunar
 # Web browser
 p qutebrowser
 
+# Sound addons
+## Base Sound controller
+p pulseaudio-alsa
+## GUI control for audio I/O
+p pavucontrol
+## Gui control for ALSA
+p gnome-alsamixer
+
 
 ## File systems managment
 # exFat utilities
@@ -143,6 +151,9 @@ p bc
 # Json parser
 p jq
 
+
+#
+y upower
 
 
 # Screencast tool to show your keys inspired by Screenflick, based on key-mon. Active fork with new features.

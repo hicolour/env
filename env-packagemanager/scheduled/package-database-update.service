@@ -1,0 +1,5 @@
+[Unit]
+Description=Update package cache
+
+[Service]
+ExecStart=/usr/bin/yaourt -Sy --aur

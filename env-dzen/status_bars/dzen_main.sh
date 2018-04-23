@@ -202,8 +202,8 @@ crypto_market="$(ifexist crypto_market)"
 
 
 #${mail}${rss}${weather}${crypto_miner}
-
-echo "${crypto_miner}${crypto_market}${currency}${net}${memory}${cpu}${power}${dropbox}${net_balance}${packages}${date}${clock}"
+#${crypto_miner}${crypto_market}${currency}
+echo "${net}${memory}${cpu}${power}${dropbox}${net_balance}${packages}${date}${clock}"
 
 sleep 1; done
 

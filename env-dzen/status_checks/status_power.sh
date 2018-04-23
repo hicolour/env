@@ -39,7 +39,7 @@ do
     DEVNAME=$DEVNAME_PATTERN$i
 
     exist=batteryLevel=`upower -i $DEVNAME`
-    exist_count=`grep -o "failed" <<<"$exist" | wc -l`
+    exist_count=`grep -o "null" <<<"$exist" | wc -l`
 
     if [ $exist_count -eq 0 ]
     then

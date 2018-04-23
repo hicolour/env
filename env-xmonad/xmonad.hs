@@ -555,7 +555,9 @@ wicdGtkCommand      = "wicd-gtk"
 wicdGtkClassName    = "wicd-client.py"
 isWicdGtk         = (className =? wicdGtkClassName)
 
-
+wicdCursesCommand      = "roxterm --role wicd-curses -e wicd-curses"
+wicdCursesClassName    = "roxterm"
+isWicdCurses         = (className =? wicdCursesClassName)   <&&> (stringProperty "WM_WINDOW_ROLE" =? "wicd-curses")
 
 
 
@@ -568,9 +570,11 @@ isConsole           = (className =? "Terminator")
                     <&&> (stringProperty "WM_WINDOW_ROLE" =? "Scratchpad")
 myConsole           = "terminator -T console -p console --role=Scratchpad"
 
+
 scratchpads =
     [   (NS "terminal"  "roxterm --role scratchpad" (role =? "scratchpad")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "htop"  "roxterm --role scratchpad -e htop" (role =? "scratchpad")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    ,   (NS "wicd-curses" wicdCursesCommand isWicdCurses (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "wicd" wicdGtkCommand isWicdGtk (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "hangoutsPersonal"  hangoutsCommand isPersonalHangouts defaultFloating)
     ,   (NS "hangoutsWork"  hangoutsCommand isWorkHangouts defaultFloating)
@@ -1426,7 +1430,7 @@ myKeys conf = let
     , ("M-<F12>"                , addName "NSP Music"                       $ namedScratchpadAction scratchpads "spotify")
     , ("M-<F2>"                 , addName "Terminal"                        $ namedScratchpadAction scratchpads "terminal")
     , ("M-<F3>"                 , addName "Htop"                            $ namedScratchpadAction scratchpads "htop")
-    , ("M-<F8>"                 , addName "Wicd"                            $ namedScratchpadAction scratchpads "wicd-gtk")
+    , ("M-<F8>"                 , addName "Wicd"                            $ namedScratchpadAction scratchpads "wicd-curses")
     , ("M-v"                    , addName "NSP Video"                       $ namedScratchpadAction scratchpads "plex")
     , ("M1-x"                   , addName "NSP Xawtv"                       $ namedScratchpadAction scratchpads "xawtv")
     , ("M-n"                    , addName "NSP Console"                     $ namedScratchpadAction scratchpads "console")

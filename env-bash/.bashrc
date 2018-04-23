@@ -41,6 +41,8 @@ alias la='ls -lah'
 #Grep
 alias gr='grep --color -E'
 
+alias y="yaourt --noconfirm"
+
 # Add PRIVATE scripts to PATH
 if [ -f ~/.personal/.private-bashrc ];
 then
