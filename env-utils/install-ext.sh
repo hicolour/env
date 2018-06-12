@@ -5,6 +5,9 @@
 
 
 
+y zotero
+y masterpdfeditor
+
 
 # Bash
 p bash-completion

@@ -447,7 +447,10 @@ projects =
 --myTerminalClass     = "Terminator"
 myTerminal          = "roxterm"
 myAltTerminal       = "cool-retro-term"
-myBrowser           = "browser" -- chrome with WS profile dirs
+myBrowserChrome     = "browser-chrome" -- chrome with WS profile dirs
+myBrowserQute       = "browser-qutebrowser"
+myBrowser           = myBrowserQute
+
 myFileManager       = "thunar"
 myBrowserClass      = "Google-chrome-stable"
 myStatusBar         = "dzen2 -y 0 -x 0 -w 1000 -ta l "
@@ -1420,12 +1423,13 @@ myKeys conf = let
     subKeys "Launchers"
     [ ("M-<Space>"              , addName "Launcher"                        $ spawn myLauncher)
     , ("M-<Return>"             , addName "Terminal"                        $ spawn myTerminal)
-    , ("M-c"                    , addName "Browser"                         $ spawn myBrowser)
+    , ("M-c"                    , addName "Browser"                         $ spawn myBrowserQute)
+    -- , ("M-c"                    , addName "Main Browser"                    $ spawn myBrowserQuteBrowser)
     , ("M-t"                    , addName "File Manager"                    $ spawn myFileManager)
     , ("M-\\"                    , addName "NSP Chat"                       $ bindOn WS [(wsWRK1, namedScratchpadAction scratchpads "hangoutsWork"),
                                                                               ("", namedScratchpadAction scratchpads "hangoutsPersonal")])
     -- , ("M-t"                    , addName "NSP Tasks"                       $ bindOn WS [(wsWRK1, namedScratchpadAction scratchpads "trelloWork"),
-    --                                                                           ("", namedScratchpadAction scratchpads "trello")])
+    --                                                                           ("", namedScratchpadAction scratchpachromeds "trello")])
     , ("M-m"                    , addName "NSP Music"                       $ namedScratchpadAction scratchpads "googleMusic")
     , ("M-<F12>"                , addName "NSP Music"                       $ namedScratchpadAction scratchpads "spotify")
     , ("M-<F2>"                 , addName "Terminal"                        $ namedScratchpadAction scratchpads "terminal")

@@ -27,6 +27,9 @@ s env-gtk/.gtkrc-2.0 .gtkrc-2.0
 s env-gtk/.gtkrc-3.0 .gtkrc-3.0
 
 s env-qutebrowser/autoconfig.yml  .config/qutebrowser/autoconfig.yml
+mkdir -p ~/.local/share/qutebrowser/userscripts/
+s env-qutebrowser/qute-zotero  .local/share/qutebrowser/userscripts/qute-zotero
+
 
 # Dunst Config
 s env-dunst .config/dunst
