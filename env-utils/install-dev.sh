@@ -29,6 +29,9 @@ p sbt
 y playframework2
 
 
+#Json parser
+#y jq
+
 
 # Haskell
 ## The Haskell Tool Stack (linked statically)

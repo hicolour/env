@@ -3,6 +3,11 @@
 . ./env-utils/utils.sh
 
 
+# File manager
+y thunar
+
+# smb for thunar
+y gvfs-smb
 
 
 

@@ -65,6 +65,7 @@ y imlibsetroot
 
 # MNotification Manager
 p dunst
+
 # Library for sending desktop notifications
 p libnotify
 
@@ -83,23 +84,11 @@ p xorg-xprop
 # Control your EWMH compliant window manager from command line
 y wmctrl
 
-
-
 # Network time protocol
 p ntp
 
-#Json parser
-#y jq
-
-
-y thunar
-# smb for thunar
-y gvfs-smb
-
-
 # exFat utilities
 y exfat-utils
-
 
 # Managment of the DOS filesystem - msotly mkfs.vfat, mkfs.msdos
 y dosfstools
