@@ -27,9 +27,6 @@ s env-gtk/.gtkrc-2.0 .gtkrc-2.0
 s env-gtk/.gtkrc-3.0 .gtkrc-3.0
 
 s env-qutebrowser/autoconfig.yml  .config/qutebrowser/autoconfig.yml
-mkdir -p ~/.local/share/qutebrowser/userscripts/
-s env-qutebrowser/qute-zotero  .local/share/qutebrowser/userscripts/qute-zotero
-
 
 # Dunst Config
 s env-dunst .config/dunst
@@ -96,10 +93,6 @@ dir=$(pwd)
 PACKAGE_DATABASE_UPDATE=package-database-update
 sudo ln -sf  $ENVDIR/env-packagemanager/scheduled/$PACKAGE_DATABASE_UPDATE.service /etc/systemd/system/$PACKAGE_DATABASE_UPDATE.service
 sudo ln -sf  $ENVDIR/env-packagemanager/scheduled/$PACKAGE_DATABASE_UPDATE.timer /etc/systemd/system/$PACKAGE_DATABASE_UPDATE.timer
-
-sudo systemctl enable $PACKAGE_DATABASE_UPDATE.service
-sudo systemctl restart $PACKAGE_DATABASE_UPDATE.timer
-sudo systemctl status $PACKAGE_DATABASE_UPDATE.timer
 
 sudo systemctl enable $PACKAGE_DATABASE_UPDATE.timer
 sudo systemctl restart $PACKAGE_DATABASE_UPDATE.timer

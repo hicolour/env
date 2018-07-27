@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# per workspace tag browser instances
+#
+# used so that most of my workpaces get a "default" user directory
+# with my "personal" browser profiles, but specific other workspaces
+# get browser instances of their own based on name (e.g. my "wrk:1
+# and "wrk:2" workspaces each get the "wrk" browser instance)
+#
+# this script also initializes control ports for each browser instance
+
+BROWSER="qutebrowser"
+BROWSER_CMD="qutebrowser"
+WSTAG=$(workspace.sh)
+WSPORT=$(workspace.sh port)
+
+echo $WSTAG
+echo $WSPORT
+
+
+
+CONFIGDIR=${XDG_CONFIG_HOME:-${HOME}/.config}
+CACHEDIR=${XDG_CACHE_HOME:-${HOME}/.cache/browser}
+
+# make directories if missing, set no COW for btrfs
+[ -d "$CONFIGDIR" ] || { mkdir -p "$CONFIGDIR"; chattr +C "$CONFIGDIR"; }
+[ -d "$CACHEDIR" ] || { mkdir -p "$CACHEDIR"; chattr +C "$CACHEDIR"; }
+
+SUFFIX_NAME=BROWSER_QUTEBROWSER_PROFILE_FOR_$WSTAG
+SUFFIX="${!SUFFIX_NAME}"
+echo $SUFFIX
+
+
+
+# echo "browser tag:$WSTAG with SUFFIX_NAME:$SUFFIX_NAME suffix:$SUFFIX" >> /tmp/browser
+
+
+[ -z "$WSPORT" ]  && REMOTE="" || REMOTE="--remote-debugging-port=$WSPORT"
+[ -z "$WSTAG" ]   && SUFFIX="" || SUFFIX="${!SUFFIX_NAME}"
+[ "$WSTAG" = "INCOGNITO" ] && INCOGNITO=" --incognito " || INCOGNITO=""
+
+if [[ -z $SUFFIX ]]; then
+   INCOGNITO=" --incognito "
+fi
+
+echo "wstag "$WSTAG
+echo "launching browser for" $SUFFIX
+
+# echo ${CONFIGDIR}/${BROWSER}/${SUFFIX}
+# echo $INCOGNITO
+
+echo "running with profile" $HOME/.config/${SUFFIX}
+eval $BROWSER_CMD --basedir=$HOME/.config/${SUFFIX} \&

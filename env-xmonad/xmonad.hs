@@ -447,7 +447,10 @@ projects =
 --myTerminalClass     = "Terminator"
 myTerminal          = "roxterm"
 myAltTerminal       = "cool-retro-term"
-myBrowser           = "browser" -- chrome with WS profile dirs
+myBrowserChrome     = "browser-chrome" -- chrome with WS profile dirs
+myBrowserQute       = "browser-qutebrowser"
+myBrowser           = myBrowserQute
+
 myFileManager       = "thunar"
 myBrowserClass      = "Google-chrome-stable"
 myStatusBar         = "dzen2 -y 0 -x 0 -w 1000 -ta l "
@@ -555,7 +558,9 @@ wicdGtkCommand      = "wicd-gtk"
 wicdGtkClassName    = "wicd-client.py"
 isWicdGtk         = (className =? wicdGtkClassName)
 
-
+wicdCursesCommand      = "roxterm --role wicd-curses -e wicd-curses"
+wicdCursesClassName    = "roxterm"
+isWicdCurses         = (className =? wicdCursesClassName)   <&&> (stringProperty "WM_WINDOW_ROLE" =? "wicd-curses")
 
 
 
@@ -568,9 +573,11 @@ isConsole           = (className =? "Terminator")
                     <&&> (stringProperty "WM_WINDOW_ROLE" =? "Scratchpad")
 myConsole           = "terminator -T console -p console --role=Scratchpad"
 
+
 scratchpads =
     [   (NS "terminal"  "roxterm --role scratchpad" (role =? "scratchpad")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "htop"  "roxterm --role scratchpad -e htop" (role =? "scratchpad")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    ,   (NS "wicd-curses" wicdCursesCommand isWicdCurses (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "wicd" wicdGtkCommand isWicdGtk (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "hangoutsPersonal"  hangoutsCommand isPersonalHangouts defaultFloating)
     ,   (NS "hangoutsWork"  hangoutsCommand isWorkHangouts defaultFloating)
@@ -1416,17 +1423,18 @@ myKeys conf = let
     subKeys "Launchers"
     [ ("M-<Space>"              , addName "Launcher"                        $ spawn myLauncher)
     , ("M-<Return>"             , addName "Terminal"                        $ spawn myTerminal)
-    , ("M-c"                    , addName "Browser"                         $ spawn myBrowser)
+    , ("M-c"                    , addName "Browser"                         $ spawn myBrowserQute)
+    -- , ("M-c"                    , addName "Main Browser"                    $ spawn myBrowserQuteBrowser)
     , ("M-t"                    , addName "File Manager"                    $ spawn myFileManager)
     , ("M-\\"                    , addName "NSP Chat"                       $ bindOn WS [(wsWRK1, namedScratchpadAction scratchpads "hangoutsWork"),
                                                                               ("", namedScratchpadAction scratchpads "hangoutsPersonal")])
     -- , ("M-t"                    , addName "NSP Tasks"                       $ bindOn WS [(wsWRK1, namedScratchpadAction scratchpads "trelloWork"),
-    --                                                                           ("", namedScratchpadAction scratchpads "trello")])
+    --                                                                           ("", namedScratchpadAction scratchpachromeds "trello")])
     , ("M-m"                    , addName "NSP Music"                       $ namedScratchpadAction scratchpads "googleMusic")
     , ("M-<F12>"                , addName "NSP Music"                       $ namedScratchpadAction scratchpads "spotify")
     , ("M-<F2>"                 , addName "Terminal"                        $ namedScratchpadAction scratchpads "terminal")
     , ("M-<F3>"                 , addName "Htop"                            $ namedScratchpadAction scratchpads "htop")
-    , ("M-<F8>"                 , addName "Wicd"                            $ namedScratchpadAction scratchpads "wicd-gtk")
+    , ("M-<F8>"                 , addName "Wicd"                            $ namedScratchpadAction scratchpads "wicd-curses")
     , ("M-v"                    , addName "NSP Video"                       $ namedScratchpadAction scratchpads "plex")
     , ("M1-x"                   , addName "NSP Xawtv"                       $ namedScratchpadAction scratchpads "xawtv")
     , ("M-n"                    , addName "NSP Console"                     $ namedScratchpadAction scratchpads "console")

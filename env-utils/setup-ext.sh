@@ -3,13 +3,8 @@
 . ./env-utils/utils.sh
 
 
-# Base Xinitrc
-s env-bash/.bashrc .bashrc
-s env-bash/.bash_profile .bash_profile 
 
 
-# Wicd
-sudo systemctl enable wicd.service
 
 #sudo systemctl enable dkms
 #sudo modprobe vboxdrv

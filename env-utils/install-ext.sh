@@ -10,6 +10,9 @@ y thunar
 y gvfs-smb
 
 
+y zotero
+y masterpdfeditor
+
 
 # Bash
 p bash-completion

@@ -106,7 +106,17 @@ Hardware addons:
 
 
 
+### Guis Tools
 
+#### Video streaming
+* [obs](https://?/) - `#gui` - Open Broadcast
+
+#### Photo/ Graphic
+* [krita](https://?/) - `#gui` - Krita
+
+
+#### Video editing
+* [kdenlive](https://?/) - `#gui` - Kdenlive
 
 ### Tools
 

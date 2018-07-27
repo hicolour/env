@@ -1,22 +1,41 @@
 #!/bin/sh
 
+###########################################################################
+# Set of base programs required to provide functional desktop enviroment
+#
+# * Login manager
+# * Tiling windows manager
+# * Status bar
+# * Application launcher
+# * Wallpaper launcher
+# * Basic file managment
+# * Network managment
+# * Actual time manager
+# * Basic web browsing
+###########################################################################
+
 . ./env-utils/utils.sh
 
 # Pkg Manager
 p yaourt
 
-# Xmonad
+#xorg
+y xorg-server
+y xorg-xinit
+y xterm
 
-p xmonad
-p xmonad-contrib
+# Xmonad
+y xmonad
+y xmonad-contrib
 
 y xcompmgr
 
 # Toolbar
-p dzen2
+y dzen2
 
 # App Toolbar
-p dmenu
+y dmenu
+y rofi
 
 #  Configure modifier keys to act as other keys when pressed and released on their own
 y xcape
@@ -26,24 +45,24 @@ y inotify-tools
 
 
 # General Utils
-p roxterm
-p htop
-p glances
-p mc
-p unzip
-p unarar
+y roxterm
+y htop
+y glances
+y mc
+y unzip
+y unarar
 
 
 # Login Manager
-p slim
-p slim-themes
-p archlinux-themes-slim
+y slim
+y slim-themes
+y archlinux-themes-slim
 
 # Gtk Themes
 y gtk-engine-murrine  gtk-engines
 
 # Gtk theme switcher - only needed if problems with theme
-p gtk-theme-switch2
+y gtk-theme-switch2
 
 y zukitwo-themes-git
 y faience-icon-theme
@@ -56,25 +75,26 @@ y faience-icon-theme
 y ttf-google-fonts-hg
 
 # Screenshoots
-p scrot
+y scrot
 
 
 # Wallpaper
-p feh
-y imlibsetroot
+y feh
+
 
 # MNotification Manager
 p dunst
 
+
 # Library for sending desktop notifications
-p libnotify
+y libnotify
 
 # Fonts
 y envypn-font
 y ttf-envy-code-r
 
 #Windows fonts
-y fontconfig-ttf-ms-fonts
+# y fontconfig-ttf-ms-fonts   !!not found!!!
 # http://nodehead.com/5-beautiful-gtk-themes-for-ubuntu/
 
 
@@ -82,25 +102,60 @@ y fontconfig-ttf-ms-fonts
 p xorg-xprop
 
 # Control your EWMH compliant window manager from command line
-y wmctrl
+p wmctrl
 
 # Network time protocol
 p ntp
 
+
+
+
+# Graphical file manager
+p thunar
+
+
+# Network manager
+
+# Web browser
+p qutebrowser
+
+# Sound addons
+## Base Sound controller
+p pulseaudio-alsa
+## GUI control for audio I/O
+p pavucontrol
+## Gui control for ALSA
+p gnome-alsamixer
+
+
+## File systems managment
 # exFat utilities
-y exfat-utils
+p exfat-utils
 
 # Managment of the DOS filesystem - msotly mkfs.vfat, mkfs.msdos
-y dosfstools
+p dosfstools
 
 # Managment of the NTFS filesystem - msotly mkfs.ntsf
 p ntfsprogs
 
-#alsi system info
-y alsi
+# smb for thunar
+p gvfs-smb
 
+#alsi system info
+p alsi
+
+
+## Utitlities used in dozen status bars
 # Calculate in bash
 p bc
+
+# Json parser
+p jq
+
+
+#
+y upower
+
 
 # Screencast tool to show your keys inspired by Screenflick, based on key-mon. Active fork with new features.
 #y screenkey
