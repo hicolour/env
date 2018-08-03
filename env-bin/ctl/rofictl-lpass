@@ -1,0 +1,100 @@
+rofi -modi lpass:rofi-lpass -show lpass \
+     -font "ypn envypn 13" \
+     -separator-style none -font "ypn envypn 13" -columns 1 -bw 0 \
+          -line-margin 0 -line-padding 2 \
+    		 -hide-scrollbar \
+    		 -color-window "#222222, #222222, #b1b4b3" \
+    		 -color-normal "#262626, #b1b4b3, #262626, #262626, #42E66C" \
+    		 -color-active "#222222, #E356A7, #222222, #007763, #b1b4b3" \
+    		 -color-urgent "#222222, #b1b4b3, #222222, #77003d, #b1b4b3" \
+    		 -kb-row-select "Tab" -kb-row-tab ""
+
+
+#selected-font
+
+# -separator-style none -font "mono 10" -columns 9 -bw 0 \
+#    		 -disable-history \
+
+
+#    -color-normal "#222222, #b1b4b3, #222222, #42E66C, #b1b4b3" \
+#		 -color-active "#222222, #b1b4b3, #222222, #007763, #b1b4b3" \
+#		 -color-urgent "#222222, #b1b4b3, #222222, #77003d, #b1b4b3" \
+
+
+#262626 black
+#E356A7 magneta/pink or red light
+#42E66C green light
+#E4F34A yellow
+#9B6BDF magneta
+#E64747 red
+#75D7EC cyan bright
+#EFA554 orange
+#7A7A7A grey
+#FF79C6 pingk
+#50FA7B green light
+#F1FA8C
+#BD93F9 yellow light
+#FF5555 pink
+#8BE9FD cyaan
+#FFB86C orange
+
+
+
+#[roxterm colour scheme]
+#background=#28282a293636
+#foreground=#9494a3a3a5a5
+
+#=#444447475a5a
+#8=#000000000000
+
+#1=#ffff55545554
+#9=#bfff3fff3fff
+
+#2=#5050fafa7b7b
+#10=#5050fafa7b7b
+
+#3=#ffffb8b86c6c
+#11=#ffffb8b86c6c
+
+#4=#8b8be9e8fdfd
+#12=#8b8be9e8fdfd
+
+#5=#bdbd9393f9f9
+#13=#bdbd9393f9f9
+
+#6=#ffff7979c6c6
+#14=#ffff7979c6c6
+
+#7=#9494a3a3a5a5
+#15=#ffffffffffff
+
+#cursor=#9494a3a3a5a5
+#palette_size=16
+
+
+
+#c0="^fg(#25292a)"   # black
+
+#c8="^fg(#5a676b)"    # black-bright
+#c8="^fg(#25292a)"    # black-bright
+
+#c1="^fg(#f24840)"    # red
+#c9="^fg(#f24840)"    # red-bright
+
+#c2="^fg(#629655)"    # green
+#c10="^fg(#629655)"   # green-bright
+
+#c3="^fg(#b68800)"    # yellow
+#c11="^fg(#b68800)"   # yellow-bright
+
+#c4="^fg(#2075c7)"    # blue
+#c12="^fg(#2075c7)"   # blue-bright
+
+#c13="^fg(#797fd4)"   # magenta-bright
+##c5="^fg(#797fd4)"    # magenta
+
+#c6="^fg(#15968d)"    # cyan
+#c14="^fg(#15968d)"   # cyan-bright
+
+#c7="^fg(#d2d8d9)"    # white
+#c15="^fg(#d2d8d9)"   # white-bright

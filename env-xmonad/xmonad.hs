@@ -1422,6 +1422,7 @@ myKeys conf = let
     -----------------------------------------------------------------------
     subKeys "Launchers"
     [ ("M-<Space>"              , addName "Launcher"                        $ spawn myLauncher)
+    , ("M-l"                    , addName "Rofi Lpass"                        $ spawn "rofictl-lpass")
     , ("M-<Return>"             , addName "Terminal"                        $ spawn myTerminal)
     , ("M-c"                    , addName "Browser"                         $ spawn myBrowserQute)
     -- , ("M-c"                    , addName "Main Browser"                    $ spawn myBrowserQuteBrowser)
