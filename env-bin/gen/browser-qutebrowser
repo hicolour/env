@@ -9,31 +9,38 @@
 #
 # this script also initializes control ports for each browser instance
 
+_LOGLEVEL=1
+
+function log () {
+    if [[ $_LOGLEVEL -eq 1 ]]; then
+        echo "$@"
+    fi
+}
+
+
 BROWSER="qutebrowser"
 BROWSER_CMD="qutebrowser"
 WSTAG=$(workspace.sh)
 WSPORT=$(workspace.sh port)
 
-echo $WSTAG
-echo $WSPORT
+log "Input WSTAG:"$WSTAG
+log "Input WSPORT:"$WSPORT
 
 
 
-CONFIGDIR=${XDG_CONFIG_HOME:-${HOME}/.config}
-CACHEDIR=${XDG_CACHE_HOME:-${HOME}/.cache/browser}
+CONFIGDIR=${XDG_CONFIG_HOME:-${HOME}/.config/qutebrowser}
+log "Base browser CONFIGDIR:"${CONFIGDIR}
+#CACHEDIR=${XDG_CACHE_HOME:-${HOME}/.cache/browser}
+
 
 # make directories if missing, set no COW for btrfs
-[ -d "$CONFIGDIR" ] || { mkdir -p "$CONFIGDIR"; chattr +C "$CONFIGDIR"; }
-[ -d "$CACHEDIR" ] || { mkdir -p "$CACHEDIR"; chattr +C "$CACHEDIR"; }
+#[ -d "$CONFIGDIR" ] || { mkdir -p "$CONFIGDIR"; chattr +C "$CONFIGDIR"; }
+#[ -d "$CACHEDIR" ] || { mkdir -p "$CACHEDIR"; chattr +C "$CACHEDIR"; }
 
-SUFFIX_NAME=BROWSER_QUTEBROWSER_PROFILE_FOR_$WSTAG
+SUFFIX_NAME=BROWSER_PROFILE_FOR_$WSTAG
 SUFFIX="${!SUFFIX_NAME}"
-echo $SUFFIX
 
-
-
-# echo "browser tag:$WSTAG with SUFFIX_NAME:$SUFFIX_NAME suffix:$SUFFIX" >> /tmp/browser
-
+log $SUFFIX
 
 [ -z "$WSPORT" ]  && REMOTE="" || REMOTE="--remote-debugging-port=$WSPORT"
 [ -z "$WSTAG" ]   && SUFFIX="" || SUFFIX="${!SUFFIX_NAME}"
@@ -43,11 +50,14 @@ if [[ -z $SUFFIX ]]; then
    INCOGNITO=" --incognito "
 fi
 
-echo "wstag "$WSTAG
-echo "launching browser for" $SUFFIX
+log "suffix"$SUFFIX
+log "wstag "$WSTAG
+log "launching browser for" $SUFFIX
 
-# echo ${CONFIGDIR}/${BROWSER}/${SUFFIX}
-# echo $INCOGNITO
 
-echo "running with profile" $HOME/.config/${SUFFIX}
-eval $BROWSER_CMD --basedir=$HOME/.config/${SUFFIX} \&
+
+SUFFIX_LOWERCASE="${SUFFIX,,}"
+
+log "Profiledir:"${CONFIGDIR}/${SUFFIX_LOWERCASE}
+
+$BROWSER_CMD -B ${CONFIGDIR}/${SUFFIX_LOWERCASE}
