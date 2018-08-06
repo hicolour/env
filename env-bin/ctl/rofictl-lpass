@@ -1,4 +1,4 @@
-rofi -modi lpass:rofi-lpass -show lpass \
+rofi-lpass && rofi -modi lpass:rofi-lpass -show lpass \
      -font "ypn envypn 13" \
      -separator-style none -font "ypn envypn 13" -columns 1 -bw 0 \
           -line-margin 0 -line-padding 2 \
