@@ -114,6 +114,10 @@ p firefox
 # Subtitle editor
 y subtitleeditor
 
+#Playing online streaming youtube,etc.
+y streamlink
+y mpv
+
 
 
 #mindmapping
