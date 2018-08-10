@@ -550,7 +550,7 @@ googleMusicInfix    = "Google Play Music"
 googleMusicResource = "crx_ioljlgoncmlkbcepmminebblkddfjofl"
 isGoogleMusic       = (resource =? googleMusicResource)
 
-spotifyCommand      = "spotify --role scratchpad "
+spotifyCommand      = "spotify"
 spotifyClassName    = "Spotify"
 isSpotify           = (className =? spotifyClassName)
 
@@ -559,9 +559,12 @@ wicdGtkClassName    = "wicd-client.py"
 isWicdGtk         = (className =? wicdGtkClassName)
 
 wicdCursesCommand      = "roxterm --role wicd-curses -e wicd-curses"
-wicdCursesClassName    = "roxterm"
+wicdCursesClassName    = "Roxterm"
 isWicdCurses         = (className =? wicdCursesClassName)   <&&> (stringProperty "WM_WINDOW_ROLE" =? "wicd-curses")
 
+pavucontrolCommand      = "pavucontrol"
+pavucontrolClassName    = "Pavucontrol"
+isPavucontrol          = (className =? pavucontrolClassName)
 
 
 plexCommand         = "dex $HOME/.local/share/applications/Plex.desktop"
@@ -574,6 +577,8 @@ isConsole           = (className =? "Terminator")
 myConsole           = "terminator -T console -p console --role=Scratchpad"
 
 
+
+
 scratchpads =
     [   (NS "terminal"  "roxterm --role scratchpad" (role =? "scratchpad")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "htop"  "roxterm --role scratchpad -e htop" (role =? "scratchpad")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
@@ -584,9 +589,10 @@ scratchpads =
     ,   (NS "trello"  trelloCommand isTrello nonFloating)
     ,   (NS "trelloWork"  trelloWorkCommand isTrelloWork nonFloating)
     ,   (NS "googleMusic"  googleMusicCommand isGoogleMusic nonFloating)
-    ,   (NS "spotify"  spotifyCommand  isSpotify defaultFloating)
     ,   (NS "plex"  plexCommand isPlex defaultFloating)
     ,   (NS "console"  myConsole isConsole nonFloating)
+    ,   (NS "pavucontrol"  pavucontrolCommand isPavucontrol (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    ,   (NS "spotify"  spotifyCommand  isSpotify (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "xawtv" "xawtv" (resource =? "xawtv") (customFloating $ W.RationalRect (2/3) (1/6) (1/5) (1/3)) )
     ]
     where role = stringProperty "WM_WINDOW_ROLE"
@@ -1436,6 +1442,7 @@ myKeys conf = let
     , ("M-<F2>"                 , addName "Terminal"                        $ namedScratchpadAction scratchpads "terminal")
     , ("M-<F3>"                 , addName "Htop"                            $ namedScratchpadAction scratchpads "htop")
     , ("M-<F8>"                 , addName "Wicd"                            $ namedScratchpadAction scratchpads "wicd-curses")
+    , ("M-<F4>"                 , addName "Pavucontrol"                     $ namedScratchpadAction scratchpads "pavucontrol")
     , ("M-v"                    , addName "NSP Video"                       $ namedScratchpadAction scratchpads "plex")
     , ("M1-x"                   , addName "NSP Xawtv"                       $ namedScratchpadAction scratchpads "xawtv")
     , ("M-n"                    , addName "NSP Console"                     $ namedScratchpadAction scratchpads "console")
@@ -1818,7 +1825,8 @@ myManageHook =
             , resource =? trelloResource -?> doFullFloat
             , resource =? trelloWorkResource -?> doFullFloat
             , resource =? googleMusicResource -?> doFullFloat
-            , className =? spotifyClassName -?> doFullFloat
+          --  , className =? pavucontrolClassName -?> doFloat
+          --  , className =? spotifyClassName -?> doFloat
             , resource =? plexResource -?> doCenterFloat
             , resource =? hangoutsResource -?> insertPosition End Newer
             , transience
@@ -1831,6 +1839,8 @@ myManageHook =
                            "_NET_WM_WINDOW_TYPE_SPLASH" -?> doCenterFloat
             , resource =? "console" -?> tileBelowNoFocus
             , isFullscreen -?> doFullFloat
+            , resource =? pavucontrolClassName -?> doFullFloat
+            , resource =? spotifyClassName -?> doFullFloat
             , pure True -?> tileBelow ]
         isBrowserDialog = isDialog <&&> className =? myBrowserClass
         gtkFile = "GtkFileChooserDialog"

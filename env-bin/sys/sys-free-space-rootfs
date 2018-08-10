@@ -1,3 +1,6 @@
 sudo pacman -Sc
 sudo pacman -Qtdq
 sudo pacman -Rs
+
+echo "-> Cleanup Systemd Journal"
+sudo journalctl --vacuum-time=1seconds
