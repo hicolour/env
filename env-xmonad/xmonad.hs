@@ -212,6 +212,7 @@ import XMonad.Layout.WindowNavigation
 
 import XMonad.Prompt                        -- to get my old key bindings working
 import XMonad.Prompt.ConfirmPrompt          -- don't just hard quit
+-- import XMonad.Prompt.Shell
 
 import XMonad.Util.Cursor
 import XMonad.Util.EZConfig                 -- removeKeys, additionalKeys
@@ -592,7 +593,7 @@ scratchpads =
     ,   (NS "plex"  plexCommand isPlex defaultFloating)
     ,   (NS "console"  myConsole isConsole nonFloating)
     ,   (NS "pavucontrol"  pavucontrolCommand isPavucontrol (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
-    ,   (NS "spotify"  spotifyCommand  isSpotify (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    ,   (NS "spotify"  spotifyCommand  isSpotify  (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3)))
     ,   (NS "xawtv" "xawtv" (resource =? "xawtv") (customFloating $ W.RationalRect (2/3) (1/6) (1/5) (1/3)) )
     ]
     where role = stringProperty "WM_WINDOW_ROLE"
@@ -620,12 +621,14 @@ blue    = "#268bd2"
 cyan    = "#2aa198"
 green       = "#859900"
 
+
 -- sizes
 gap         = 0
 topbar      = 5
 border      = 0
-prompt      = 20
+-- prompt      = 20
 status      = 20
+
 
 -- cusotmization
 topGap     = 5
@@ -684,7 +687,7 @@ myPromptTheme = def
     , bgHLight              = active
     , borderColor           = base03
     , promptBorderWidth     = 0
-    , height                = prompt
+  --  , height                = prompt
     , position              = Top
     }
 
@@ -699,6 +702,17 @@ hotPromptTheme = myPromptTheme
     , fgColor               = base3
     , position              = Top
     }
+
+myXPConfig = defaultXPConfig
+    {
+          position = Top
+        , promptBorderWidth = 0
+        , defaultText = ""
+        , alwaysHighlight = True
+        , font = "9x15"
+        }
+
+
 
 myShowWNameTheme = def
     { swn_font              = myWideFont
@@ -1379,7 +1393,8 @@ myKeys conf = let
     subKeys "System"
     [ ("M-q"                    , addName "Restart XMonad"                  $ spawn "xmonad --restart")
     , ("M-C-q"                  , addName "Rebuild & restart XMonad"        $ spawn "xmonad --recompile && xmonad --restart")
-    , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
+    , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt myXPConfig "exit" $ io exitSuccess)
+--    , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
     , ("M-x"                    , addName "Lock screen"                     $ spawn "slimlock")  -- "xset s activate"
     , ("M-<F4>"                 , addName "Print Screen"                    $ return ())
     , ("M-<F4>"                 , addName "Print Screen"                    $ return ())
@@ -1407,7 +1422,7 @@ myKeys conf = let
     -----------------------------------------------------------------------
     subKeys "Actions"
     [ ("M-a"                    , addName "Notify w current X selection"    $ unsafeWithSelection "notify-send")
-  --, ("M-7"                    , addName "TESTING"                         $ runInTerm "-name glances" "glances" )
+    , ("M-<F7>"                    , addName "TESTING"                         $ runInTerm "-role glances" "glances" )
     , ("M-u"                    , addName "Copy current browser URL"        $ spawn "with-url copy")
     , ("M-o"                    , addName "Display (output) launcher"       $ spawn "displayctl menu")
     , ("<XF86XK_MonBrightnessUp>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -inc 5  & notify-send  \"Bright Up\"")
@@ -1779,8 +1794,8 @@ myFadeHook = composeAll
     , (className =? "URxvt") <&&> (isUnfocused) --> opacity 0.9
     , fmap ("Google" `isPrefixOf`) className --> opaque
     , isDialog --> opaque
-    --, isUnfocused --> opacity 0.55
-    --, isFloating  --> opacity 0.75
+    , isUnfocused --> opacity 0.85
+    , isFloating  --> opacity 0.85
     ]
 
 ------------------------------------------------------------------------}}}
@@ -1825,13 +1840,11 @@ myManageHook =
             , resource =? trelloResource -?> doFullFloat
             , resource =? trelloWorkResource -?> doFullFloat
             , resource =? googleMusicResource -?> doFullFloat
-          --  , className =? pavucontrolClassName -?> doFloat
-          --  , className =? spotifyClassName -?> doFloat
             , resource =? plexResource -?> doCenterFloat
             , resource =? hangoutsResource -?> insertPosition End Newer
             , transience
             , isBrowserDialog -?> forceCenterFloat
-            --, isConsole -?> forceCenterFloat
+            , isConsole -?> forceCenterFloat
             , isRole =? gtkFile  -?> forceCenterFloat
             , isDialog -?> doCenterFloat
             , isRole =? "pop-up" -?> doCenterFloat
@@ -1839,8 +1852,8 @@ myManageHook =
                            "_NET_WM_WINDOW_TYPE_SPLASH" -?> doCenterFloat
             , resource =? "console" -?> tileBelowNoFocus
             , isFullscreen -?> doFullFloat
-            , resource =? pavucontrolClassName -?> doFullFloat
-            , resource =? spotifyClassName -?> doFullFloat
+            , className =? pavucontrolClassName -?> doFullFloat
+            , className =? spotifyClassName -?> doFullFloat
             , pure True -?> tileBelow ]
         isBrowserDialog = isDialog <&&> className =? myBrowserClass
         gtkFile = "GtkFileChooserDialog"
