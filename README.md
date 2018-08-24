@@ -91,6 +91,9 @@ Hardware addons:
 
 #### Browser
 * yaourt qutebrowser
+#### Resources
+ - Userscripts: https://github.com/qutebrowser/qutebrowser/tree/master/misc/userscripts
+
 
 #### music
 * [sconsify](https://github.com/fabiofalci/sconsify)
