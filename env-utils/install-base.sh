@@ -122,6 +122,11 @@ p qutebrowser
 sudo pip install tldextract
 
 
+python /usr/share/qutebrowser/scripts/dictcli.py install en-US
+
+python /usr/share/qutebrowser/scripts/dictcli.py install pl-PL
+
+
 # Sound addons
 ## Base Sound controller
 p pulseaudio-alsa
