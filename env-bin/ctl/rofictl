@@ -1,4 +1,10 @@
-rofi -matching fuzzy -modi combi -show combi -combi-modi run,drun  \
+if [ "$1" != "" ]; then
+    SHOW=$1    
+else
+   SHOW="combi -combi-modi run,drun"
+fi
+
+rofi -matching fuzzy -modi combi -show $SHOW  \
      -font "ypn envypn 13" \
      -separator-style none -font "ypn envypn 13" -columns 1 -bw 0 \
           -line-margin 0 -line-padding 2 \

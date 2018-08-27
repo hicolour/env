@@ -1314,6 +1314,8 @@ showKeybindings x = addName "Show Keybindings" $ io $ do
     hClose h
     return ()
 
+--zenity --text-info --font=terminus --width=800 --height=600
+
 -- some of the structure of the following cribbed from
 -- https://github.com/SimSaladin/configs/blob/master/.xmonad/xmonad.hs
 -- https://github.com/paul-axe/dotfiles/blob/master/.xmonad/xmonad.hs
@@ -1393,19 +1395,16 @@ myKeys conf = let
     subKeys "System"
     [ ("M-q"                    , addName "Restart XMonad"                  $ spawn "xmonad --restart")
     , ("M-C-q"                  , addName "Rebuild & restart XMonad"        $ spawn "xmonad --recompile && xmonad --restart")
-    , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt myXPConfig "exit" $ io exitSuccess)
---    , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
+    , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
     , ("M-x"                    , addName "Lock screen"                     $ spawn "slimlock")  -- "xset s activate"
     , ("M-<F4>"                 , addName "Print Screen"                    $ return ())
     , ("M-<F4>"                 , addName "Print Screen"                    $ return ())
-  --, ("M-F1"                   , addName "Show Keybindings"                $ return ())
+    , ("M-F1"                   , addName "Show Keybindings"                $ return ())
     ] ^++^
 
     subKeys "Media"
-  -- XF86AudioMute
     [ ("XF86AudioMute"          , addName "Restart XMonad"                 $ spawn "amixer -q set Master toggle")
---   -- XF86AudioMicMute
---     , ((0, 0x1008FFB2)        , addName "Restart XMonad"                    $ spawn  "amixer -q set Capture toggle")
+--        "XF86AudioMicMute       , addName "Restart XMonad"                 $ spawn  "amixer -q set Capture toggle")
 --   -- XF86AudioLowerVolume
     , ("M1-]"        , addName "Restart XMonad"                    $ spawn "amixer -q set Master 1%-")
 --   -- XF86AudioRaiseVolume
@@ -1443,10 +1442,10 @@ myKeys conf = let
     -----------------------------------------------------------------------
     subKeys "Launchers"
     [ ("M-<Space>"              , addName "Launcher"                        $ spawn myLauncher)
+    , ("M-w"                    , addName "Rofi Lpass"                        $ spawn "rofictl window")
     , ("M-l"                    , addName "Rofi Lpass"                        $ spawn "rofictl-lpass")
     , ("M-<Return>"             , addName "Terminal"                        $ spawn myTerminal)
     , ("M-c"                    , addName "Browser"                         $ spawn myBrowserQute)
-    -- , ("M-c"                    , addName "Main Browser"                    $ spawn myBrowserQuteBrowser)
     , ("M-t"                    , addName "File Manager"                    $ spawn myFileManager)
     , ("M-\\"                    , addName "NSP Chat"                       $ bindOn WS [(wsWRK1, namedScratchpadAction scratchpads "hangoutsWork"),
                                                                               ("", namedScratchpadAction scratchpads "hangoutsPersonal")])
@@ -1473,9 +1472,9 @@ myKeys conf = let
     (
     [ ("M-<Backspace>"          , addName "Kill"                            kill1)
     , ("M-S-<Backspace>"        , addName "Kill all"                        $ confirmPrompt hotPromptTheme "kill all" $ killAll)
-    --, ("M-d"                    , addName "Duplicate w to all ws"           $ windows copyToAll)
-    --, ("M-S-d"                  , addName "Kill other duplicates"           $ killAllOtherCopies)
-    , ("M-d"                    , addName "Duplicate w to all ws"           $ toggleCopyToAll)
+    , ("M-d"                    , addName "Duplicate w to all ws"           $ windows copyToAll)
+    , ("M-S-d"                  , addName "Kill other duplicates"           $ killAllOtherCopies)
+    --, ("M-d"                    , addName "Duplicate w to all ws"           $ toggleCopyToAll)
     , ("M-p"                    , addName "Hide window to stack"            $ withFocused hideWindow)
     , ("M-S-p"                  , addName "Restore hidden window (FIFO)"    $ popOldestHiddenWindow)
 
@@ -1521,7 +1520,7 @@ myKeys conf = let
 
     subKeys "Workspaces & Projects"
     (
-    [ ("M-w"                    , addName "Switch to Project"           $ switchProjectPrompt warmPromptTheme)
+    [ ("M-ws"                    , addName "Switch to Project"           $ switchProjectPrompt warmPromptTheme)
     , ("M-S-w"                  , addName "Shift to Project"            $ shiftToProjectPrompt warmPromptTheme)
     , ("M-<Escape>"             , addName "Next non-empty workspace"    $ nextNonEmptyWS)
     , ("M-S-<Escape>"           , addName "Prev non-empty workspace"    $ prevNonEmptyWS)
