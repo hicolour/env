@@ -7,6 +7,14 @@
 info "Enabling jdk 10"
 sudo archlinux-java set java-10-jdk
 
+#Docker
+sudo systemctl enable docker.service
+sudo systemctl start docker.service
+sudo usermod -aG docker $USER
+newgrp docker
+
+
+
 # color() {
 #       printf '\033[%sm%s\033[m\n' "$@"
 #       # usage color "31;5" "string"

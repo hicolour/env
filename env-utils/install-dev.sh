@@ -14,6 +14,8 @@ y scala
 y sbt
 
 
+p docer
+p docker-compose
 
 
 

@@ -118,8 +118,12 @@ p thunar
 
 # Web browser
 p qutebrowser
+
+# Pip install for python module instllation
+p python-pip
+
 # Additional module required by qutebrowser lastpass userscript
-sudo pip install tldextract
+pp tldextract
 
 
 # Sound addons

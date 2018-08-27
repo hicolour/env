@@ -22,6 +22,14 @@ p(){
       sudo pacman -S --noconfirm $@
       }
 
+pp(){
+      line
+      color '32;1' "pip install : $@"
+      line
+      sudo pip install $@
+}
+
+
 y(){
       line
       color '32;1' "yaourt install : $@"
