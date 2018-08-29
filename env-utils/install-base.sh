@@ -17,7 +17,7 @@
 . ./env-utils/utils.sh
 
 # Pkg Manager
-p yaourt
+#p yaourt
 
 #xorg
 p xorg-server

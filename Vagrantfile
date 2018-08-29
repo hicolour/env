@@ -1,8 +1,13 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+VAGRANT_COMMAND = ARGV[0]
 Vagrant.configure(2) do |config|
 
+  if VAGRANT_COMMAND == "ssh"
+      config.ssh.username = 'other_username'
+  end
+  
   config.vm.box = "archlinux/archlinux"
 
   config.vm.provider "virtualbox" do |vb|
@@ -11,42 +16,49 @@ Vagrant.configure(2) do |config|
      vb.memory = "2048"
   end
 
-  pacman_conf = <<-CONF
-  [archlinuxfr]
-  SigLevel = Never
-  Server = http://repo.archlinux.fr/\\$arch
-  CONF
+
+  # pacman_conf = <<-CONF
+  # [archlinuxfr]
+  # SigLevel = Optional TrustAll
+  # Server = http://repo.archlinux.fr/\\$arch
+  # CONF
+  # echo "Pacman conffiguration"
+  # egrep --quiet "^[archlinuxfr]" /etc/pacman.conf
+  # if [ $? -ne 0 ]; then
+  #   sudo sh -c "echo '#{pacman_conf}' >> /etc/pacman.conf"
+  # fi
 
   config.vm.provision "shell", inline: <<-SHELL
 
 
-    echo "Pacman conffiguration"
-    egrep --quiet "^[archlinuxfr]" /etc/pacman.conf
-    if [ $? -ne 0 ]; then
-      sudo sh -c "echo '#{pacman_conf}' >> /etc/pacman.conf"
-    fi
+    sudo pacman -Suy --noconfirm
+    sudo pacman -S --noconfirm make git wget
 
-    # sudo echo "[archlinuxfr]" >> /etc/pacman.conf
-    # sudo echo "SigLevel = Never" >> /etc/pacman.conf
-    # sudo echo "Server = http://repo.archlinux.fr/\\$arch" >> /etc/pacman.conf
 
-    sudo pacman -Suy
+    cd /tmp/
+    wget https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
+    tar xzvf package-query.tar.gz
+    cd package-query
+    makepkg -si    # -s, checks for dependencies; -i, installs the pkg with pacman
+    cd ..
+    wget https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz
+    tar xzvf yaourt.tar.gz
+    cd yaourt
+    makepkg -si
 
-    sudo pacman -S --noconfirm git
-    sudo pacman -S --noconfirm make
 
     mkdir -p /home/vagrant/projects/personal/
 
     git clone https://github.com/hicolour/.personal-exmaple.git /home/vagrant/projects/personal/.personal-example
 
-    ln -s /home/vagrant/projects/personal/.personal-example /home/vagrant/.personal
+    ln -s /home/vagrant/proje--noconfirm cts/personal/.personal-example /home/vagrant/.personal
     echo "this=hal9000" > /home/vagrant/.personal/this
 
 
     git clone https://github.com/hicolour/env.git /home/vagrant/projects/personal/env
 
     cd /home/vagrant/projects/personal/env
-    
+
     make base
 
 
