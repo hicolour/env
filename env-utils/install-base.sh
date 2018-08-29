@@ -30,6 +30,8 @@ p xmonad-contrib
 
 p xcompmgr
 
+p xorg-xrandr
+
 # Toolbar
 p dzen2
 

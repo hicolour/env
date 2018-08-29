@@ -136,7 +136,7 @@ usage () {
 
     $SCRIPTNAME [mode]
     $SCRIPTNAME [backlight up|down]
-    $SCRIPTNAME [fingerprint]   
+    $SCRIPTNAME [fingerprint]
 
     where [mode] is one of:
     internal
@@ -212,14 +212,14 @@ execute () {
     # TODO: the restart of dunst is probably messing with our flock on the
     # lockfile (see above note)
     #notifications init
-    
+
     # journal and notification
     log_notify "${mode:-} ${LOGIC:-}"
 
 }
 
 save_fingerprint () {
-    fingerprint="$(generate_fingerprint)" 
+    fingerprint="$(generate_fingerprint)"
     if [ -f "$CONFIG" ]
     then
         CONFIG_VALUES="$(grep -v $fingerprint $CONFIG)"
@@ -394,7 +394,7 @@ span () {
     do
         eval '
         case $OUTPUT in
-            $INTERNAL_OUTPUT) : ;; 
+            $INTERNAL_OUTPUT) : ;;
             '$CONNECTED_OUTPUTS') CMD="$CMD --output $OUTPUT --scale 1x1 --auto --right-of $NEIGHBOR"; NEIGHBOR=$OUTPUT ;;
             *) : ;;
         esac'
@@ -441,7 +441,7 @@ oldspan () {
     do
         eval '
         case $OUTPUT in
-            $INTERNAL_OUTPUT) : ;; 
+            $INTERNAL_OUTPUT) : ;;
             '$CONNECTED_OUTPUTS') CMD="$CMD --output $OUTPUT --scale 1x1 --auto --pos '$OFFSET'x0" ;;
             *) : ;;
         esac'
@@ -456,7 +456,7 @@ mirror () {
     do
         eval '
         case $OUTPUT in
-            $INTERNAL_OUTPUT) CMD="$CMD --output $OUTPUT --primary --mode $INTERNAL_OUTPUT_MODE --pos 0x0 --rotate normal --panning 0x0" ;; 
+            $INTERNAL_OUTPUT) CMD="$CMD --output $OUTPUT --primary --mode $INTERNAL_OUTPUT_MODE --pos 0x0 --rotate normal --panning 0x0" ;;
             '$CONNECTED_OUTPUTS') CMD="$CMD --output $OUTPUT --mode $INTERNAL_OUTPUT_MODE --same-as $INTERNAL_OUTPUT" ;;
             *) CMD="$CMD --output $OUTPUT --off" ;;
         esac'
