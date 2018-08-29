@@ -45,12 +45,11 @@ p inotify-tools
 
 
 # General Utils
-p roxterm
 p htop
 p glances
 p mc
 p unzip
-p unarar
+
 
 
 # Login Manager
@@ -64,15 +63,11 @@ p gtk-engine-murrine  gtk-engines
 # Gtk theme switcher - onlp needed if problems with theme
 p gtk-theme-switch2
 
-p zukitwo-themes-git
-p faience-icon-theme
 
 
 #p numix-themes
 #p gtk-theme-xgtk
 
-# Fonts
-p ttf-google-fonts-hg
 
 # Screenshoots
 p scrot
@@ -89,9 +84,7 @@ p dunst
 # Librarp for sending desktop notifications
 p libnotify
 
-# Fonts
-p envypn-font
-p ttf-envy-code-r
+
 
 #Windows fonts
 # p fontconfig-ttf-ms-fonts   !!not found!!!
@@ -123,11 +116,8 @@ p qutebrowser
 p python-pip
 
 # Additional module required bp qutebrowser lastpass userscript
-pp tldextract
-
-
+p tldextract
 python /usr/share/qutebrowser/scripts/dictcli.pp install en-US
-
 python /usr/share/qutebrowser/scripts/dictcli.pp install pl-PL
 
 
@@ -153,8 +143,6 @@ p ntfsprogs
 # smb for thunar
 p gvfs-smb
 
-#alsi system info
-p alsi
 
 
 ## Utitlities used in dozen status bars
@@ -174,3 +162,24 @@ p upower
 
 # Cheat allows you to create and view interactive cheatsheets on the command-line
 #p cheat-git
+
+##################################
+# YAOURT required => AUR
+##################################
+y roxterm
+
+y unarar
+
+# Fonts
+y envypn-font
+y ttf-envy-code-r
+
+#alsi system info
+y alsi
+
+# Fonts
+y ttf-google-fonts-hg
+
+
+y faience-icon-theme
+y zukitwo-themes-git

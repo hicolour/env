@@ -7,7 +7,7 @@ Vagrant.configure(2) do |config|
   if VAGRANT_COMMAND == "ssh"
       config.ssh.username = 'other_username'
   end
-  
+
   config.vm.box = "archlinux/archlinux"
 
   config.vm.provider "virtualbox" do |vb|
@@ -28,23 +28,24 @@ Vagrant.configure(2) do |config|
   #   sudo sh -c "echo '#{pacman_conf}' >> /etc/pacman.conf"
   # fi
 
-  config.vm.provision "shell", inline: <<-SHELL
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
 
 
     sudo pacman -Suy --noconfirm
+    sudo pacman -S --noconfirm binutils gcc pkg-config fakeroot
+
     sudo pacman -S --noconfirm make git wget
 
-
     cd /tmp/
-    wget https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
+    wget --quiet https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
     tar xzvf package-query.tar.gz
     cd package-query
-    makepkg -si    # -s, checks for dependencies; -i, installs the pkg with pacman
+    makepkg -si --noconfirm   # -s, checks for dependencies; -i, installs the pkg with pacman
     cd ..
-    wget https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz
+    wget --quiet https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz
     tar xzvf yaourt.tar.gz
     cd yaourt
-    makepkg -si
+    makepkg -si --noconfirm
 
 
     mkdir -p /home/vagrant/projects/personal/
