@@ -1,2 +1,6 @@
 env.sublime*
 env-xmonad/xmonad.state
+
+.idea/
+*.iml
+

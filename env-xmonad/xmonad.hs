@@ -1402,19 +1402,19 @@ myKeys conf = let
     , ("M-F1"                   , addName "Show Keybindings"                $ return ())
     ] ^++^
 
-    subKeys "Media"
-    [ ("XF86AudioMute"          , addName "Restart XMonad"                 $ spawn "amixer -q set Master toggle")
---        "XF86AudioMicMute       , addName "Restart XMonad"                 $ spawn  "amixer -q set Capture toggle")
---   -- XF86AudioLowerVolume
-    , ("M1-]"        , addName "Restart XMonad"                    $ spawn "amixer -q set Master 1%-")
---   -- XF86AudioRaiseVolume
---     , ((0, 0x1008ff13)        , addName "Restart XMonad"                    $ spawn  "amixer -q set Master 1%+")
--- --XF86XK_MonBrightnessDown
-    , ("M1--"                   , addName "Restart XMonad"                   $ spawn "/usr/bin/xbacklight -dec 5  & notify-send  $(/usr/bin/xbacklight -get)  \"Bright Up $()/usr/bin/xbacklight -get)\" ")
---   --XF86XK_MonBrightnessUp
-    , ("M1-="                   , addName "Restart XMonad"                   $ spawn  "/usr/bin/xbacklight -inc 5 & notify-send  $(/usr/bin/xbacklight -get) \"Bright Down $()/usr/bin/xbacklight -get)\" ")
-
-     ] ^++^
+--    subKeys "Media"
+--    [ ("XF86AudioMute"          , addName "Restart XMonad"                 $ spawn "amixer -q set Master toggle")
+----        "XF86AudioMicMute       , addName "Restart XMonad"                 $ spawn  "amixer -q set Capture toggle")
+----   -- XF86AudioLowerVolume
+--    , ("M1-]"        , addName "Restart XMonad"                    $ spawn "amixer -q set Master 1%-")
+----   -- XF86AudioRaiseVolume
+----     , ((0, 0x1008ff13)        , addName "Restart XMonad"                    $ spawn  "amixer -q set Master 1%+")
+---- --XF86XK_MonBrightnessDown
+--    , ("M1--"                   , addName "Restart XMonad"                   $ spawn "/usr/bin/xbacklight -dec 5  & notify-send  $(/usr/bin/xbacklight -get)  \"Bright Up $()/usr/bin/xbacklight -get)\" ")
+----   --XF86XK_MonBrightnessUp
+--    , ("M1-="                   , addName "Restart XMonad"                   $ spawn  "/usr/bin/xbacklight -inc 5 & notify-send  $(/usr/bin/xbacklight -get) \"Bright Down $()/usr/bin/xbacklight -get)\" ")
+--
+--     ] ^++^
 
     -----------------------------------------------------------------------
     -- Actionsff

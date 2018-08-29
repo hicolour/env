@@ -1,8 +1,8 @@
 [global]
     #font = envypn-10
     #font=ohsnap 10
-    font=envypn 9
-    
+    font=envypn 40
+
 
 
     # The format of the message. Possible variables are:
