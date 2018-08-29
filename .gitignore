@@ -4,3 +4,4 @@ env-xmonad/xmonad.state
 .idea/
 *.iml
 
+.vagrant
