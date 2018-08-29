@@ -20,81 +20,81 @@
 p yaourt
 
 #xorg
-y xorg-server
-y xorg-xinit
-y xterm
+p xorg-server
+p xorg-xinit
+p xterm
 
 # Xmonad
-y xmonad
-y xmonad-contrib
+p xmonad
+p xmonad-contrib
 
-y xcompmgr
+p xcompmgr
 
 # Toolbar
-y dzen2
+p dzen2
 
 # App Toolbar
-y dmenu
-y rofi
+p dmenu
+p rofi
 
 #  Configure modifier keys to act as other keys when pressed and released on their own
-y xcape
+p xcape
 
-# inotify-tools is a C library and a set of command-line programs for Linux providing a  simple interface to inotify.
-y inotify-tools
+# inotify-tools is a C librarp and a set of command-line programs for Linux providing a  simple interface to inotify.
+p inotify-tools
 
 
 # General Utils
-y roxterm
-y htop
-y glances
-y mc
-y unzip
-y unarar
+p roxterm
+p htop
+p glances
+p mc
+p unzip
+p unarar
 
 
 # Login Manager
-y slim
-y slim-themes
-y archlinux-themes-slim
+p slim
+p slim-themes
+p archlinux-themes-slim
 
 # Gtk Themes
-y gtk-engine-murrine  gtk-engines
+p gtk-engine-murrine  gtk-engines
 
-# Gtk theme switcher - only needed if problems with theme
-y gtk-theme-switch2
+# Gtk theme switcher - onlp needed if problems with theme
+p gtk-theme-switch2
 
-y zukitwo-themes-git
-y faience-icon-theme
+p zukitwo-themes-git
+p faience-icon-theme
 
 
-#y numix-themes
-#y gtk-theme-xgtk
+#p numix-themes
+#p gtk-theme-xgtk
 
 # Fonts
-y ttf-google-fonts-hg
+p ttf-google-fonts-hg
 
 # Screenshoots
-y scrot
+p scrot
 
 
 # Wallpaper
-y feh
+p feh
 
 
 # MNotification Manager
 p dunst
 
 
-# Library for sending desktop notifications
-y libnotify
+# Librarp for sending desktop notifications
+p libnotify
 
 # Fonts
-y envypn-font
-y ttf-envy-code-r
+p envypn-font
+p ttf-envy-code-r
 
 #Windows fonts
-# y fontconfig-ttf-ms-fonts   !!not found!!!
+# p fontconfig-ttf-ms-fonts   !!not found!!!
 # http://nodehead.com/5-beautiful-gtk-themes-for-ubuntu/
 
 
@@ -122,13 +122,13 @@ p qutebrowser
 # Pip install for python module instllation
 p python-pip
 
-# Additional module required by qutebrowser lastpass userscript
+# Additional module required bp qutebrowser lastpass userscript
 pp tldextract
 
 
-python /usr/share/qutebrowser/scripts/dictcli.py install en-US
+python /usr/share/qutebrowser/scripts/dictcli.pp install en-US
 
-python /usr/share/qutebrowser/scripts/dictcli.py install pl-PL
+python /usr/share/qutebrowser/scripts/dictcli.pp install pl-PL
 
 
 # Sound addons
@@ -144,10 +144,10 @@ p gnome-alsamixer
 # exFat utilities
 p exfat-utils
 
-# Managment of the DOS filesystem - msotly mkfs.vfat, mkfs.msdos
+# Managment of the DOS filesystem - msotlp mkfs.vfat, mkfs.msdos
 p dosfstools
 
-# Managment of the NTFS filesystem - msotly mkfs.ntsf
+# Managment of the NTFS filesystem - msotlp mkfs.ntsf
 p ntfsprogs
 
 # smb for thunar
@@ -166,11 +166,11 @@ p jq
 
 
 #
-y upower
+p upower
 
 
-# Screencast tool to show your keys inspired by Screenflick, based on key-mon. Active fork with new features.
-#y screenkey
+# Screencast tool to show your keys inspired bp Screenflick, based on key-mon. Active fork with new features.
+#p screenkey
 
 # Cheat allows you to create and view interactive cheatsheets on the command-line
-#y cheat-git
+#p cheat-git

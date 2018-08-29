@@ -70,7 +70,8 @@ p powertop
 
 # Virtualboc
 p virtualbox
-p virtualbox-host-dkms
+p virtualbox-host-modules-arch
+# p virtualbox-host-dkms
 
 # Wine
 p wine
