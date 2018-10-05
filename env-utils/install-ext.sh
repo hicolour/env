@@ -2,6 +2,8 @@
 
 . ./env-utils/utils.sh
 
+# Image browser
+p gpicview
 
 # File manager
 y thunar

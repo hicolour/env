@@ -38,4 +38,3 @@ screen0_width=`xrandr | grep "Screen 0" | grep -o "current [0-9]*" |  grep -o "[
 # ~/.dzen/status_bars/dzen_main.sh      | dzen2 -y 0   -x 100 -w 1580 -ta r $dzen_style &
 # ~/.dzen/status_bars/dzen_audio.sh     | dzen2 -y 0   -x 0 -w 100	-ta l $dzen_style &
 # ~/.dzen/status_bars/dzen_secondary.sh | dzen2 -y 1030 	-x 1280 -w 400	-ta r $dzen_style &
-

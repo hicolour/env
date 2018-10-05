@@ -30,10 +30,14 @@ c8="^fg(#5a676b)"    # black-bright
 c8="^fg(#25292a)"    # black-bright
 
 c1="^fg(#f24840)"    # red
-c9="^fg(#f24840)"    # red-bright
+c9="^fg(#FF5555)"
+#c9="^fg(#f24840)"    # red-bright
+
+
 
 c2="^fg(#629655)"    # green
-c10="^fg(#629655)"   # green-bright
+c10="^fg(#50FA7B)"
+#c10="^fg(#629655)"   # green-bright
 
 c3="^fg(#b68800)"    # yellow
 c11="^fg(#b68800)"   # yellow-bright
