@@ -60,9 +60,9 @@ fi
 
 # ---------- @jdk
 
-export JAVA_HOME=/usr/lib/jvm/java-8-jdk/
+# export JAVA_HOME=/usr/lib/jvm/java-8-jdk/
 #export JAVA_HOME=/usr/lib/jvm/java-9-jdk/
-#export JAVA_HOME=/usr/lib/jvm/java-10-jdk/
+export JAVA_HOME=/usr/lib/jvm/java-10-jdk/
 
 PATH=$PATH:/$JAVA_HOME/bin/
 export PATH
