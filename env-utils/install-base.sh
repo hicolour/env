@@ -19,6 +19,10 @@
 # Pkg Manager
 #p yaourt
 
+# Pacman utilities e.g. rankmirrors
+p pacman-contrib
+
+
 #xorg
 p xorg-server
 p xorg-xinit
