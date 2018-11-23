@@ -42,7 +42,7 @@ else
     net=${c15}${net_wired_icon}" "${GREEN_BRIGHT}$wired_net_ip
     echo $net
   else
-    net="${c15}${wireless_disconnected_icon} ${GRAY}disconnected"
+    net="${c15}${wireless_disconnected_icon}${GRAY} disconnected"
   fi
 fi
 

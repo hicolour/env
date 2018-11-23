@@ -707,9 +707,8 @@ myXPConfig = defaultXPConfig
     {
           position = Top
         , promptBorderWidth = 0
-        , defaultText = ""
+        , defaultText = "test"
         , alwaysHighlight = True
-        , font = "9x15"
         }
 
 
@@ -1395,7 +1394,8 @@ myKeys conf = let
     subKeys "System"
     [ ("M-q"                    , addName "Restart XMonad"                  $ spawn "xmonad --restart")
     , ("M-C-q"                  , addName "Rebuild & restart XMonad"        $ spawn "xmonad --recompile && xmonad --restart")
-    , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
+    , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt myXPConfig "exit" (io exitSuccess))
+--  , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
     , ("M-x"                    , addName "Lock screen"                     $ spawn "slimlock")  -- "xset s activate"
     , ("M-<F4>"                 , addName "Print Screen"                    $ return ())
     , ("M-<F4>"                 , addName "Print Screen"                    $ return ())
