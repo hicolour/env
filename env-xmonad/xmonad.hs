@@ -253,6 +253,10 @@ import XMonad.Layout.IndependentScreens
 
 import System.Environment
 
+-- Experimenets
+import XMonad.Actions.GroupNavigation
+
+
 -- taffybar specific
 -- import System.Taffybar.Hooks.PagerHints (pagerHints)
 -- to demo and comment out or remove
@@ -322,7 +326,7 @@ myConfig p = def
         , manageHook         = myManageHook
         , handleEventHook    = myHandleEventHook
         , layoutHook         = myLayoutHook
-        , logHook            = myLogHook p
+        , logHook            = myLogHook p >> historyHook
         , modMask            = myModMask
         , mouseBindings      = myMouseBindings
         , startupHook        = myStartupHook
@@ -1400,6 +1404,7 @@ myKeys conf = let
     , ("M-<F4>"                 , addName "Print Screen"                    $ return ())
     , ("M-<F4>"                 , addName "Print Screen"                    $ return ())
     , ("M-F1"                   , addName "Show Keybindings"                $ return ())
+    , ("M-n"                , addName "Show Keybindings"                $ nextMatch History (return True))
     ] ^++^
 
 --    subKeys "Media"
@@ -1459,7 +1464,7 @@ myKeys conf = let
     , ("M-<F4>"                 , addName "Pavucontrol"                     $ namedScratchpadAction scratchpads "pavucontrol")
     , ("M-v"                    , addName "NSP Video"                       $ namedScratchpadAction scratchpads "plex")
     , ("M1-x"                   , addName "NSP Xawtv"                       $ namedScratchpadAction scratchpads "xawtv")
-    , ("M-n"                    , addName "NSP Console"                     $ namedScratchpadAction scratchpads "console")
+  --  , ("M-n"                    , addName "NSP Console"                     $ namedScratchpadAction scratchpads "console")
     , ("M-s s"                  , addName "Cancel submap"                   $ return ())
     , ("M-s M-s"                , addName "Cancel submap"                   $ return ())
     ] ^++^
@@ -1756,6 +1761,7 @@ myLogHook h = do
     fadeWindowsLogHook myFadeHook
     ewmhDesktopsLogHook
     --dynamicLogWithPP $ defaultPP
+
     dynamicLogWithPP $ def
 
         { ppCurrent          = wrap "^fg(#F39C12)[^fg(#F1C40F)" "^fg(#F39C12)]"
