@@ -1460,6 +1460,7 @@ myKeys conf = let
     , ("M-<F12>"                , addName "NSP Music"                       $ namedScratchpadAction scratchpads "spotify")
     , ("M-<F2>"                 , addName "Terminal"                        $ namedScratchpadAction scratchpads "terminal")
     , ("M-<F3>"                 , addName "Htop"                            $ namedScratchpadAction scratchpads "htop")
+    , ("M-<F5>"                , addName "Rofi Lpass"                        $ spawn "/home/marek/projects/personal/rchst/rchst")
     , ("M-<F8>"                 , addName "Wicd"                            $ namedScratchpadAction scratchpads "wicd-curses")
     , ("M-<F4>"                 , addName "Pavucontrol"                     $ namedScratchpadAction scratchpads "pavucontrol")
     , ("M-v"                    , addName "NSP Video"                       $ namedScratchpadAction scratchpads "plex")
