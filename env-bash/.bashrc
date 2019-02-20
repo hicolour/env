@@ -49,6 +49,8 @@ alias su='yaourt -Suya --noconfirm; yaourt -Qtd'
 
 alias la='ls -lah'
 
+rofi='rofi -font "ypn envypn 10"'
+
 #Grep
 alias gr='grep --color -E'
 

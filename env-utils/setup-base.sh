@@ -31,6 +31,12 @@ mkdir -p ~/.local/share/qutebrowser/userscripts/
 s env-qutebrowser/qute-zotero  .local/share/qutebrowser/userscripts/qute-zotero
 
 
+mkdir -p ~/.config/rofi/
+rm -rf ~/.config/rofi/config
+s env-rofi/config .config/rofi/config
+
+
+
 # Dunst Config
 s env-dunst .config/dunst
 
