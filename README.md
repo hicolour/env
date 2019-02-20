@@ -32,6 +32,7 @@ Base setup:
 Common:
 
  * `base` - base stack: xmonad, dzen2, dmenu, dunst, roxterm, gtk, slim, ...   : [@install-base](env-utils/install-base.sh)
+ ** `neofetch` - A CLI system information tool written in BASH that supports displaying images. 
 
  * `ext` - extended stack - basic linux componenets: xmonad, dzen2, dmenu, dunst, roxterm, gtk, slim, ...   : [@install-ext](.utils/install-ext.sh)
 

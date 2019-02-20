@@ -441,7 +441,6 @@ projects =
 ------------------------------------------------------------------------}}}
 -- Applications                                                         {{{
 ---------------------------------------------------------------------------
-
 -- | Uses supplied function to decide which action to run depending on current workspace name.
 
 --myTerminal          = "terminator"
@@ -625,8 +624,8 @@ green       = "#859900"
 -- sizes
 gap         = 0
 topbar      = 5
-border      = 0
--- prompt      = 20
+border      = 2
+prompt      = 20  -- #! reset to 0
 status      = 20
 
 
@@ -722,7 +721,7 @@ myShowWNameTheme = def
 
 ------------------------------------------------------------------------}}}
 -- Layouts                                                              {{{
---
+--trans
 -- WARNING: WORK IN PROGRESS AND A LITTLE MESSY
 ---------------------------------------------------------------------------
 
@@ -1261,7 +1260,7 @@ myLayoutHook = windowNavigation $
                            (smartTabbed)
                            (ClassName "Google-chrome-beta")
             normalScreen = combineTwoP (TwoPane 0.03 (2/3))
-                           (smartTall)
+                           (smartTtransall)
                            (smartTabbed)
                            (ClassName "Google-chrome-beta")
 
@@ -1395,7 +1394,7 @@ myKeys conf = let
     [ ("M-q"                    , addName "Restart XMonad"                  $ spawn "xmonad --restart")
     , ("M-C-q"                  , addName "Rebuild & restart XMonad"        $ spawn "xmonad --recompile && xmonad --restart")
     , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt myXPConfig "exit" (io exitSuccess))
---  , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
+    , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
     , ("M-x"                    , addName "Lock screen"                     $ spawn "slimlock")  -- "xset s activate"
     , ("M-<F4>"                 , addName "Print Screen"                    $ return ())
     , ("M-<F4>"                 , addName "Print Screen"                    $ return ())

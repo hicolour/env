@@ -10,20 +10,19 @@
 
 
 
+# Disable ctrl-s and ctrl-q
+stty -ixon
 
-#### -------
-
-
-### --------
+# Allows you to cd into directory merely by typing the directory name.
+shopt -s autocd
 
 # History
-alias h='history'
 HISTTIMEFORMAT="[%d/%m/%y %T] "
 
+# Infinite history
+HISTSIZE= HISTFILESIZE=
 
 
-export HISTFILESIZE=100000
-export HISTSIZE=100000
 
 # export HISTCONTROL=ignoreboth
 # #export HISTCONTROL=erasedups
@@ -33,7 +32,19 @@ export PROMPT_COMMAND="history -a"        # update histfile after every command
 
 shopt -s histappend                       # append history file
 
+# History aliases
+alias h='history'
 alias hg='history | gr'
+
+# Adding color
+alias ls='ls -hN --color=auto --group-directories-first'
+alias grep="grep --color=auto"
+alias diff="diff --color=auto"
+alias ccat="highlight --out-format=ansi" # Color cat - print file with syntax highlighting.
+
+
+
+
 alias su='yaourt -Suya --noconfirm; yaourt -Qtd'
 
 alias la='ls -lah'
@@ -248,7 +259,7 @@ branch_exists () {
 }
 
 parse_git_ahead () {
-  # Grab the local and remote branch
+  # Grab the local and remote bPS1ranch
   branch="$(get_git_branch)"
   remote_branch=origin/"$branch"
 
@@ -361,13 +372,21 @@ function get_prompt_symbol() {
 #\[$prompt_preposition_color\]\h\[$prompt_reset\] \
 
 # Define the sexy-bash-prompt
-PS1="\[$prompt_dir_color\] •\[$prompt_git_status_color\] •\[$prompt_device_color\] •\[$prompt_reset\]\[$prompt_reset\]  \
-\[$prompt_dir_color\]\w\[$prompt_reset\]\
+PS1="\[$prompt_dir_color\] •\[$prompt_git_status_color\] •\[$prompt_device_color\] •\[$prompt_reset\]\[$prompt_reset\] \
 \$( is_on_git && \
-  echo -n \" \[$prompt_preposition_color\]ᄉ\[$prompt_reset\]\" && \
+  echo -n \" \[$prompt_preposition_color\]on\[$prompt_reset\] \" && \
   echo -n \"\[$prompt_git_status_color\]\$(get_git_info)\" && \
   echo -n \"\[$prompt_preposition_color\]\") \[$prompt_reset\]\
 \[$prompt_symbol_color\]$(get_prompt_symbol) \[$prompt_reset\]"
+
+
+# PS1="\[$prompt_dir_color\] •\[$prompt_git_status_color\] •\[$prompt_device_color\] •\[$prompt_reset\]\[$prompt_reset\]  \
+# \[$prompt_dir_color\]\w\[$prompt_reset\]\
+# \$( is_on_git && \
+#   echo -n \" \[$prompt_preposition_color\]ᄉ\[$prompt_reset\]\" && \
+#   echo -n \"\[$prompt_git_status_color\]\$(get_git_info)\" && \
+#   echo -n \"\[$prompt_preposition_color\]\") \[$prompt_reset\]\
+# \[$prompt_symbol_color\]$(get_prompt_symbol) \[$prompt_reset\]"
 
 
 # PS1="\[$prompt_user_color\]\u\[$prompt_reset\] \

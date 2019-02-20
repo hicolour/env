@@ -56,7 +56,8 @@ p glances
 p mc
 p unzip
 
-
+# A CLI system information tool written in BASH that supports displaying images. 
+p neofetch
 
 # Login Manager
 p slim
