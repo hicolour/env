@@ -1,6 +1,6 @@
 [roxterm options]
 profile=darcula
-shortcut_scheme=Main
+shortcut_scheme=Main0
 colour_scheme=darcula
 
 warn_close=0

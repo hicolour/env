@@ -56,7 +56,7 @@ p glances
 p mc
 p unzip
 
-# A CLI system information tool written in BASH that supports displaying images. 
+# A CLI system information tool written in BASH that supports displaying images.
 p neofetch
 
 # Login Manager
@@ -78,6 +78,11 @@ p gtk-theme-switch2
 
 # Screenshoots
 p scrot
+
+#Utility to take a screenshot
+p maim
+
+
 
 
 # Wallpaper
