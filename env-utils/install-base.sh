@@ -112,8 +112,11 @@ p wmctrl
 # Network time protocol
 p ntp
 
+# Command-line X11 automation tool
+p xdotool
 
-
+#Screencast tool to show your keys inspired by Screenflick, based on key-mon. Active fork with new features.
+p screenkey
 
 # Graphical file manager
 p thunar
@@ -155,6 +158,9 @@ p ntfsprogs
 # smb for thunar
 p gvfs-smb
 
+
+#Command-line fuzzy finder
+p fzf
 
 
 ## Utitlities used in dozen status bars

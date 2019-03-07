@@ -530,7 +530,7 @@ myColorHN = "#686868"
 hangoutsCommand     = myBrowser ++ " --app-id=knipolnnllmklapflnccelgolnpehhpl"
 hangoutsTitle     = "Google Hangouts - es@ethanschoonover.com"
 hangoutsPrefix      = "Google Hangouts"
-hangoutsResource    = "crx_nckgahadagoaajjgafhacjanaoiihapd"
+hangoutsResource    = "crx_nckga.dothadagoaajjgafhacjanaoiihapd"
 isHangoutsFor s     = (className =? myBrowserClass
                       <&&> fmap (isPrefixOf hangoutsPrefix) title
                       <&&> fmap (isInfixOf s) title)
@@ -1425,13 +1425,13 @@ myKeys conf = let
     -----------------------------------------------------------------------
     subKeys "Actions"
     [ ("M-a"                    , addName "Notify w current X selection"    $ unsafeWithSelection "notify-send")
-    , ("M-<F7>"                    , addName "TESTING"                         $ runInTerm "-role glances" "glances" )
-    , ("M-u"                    , addName "Copy current browser URL"        $ spawn "with-url copy")
-    , ("M-o"                    , addName "Display (output) launcher"       $ spawn "displayctl menu")
-    , ("<XF86XK_MonBrightnessUp>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -inc 5  & notify-send  \"Bright Up\"")
-    , ("<xF86XK_MonBrightnessDown>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -dec 5")
+--NW    , ("M-<F7>"                    , addName "TESTING"                         $ runInTerm "-role glances" "glances" )
+--NW    , ("M-u"                    , addName "Copy current browser URL"        $ spawn "with-url copy")
+--NW    , ("M-o"                    , addName "Display (output) launcher"       $ spawn "displayctl menu")
+--NW     , ("<XF86XK_MonBrightnessUp>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -inc 5  & notify-send  \"Bright Up\"")
+--NW     , ("<xF86XK_MonBrightnessDown>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -dec 5")
     , ("M-<XF86Display>"        , addName "Display - force internal"        $ spawn "displayctl internal")
-    , ("S-<XF86Display>"        , addName "Display - force internal"        $ spawn "displayctl internal")
+--    , ("S-<XF86Display>"        , addName "Display - force internal"        $ spawn "displayctl internal")
     , ("M-i"                    , addName "Network (Interface) launcher"    $ spawn "wicd-gtk")
     , ("M-/"                    , addName "On-screen keys"                  $ spawn "killall screenkey &>/dev/null || screenkey --no-systray")
     , ("M-S-/"                  , addName "On-screen keys settings"         $ spawn "screenkey --show-settings")
@@ -1451,22 +1451,22 @@ myKeys conf = let
     , ("M-<Return>"             , addName "Terminal"                        $ spawn myTerminal)
     , ("M-c"                    , addName "Browser"                         $ spawn myBrowserQute)
     , ("M-t"                    , addName "File Manager"                    $ spawn myFileManager)
-    , ("M-\\"                    , addName "NSP Chat"                       $ bindOn WS [(wsWRK1, namedScratchpadAction scratchpads "hangoutsWork"),
-                                                                              ("", namedScratchpadAction scratchpads "hangoutsPersonal")])
+--    , ("M-\\"                    , addName "NSP Chat"                       $ bindOn WS [(wsWRK1, namedScratchpadAction scratchpads "hangoutsWork"),
+--                                                                              ("", namedScratchpadAction scratchpads "hangoutsPersonal")])
     -- , ("M-t"                    , addName "NSP Tasks"                       $ bindOn WS [(wsWRK1, namedScratchpadAction scratchpads "trelloWork"),
     --                                                                           ("", namedScratchpadAction scratchpachromeds "trello")])
     , ("M-m"                    , addName "NSP Music"                       $ namedScratchpadAction scratchpads "googleMusic")
     , ("M-<F12>"                , addName "NSP Music"                       $ namedScratchpadAction scratchpads "spotify")
     , ("M-<F2>"                 , addName "Terminal"                        $ namedScratchpadAction scratchpads "terminal")
     , ("M-<F3>"                 , addName "Htop"                            $ namedScratchpadAction scratchpads "htop")
-    , ("M-<F5>"                , addName "Rofi Lpass"                        $ spawn "/home/marek/projects/personal/rchst/rchst")
+    , ("M-<F5>"                 , addName "Rofi Lpass"                        $ spawn "/home/marek/projects/personal/rchst/rchst")
     , ("M-<F8>"                 , addName "Wicd"                            $ namedScratchpadAction scratchpads "wicd-curses")
     , ("M-<F4>"                 , addName "Pavucontrol"                     $ namedScratchpadAction scratchpads "pavucontrol")
-    , ("M-v"                    , addName "NSP Video"                       $ namedScratchpadAction scratchpads "plex")
-    , ("M1-x"                   , addName "NSP Xawtv"                       $ namedScratchpadAction scratchpads "xawtv")
-  --  , ("M-n"                    , addName "NSP Console"                     $ namedScratchpadAction scratchpads "console")
-    , ("M-s s"                  , addName "Cancel submap"                   $ return ())
-    , ("M-s M-s"                , addName "Cancel submap"                   $ return ())
+--  , ("M-v"                    , addName "NSP Video"                       $ namedScratchpadAction scratchpads "plex")
+--  , ("M1-x"                   , addName "NSP Xawtv"                       $ namedScratchpadAction scratchpads "xawtv")
+--  , ("M-n"                    , addName "NSP Console"                     $ namedScratchpadAction scratchpads "console")
+--  , ("M-s s"                  , addName "Cancel submap"                   $ return ())
+--  , ("M-s M-s"                , addName "Cancel submap"                   $ return ())
     ] ^++^
 
     -----------------------------------------------------------------------
