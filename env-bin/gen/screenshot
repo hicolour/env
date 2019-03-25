@@ -1,7 +1,13 @@
 #!/bin/sh
 
 SCRIPTNAME=$(basename $0)
-FILENAME="$HOME/$SCRIPTNAME-$(date +'%Y-%m-%d-%H-%M-%S').png"
+mkdir -p $HOME/tmp/$SCRIPTNAME
+FILENAME="$HOME/tmp/$SCRIPTNAME/$(date +'%Y-%m-%d-%H-%M-%S').png"
+
+if [[ $1 = "delay" ]]
+then
+  sleep 10
+fi
 
 case ${1:-} in
     select*|region|area) SEL="-s" ;;
