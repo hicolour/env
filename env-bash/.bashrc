@@ -24,6 +24,9 @@ HISTSIZE= HISTFILESIZE=
 
 
 
+
+
+
 # export HISTCONTROL=ignoreboth
 # #export HISTCONTROL=erasedups
 export HISTIGNORE="ls*:rm*:cd*:CD*:ps*:exit*:reset*:clear*:synaptic*:mkdir*:cat*"
@@ -31,6 +34,11 @@ export HISTCONTROL=ignoreboth:erasedups
 export PROMPT_COMMAND="history -a"        # update histfile after every command
 
 shopt -s histappend                       # append history file
+
+
+
+
+source <(doctl completion bash)
 
 # History aliases
 alias h='history'
@@ -75,7 +83,7 @@ fi
 
 # export JAVA_HOME=/usr/lib/jvm/java-8-jdk/
 #export JAVA_HOME=/usr/lib/jvm/java-9-jdk/
-export JAVA_HOME=/usr/lib/jvm/java-9-jdk/
+export JAVA_HOME=/usr/lib/jvm/java-10-jdk/
 
 PATH=$PATH:/$JAVA_HOME/bin/
 export PATH
