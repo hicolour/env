@@ -32,7 +32,6 @@ HISTSIZE= HISTFILESIZE=
 export HISTIGNORE="ls*:rm*:cd*:CD*:ps*:exit*:reset*:clear*:synaptic*:mkdir*:cat*"
 export HISTCONTROL=ignoreboth:erasedups
 export PROMPT_COMMAND="history -a"        # update histfile after every command
-
 shopt -s histappend                       # append history file
 
 
@@ -51,6 +50,9 @@ alias diff="diff --color=auto"
 alias ccat="highlight --out-format=ansi" # Color cat - print file with syntax highlighting.
 
 
+
+alias cs='xclip -selection clipboard'
+alias vs='xclip -o -selection clipboard'
 
 
 alias su='yaourt -Suya --noconfirm; yaourt -Qtd'
@@ -83,7 +85,7 @@ fi
 
 # export JAVA_HOME=/usr/lib/jvm/java-8-jdk/
 #export JAVA_HOME=/usr/lib/jvm/java-9-jdk/
-export JAVA_HOME=/usr/lib/jvm/java-10-jdk/
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk/
 
 PATH=$PATH:/$JAVA_HOME/bin/
 export PATH
