@@ -53,7 +53,7 @@ import XMonad.Hooks.ManageDocks             -- avoid xmobar
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.SetWMName
-
+False
 import XMonad.Layout.Accordion
 import XMonad.Layout.BinarySpacePartition
 import XMonad.Layout.BorderResize
@@ -103,7 +103,7 @@ import XMonad.Util.Run                      -- for spawnPipe and hPutStrLn
 import XMonad.Util.SpawnOnce
 import XMonad.Util.WorkspaceCompare         -- custom WS functions filtering NSP
 import XMonad.Util.XSelection
-import XMonad.Actions.GroupNavigation
+
 
 -- experimenting with tripane
 import XMonad.Layout.Decoration
@@ -121,8 +121,7 @@ import XMonad.Layout.NoBorders
 
 main = do
 
-    xmproc <- spawnPipe myDzenXmonad
-    myDzenMonitoring_ <- spawnPipe myDzenMonitoring
+    xmproc <- spawnPipe myStatusBar
 
     -- for independent screens
     -- nScreens <- countScreens
@@ -146,7 +145,7 @@ myConfig p = def
         , manageHook         = myManageHook
         , handleEventHook    = myHandleEventHook
         , layoutHook         = myLayoutHook
-        , logHook            = myLogHook p >> historyHook
+        , logHook            = myLogHook p
         , modMask            = myModMask
         , mouseBindings      = myMouseBindings
         , startupHook        = myStartupHook
@@ -245,98 +244,23 @@ projects =
 
 -- | Uses supplied function to decide which action to run depending on current workspace name.
 
-myTerminal          = "roxterm"
+myTerminal          = "urxvt"
 myAltTerminal       = "xfce4-terminal"
 myBrowser           = "google-chrome-stable" -- chrome with WS profile dirs
 myBrowserClass      = "Google-chrome-stable"
 myAltBrowser        = "firefox"
-myStatusBar         = "dzen2 -y 0 -x 0 -w 1000 -ta l "
+myStatusBar         = "xmobar -x0 ~/.xmonad/xmobar.hs"
 myIDE               = "./eclipse/java-oxygen/eclipse/eclipse"
 --myMail              = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=bplaligjlefkphkdgeohajfaojnnfnpm"
 myMail              = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=egddcdhcadfhcbheacnhikllgjokeico"
 myKeep              = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=hcfcmgpnmpinpidjdgejehjchlbglpde"
 myTranslate         = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=fklgpoecafmhpbmoepkbhkhhbahodcdh"
 --myLauncher          = "dmenu_run -o 0.9 -h 17 -fn 'misc ohsnap' -nb '#081c2b' -nf '#268bd2' -sf '#ffcc00' -sb '#4d3d00' -y 18 -p '>>>'"
---myLauncher          = "dmenu_run  -h 17 -fn 'misc ohsnap:bold' -sb '#081c2b' -sf '#00afaf' -nf '#ffcc00' -nb '#4d3d00' -y 18 -p '>>> funtoo linux '"
+myLauncher          = "dmenu_run  -h 17 -fn 'misc ohsnap:bold' -sb '#081c2b' -sf '#00afaf' -nf '#ffcc00' -nb '#4d3d00' -y 18 -p '>>> funtoo linux '"
 
-myLauncher          = "rofictl"
+--myLauncher          = "rofi -matching fuzzy -show run"
 --myLauncher          = "rofi -combi-modi window,drun -show combi -modi combi -width 90 -location 2 -columns 1"
 --myLauncher          = "rofi -matching fuzzy -modi combi -show combi -combi-modi run,drun"
-
----------------------------------------------------------------------------
--- Applications properties
----------------------------------------------------------------------------
-spotifyCommand      = "spotify"
-spotifyClassName    = "Spotify"
-isSpotify           = (className =? spotifyClassName)
-
-wicdGtkCommand      = "wicd-gtk"
-wicdGtkClassName    = "wicd-client.py"
-isWicdGtk         = (className =? wicdGtkClassName)
-
-wicdCursesCommand      = "roxterm --role wicd-curses -e wicd-curses"
-wicdCursesClassName    = "Roxterm"
-isWicdCurses         = (className =? wicdCursesClassName)   <&&> (stringProperty "WM_WINDOW_ROLE" =? "wicd-curses")
-
-pavucontrolCommand      = "pavucontrol"
-pavucontrolClassName    = "Pavucontrol"
-isPavucontrol          = (className =? pavucontrolClassName)
-
----------------------------------------------------------------------------
--- Scratchpads
----------------------------------------------------------------------------
-scratchpads =
-    [   (NS "terminal"  "roxterm --role scratchpad" (role =? "scratchpad")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
-    ,   (NS "htop"  "roxterm --role scratchpad -e htop" (role =? "scratchpad")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
-    ,   (NS "wicd-curses" wicdCursesCommand isWicdCurses (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
-    ,   (NS "wicd" wicdGtkCommand isWicdGtk (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
-    ,   (NS "pavucontrol"  pavucontrolCommand isPavucontrol (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
-    ,   (NS "spotify"  spotifyCommand  isSpotify  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
-    ]
-    where role = stringProperty "WM_WINDOW_ROLE"
------------------------------------------------------------
-
--- ------------> DZEN Config TMP
-
-myDzenPP = dzenPP
-  {
-    ppCurrent          = wrap "^fg(#F39C12)[^fg(#F1C40F)" "^fg(#F39C12)]"
-  , ppVisible          = wrap "^fg(#E67E22)[^fg(#d3d0c8)" "^fg(#E67E22)]"
-  , ppHidden           = wrap " ^fg(#d3d0c8)" " "
-  , ppHiddenNoWindows  = wrap " ^fg(#747369)" " "
-  , ppUrgent           = wrap "^fg(#8ab3b5)[^fg(#cdc5b3)" "^fg(#8ab3b5)]"
-
-  , ppSep              = "  "
-  , ppLayout           = wrap "^fg(#8E44AD)[^fg(#9B59B6)" "^fg(#8E44AD)]"
-  , ppTitle            = (" " ++) . dzenColor "#5b709b" "" . dzenEscape
-  , ppSort             = fmap (.namedScratchpadFilterOutWorkspace) $ ppSort defaultPP
-  }
-
-
---myDzenXmonad="dzen2 -y 1030 -x 0 -w 1280 -ta l " ++ myDzenStyle
-myDzenXmonad="dzen2 -y 0 -x 0 -w 1000 -ta l " ++ myDzenStyle
-
-myDzenMonitoring="~/.dzen/dzen_xmonad.sh"
-
--- Dzen helpers
-myDzenStyle = "-fg '" ++ myFgColor ++
-              "' -bg '" ++ myBgColor ++
-              "' -fn '" ++ myFont ++
-              "' -h 20"
-
-myFgColor = "#E74C3C"
---myBgColor = "#0f0f0f"
-myBgColor = "#1B1B1B"
-
-myFocusedFGColor = "#8ab1c1"
-myAlertColor = "#934a5a"
-
-myColorH  = "#999999"
-myColorHN = "#686868"
-
--- myFont = "-ypn-envypn-Medium-R-Normal--13-130-75-75-C-90-ISO8859-1"
--- ------------> DZEN Config TMP
-
 
 -- I'm using a custom browser launching script (see myBrowser above) that
 -- is workspace aware. It launches an instance of Chrome that is unique
@@ -359,8 +283,6 @@ myColorHN = "#686868"
 -- * bindOn via X.A.ConditionalKeys
 
 -- TODO: change this to a lookup for all workspaces
-
-
 
 ---------------------------------------------------------------------------
 -- Theme
@@ -389,13 +311,13 @@ green   = "#859900"
 -- sizes
 gap         = 9
 topbar      = 3
-border      = 2
+border      = 0
 prompt      = 20
 status      = 20
 tabbar      = 15
 
 myNormalBorderColor     = "#000000"
-myFocusedBorderColor    = active
+myFocusedBorderColor    = cyan
 
 active      = blue
 activeWarn  = red
@@ -403,9 +325,7 @@ inactive    = base02
 focusColor  = cyan
 unfocusColor = base02
 
---myFont      ="xft:envypn-11"
 myFont      ="xft:misc ohsnap-11"
---myFont      ="-ypn-envypn-Medium-R-Normal--13-130-75-75-C-90-ISO8859-1"
 myBigFont   = "-*-terminus-medium-*-*-*-*-240-*-*-*-*-*-*"
 myWideFont  = "xft:Eurostar Black Extended:"
             ++ "style=Regular:pixelsize=50:hinting=true"
@@ -421,16 +341,16 @@ topBarTheme = def
     , activeBorderColor     = active
     , activeColor           = active
     , activeTextColor       = active
-    , urgentBorderColor     = red
-    , urgentTextColor       = yellow
+    , urgentBorderColor     = "#fdf6e3"
+    , urgentTextColor       = "#dc322f"
     , decoHeight            = topbar
     }
 
 myTabTheme = def
     { fontName              = myFont
-    , activeColor           = active
+    , activeColor           = "#2aa198"
     , inactiveColor         = base02
-    , activeBorderColor     = active
+    , activeBorderColor     = "#2aa198"
     , inactiveBorderColor   = base02
     , activeTextColor       = base03
     , inactiveTextColor     = base00
@@ -456,20 +376,10 @@ warmPromptTheme = myPromptTheme
     }
 
 hotPromptTheme = myPromptTheme
-    { bgColor               = red
-    , fgColor               = base3
+    { bgColor               = "#330000"
+    , fgColor               = "#dc322f"
     , position              = Top
     }
-
-myXPConfig = defaultXPConfig
-    {
-          position = Top
-        , promptBorderWidth = 0
-        , defaultText = "test"
-        , alwaysHighlight = True
-        }
-
-
 
 myShowWNameTheme = def
     { swn_font              = myWideFont
@@ -511,8 +421,7 @@ barFull = avoidStruts $ Simplest
 -- cf http://xmonad.org/xmonad-docs/xmonad-contrib/src/XMonad-Config-Droundy.html
 
 myLayoutHook = showWorkspaceName
-             $ avoidStruts
---             $ gaps [(U,20),(D,0),(L,0),(R,0)] --default gap rule krogulec
+--             $ avoidStruts
              $ onWorkspace wsFLOAT floatWorkSpace
              $ smartBorders
              $ LF.fullscreenFloat -- fixes floating windows going full screen, while retaining "bounded" fullscreen
@@ -549,23 +458,11 @@ myLayoutHook = showWorkspaceName
     myGaps              = gaps [(U, gap),(D, gap),(L, gap),(R, gap)]
     mySmallGaps         = gaps [(U, sGap),(D, sGap),(L, sGap),(R, sGap)]
     myBigGaps           = gaps [(U, gap*2),(D, gap*2),(L, gap*2),(R, gap*2)]
-    onlyTopGap          = gaps [(U,20),(D,0),(L,0),(R,0)]
-
 
     --------------------------------------------------------------------------
     -- Tabs Layout
     --------------------------------------------------------------------------
 
-    -- --------------------------------------------
-    -- |          |                    |          |
-    -- |          |                    |   Tabs   |
-    -- |          |                    |          |
-    -- |----------|       Master       |----------|
-    -- |          |                    |          |
-    -- |   Tabs   |                    |          |
-    -- |          |                    |          |
-    -- --------------------------------------------
-    --
     threeCol = named "Unflexed"
          $ smartBorders
          $ avoidStruts
@@ -577,8 +474,7 @@ myLayoutHook = showWorkspaceName
     tabs = named "Tabs"
          $ smartBorders
          $ avoidStruts
-         $ onlyTopGap
-         $ addTopBar
+--         $ addTopBar
          $ addTabs shrinkText myTabTheme
          $ Simplest
 
@@ -592,16 +488,17 @@ myLayoutHook = showWorkspaceName
               -- we need windowNavigation for merging to sublayouts
 --              $ smartBorders
               $ windowNavigation
+              $ addTopBar
               $ addTabs shrinkText myTabTheme
               -- $ subLayout [] (Simplest ||| (mySpacing $ Accordion))
               $ subLayout [] (Simplest ||| Accordion)
               $ ifWider smallMonResWidth wideLayouts standardLayouts
               where
-                  wideLayouts = onlyTopGap
+                  wideLayouts = myGaps $ mySpacing
                       $ (suffixed "Wide 3Col" $ ThreeColMid 1 (1/20) (1/2))
                     ||| (trimSuffixed 1 "Wide BSP" $ hiddenWindows emptyBSP)
                   --  ||| fullTabs
-                  standardLayouts = onlyTopGap
+                  standardLayouts = myGaps $ mySpacing
                       $ (suffixed "Std 2/3" $ ResizableTall 1 (1/20) (2/3) [])
                     ||| (suffixed "Std 1/2" $ ResizableTall 1 (1/20) (1/2) [])
 
@@ -688,11 +585,10 @@ myKeys conf = let
     [ ("M-q"                    , addName "Restart XMonad"                  $ confirmPrompt hotPromptTheme "Restart XMonad" $ restartXmonad)
     , ("M-C-q"                  , addName "Rebuild & restart XMonad"        $ confirmPrompt hotPromptTheme "Recompile and Restart XMonad" $ rebuildXmonad)
     , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
-    , ("M-x"                    , addName "Lock screen"                     $ spawn "slimlock")  -- "xset s activate"
-    , ("M-F1"                   , addName "Show Keybindings"                $ return ())
-    , ("M-n"                , addName "Show Keybindings"                $ nextMatch History (return True))
+--    , ("M-x"                    , addName "Lock screen"                     $ spawn "xset s activate")
+--    , ("M-<F4>"                    , addName "Print Screen"                    $ return ())
+--    , ("M-F1"                   , addName "Show Keybindings"                $ return ())
     ] ^++^
-
 
     -----------------------------------------------------------------------
     -- Actions keys https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Util-EZConfig.html
@@ -705,9 +601,10 @@ myKeys conf = let
 
     , ("M1-<Right>"                , addName "Up brilho"                       $ spawn "xbacklight -inc 6")
     , ("M1-<Left>"                 , addName "Down brilho"                     $ spawn "xbacklight -dec 6")
-    , ("<XF86MonBrightnessUp>"     , addName "Up brilho"                       $ spawn "xbacklight -inc 3")
-    , ("<XF86MonBrightnessDown>"   , addName "Down brilho"                     $ spawn "xbacklight -dec 3")
-    , ("M1-<Up>"                   , addName "Up audio"                        $ spawn "pamixer -i 10")
+    , ("<XF86MonBrightnessUp>"     , addName "Up brilho"                       $ spawn "xbacklight -inc 6")
+    , ("<XF86MonBrightnessDown>"   , addName "Down brilho"                     $ spawn "xbacklight -dec 6")
+
+    , ("M1-<Up>"                   , addName "Up audio"                        $ spawn "amixer set Master 5%+")
     , ("M1-<Down>"                 , addName "Down audio"                      $ spawn "amixer set Master 5%-")
     , ("M1-S-<Up>"                 , addName "Up audio beyond"                 $ spawn "pactl set-sink-volume 0 +10%")
     , ("M1-S-<Down>"               , addName "Down audio beyond"               $ spawn "pactl set-sink-volume 0 -10%")
@@ -731,10 +628,10 @@ myKeys conf = let
     , ("M-C-<KP_Up>"               , addName "Redim BAIXO levanta"             $ withFocused (keysResizeWindow (0,-5) (0,0)))
     , ("M-C-<KP_Down>"             , addName "Redim BAIXO desce"               $ withFocused (keysResizeWindow (0,5) (0,0)))
 
---    , ("M-m"                       , addName "MOC Open Player"                 $ spawn "urxvt -e mocp")
---    , ("M1-<Space>"                , addName "MOC Play/Pause"                  $ spawn "mocp -G")
---    , ("M1-]"                      , addName "MOC Next Music"                  $ spawn "mocp -f")
---    , ("M1-["                      , addName "MOC Previous Mucic"              $ spawn "mocp -r")
+    , ("M-m"                       , addName "MOC Open Player"                 $ spawn "urxvt -e mocp")
+    , ("M1-<Space>"                , addName "MOC Play/Pause"                  $ spawn "mocp -G")
+    , ("M1-]"                      , addName "MOC Next Music"                  $ spawn "mocp -f")
+    , ("M1-["                      , addName "MOC Previous Mucic"              $ spawn "mocp -r")
 
     ] ^++^
 
@@ -742,30 +639,19 @@ myKeys conf = let
     -- Launchers
     -----------------------------------------------------------------------
     subKeys "Launchers"
-    [ ("M-<Space>"                , addName "Launcher"                        $ spawn myLauncher)
-    , ("M-M1-<Space>"             , addName "Windows Launcher"                $ spawn "rofictl window")
-    , ("M-<Return>"               , addName "Terminal"                        $ spawn myTerminal)
-    , ("M-r"                      , addName "Ranger"                          $ spawn "urxvt -e ranger")
-    , ("<Print>"                  , addName "Print full"                      $ spawn "scrot -e 'mv $f ~/Imagens/ 2>/dev/null'")
-    , ("M-<Print>"                , addName "Print por seleção"               $ spawn "sleep 0.2; scrot -s -e 'mv $f ~/Imagens/ 2>/dev/null'")
-    , ("M-o"                      , addName "Browser"                         $ spawn myBrowser)
-    , ("M-\\"                     , addName "Browser Alternativo"             $ spawn myAltBrowser)
-    , ("M-<Home>"                 , addName "E-mail"                          $ spawn myMail)
-    , ("M-<Insert>"               , addName "Keep"                            $ spawn myKeep)
-    , ("M-<End>"                  , addName "Translate"                       $ spawn myTranslate)
-    , ("M-<Delete>"               , addName "IDE"                             $ spawn myIDE)
-    ] ^++^
+    [ ("M-p"                    , addName "Launcher"                        $ spawn myLauncher)
+    , ("M-<Return>"             , addName "Terminal"                        $ spawn myTerminal)
+    , ("M-<KP_Enter>"           , addName "Terminal"                        $ spawn myAltTerminal)
+    , ("M-r"                    , addName "Ranger"                          $ spawn "urxvt -e ranger")
+    , ("<Print>"                , addName "Print full"                      $ spawn "scrot -e 'mv $f ~/Imagens/ 2>/dev/null'")
+    , ("M-<Print>"              , addName "Print por seleção"               $ spawn "sleep 0.2; scrot -s -e 'mv $f ~/Imagens/ 2>/dev/null'")
+    , ("M-o"                    , addName "Browser"                         $ spawn myBrowser)
+    , ("M-\\"                   , addName "Browser Alternativo"             $ spawn myAltBrowser)
+    , ("M-<Home>"               , addName "E-mail"                          $ spawn myMail)
+    , ("M-<Insert>"             , addName "Keep"                            $ spawn myKeep)
+    , ("M-<End>"                , addName "Translate"                       $ spawn myTranslate)
+    , ("M-<Delete>"             , addName "IDE"                             $ spawn myIDE)
 
-    ---------------------------------------------------------------------
-    -- Launchers
-    -----------------------------------------------------------------------
-    subKeys "Scratchpads"
-    [ ("M-<F2>"                   , addName "NSP Terminal"                    $ namedScratchpadAction scratchpads "terminal")
-    , ("M-<F3>"                   , addName "NSP Htop"                        $ namedScratchpadAction scratchpads "htop")
-    , ("M-<F5>"                   , addName "NSP Rchst"                       $ spawn "/home/marek/projects/personal/rchst/rchst")
-    , ("M-<F8>"                   , addName "NSP Wicd"                        $ namedScratchpadAction scratchpads "wicd-curses")
-    , ("M-<F4>"                   , addName "NSP Pavucontrol"                 $ namedScratchpadAction scratchpads "pavucontrol")
-    , ("M-<F12>"                  , addName "NSP Spotify"                     $ namedScratchpadAction scratchpads "plex")
     ] ^++^
 
     -----------------------------------------------------------------------
@@ -774,8 +660,8 @@ myKeys conf = let
 
     subKeys "Windows"
     (
-    [ ("M-<Backspace>"                    , addName "Kill"                            kill1)
-    , ("M-S-<Backspace>"                  , addName "Kill all"                        $ confirmPrompt hotPromptTheme "kill all" $ killAll)
+    [ ("M-c"                    , addName "Kill"                            kill1)
+    , ("M-S-c"                  , addName "Kill all"                        $ confirmPrompt hotPromptTheme "kill all" $ killAll)
     , ("M-d"                    , addName "Duplicate w to all ws"           $ toggleCopyToAll)
     , ("M-b"                    , addName "Promote"                         $ promote)
     , ("M-g"                    , addName "Un-merge from sublayout"         $ withFocused (sendMessage . UnMerge))
@@ -798,7 +684,7 @@ myKeys conf = let
     -- TODO: following may necessitate use of a "passthrough" binding that can send C- values to focused w
     ++ zipM' "M1-"              "Move window"                               dirKeys dirs windowSwap True
     ++ zipM  "M-C-"             "Merge w/sublayout"                         dirKeys dirs (sendMessage . pullGroup)
-    ++ zipM' "M-S-"             "Navigate screen"                           arrowKeys dirs screenGo True
+    ++ zipM' "M-"               "Navigate screen"                           arrowKeys dirs screenGo True
     ++ zipM' "M-C-"             "Move window to screen"                     arrowKeys dirs windowToScreen True
     ++ zipM' "M-S-"             "Swap workspace to screen"                  arrowKeys dirs screenSwap True
 
@@ -872,6 +758,8 @@ myKeys conf = let
     -----------------------------------------------------------------------
 
     subKeys "Resize"
+
+
 
     [
 
@@ -956,15 +844,15 @@ myLogHook h = do
     --dynamicLogWithPP $ defaultPP
     dynamicLogWithPP $ def
 
-        { ppCurrent             = wrap "^fg(#F39C12)[^fg(#F1C40F)" "^fg(#F39C12)]"
-        , ppTitle               = (" " ++) . dzenColor "#5b709b" "" . dzenEscape
-        , ppVisible             = wrap "^fg(#d3d0c8)" "" . wrap "[" "]"
-        , ppUrgent              = wrap "^fg(#8ab3b5)[^fg(#cdc5b3)" "^fg(#8ab3b5)]"
+        { ppCurrent             = xmobarColor "#00afaf" "" . wrap "[" "]"
+        , ppTitle               = xmobarColor "#268bd2" "" . shorten 50 . wrap " " " "
+        , ppVisible             = xmobarColor base0  "" . wrap "("")"
+        , ppUrgent              = xmobarColor red    "" . wrap " "" "
         , ppHidden              = check
-        , ppHiddenNoWindows     = wrap " ^fg(#d3d0c8)" " "
+        , ppHiddenNoWindows     = const ""
         , ppSep                 = ""
         , ppWsSep               = ""
-        , ppLayout              = wrap "^fg(#8E44AD)[^fg(#9B59B6)" "^fg(#8E44AD)]"
+        , ppLayout              = xmobarColor "#b58900" "" . wrap " " " "
         , ppOrder               = id
         , ppOutput              = hPutStrLn h
         , ppSort                = fmap
@@ -1015,7 +903,7 @@ myManageHook :: ManageHook
 myManageHook =
         manageSpecific
     <+> manageDocks
-    <+> namedScratchpadManageHook scratchpads
+--    <+> namedScratchpadManageHook scratchpads
     <+> manageHook defaultConfig
     <+> LF.fullscreenManageHook
     <+> manageSpawn
@@ -1026,11 +914,10 @@ myManageHook =
             , resource =? "vlc"     -?> doFloat
             , resource =? "google-chrome" -?> doShift "2:web"
             , resource =? "steam"   -?> doFloat
---            , className =? spotifyClassName -?> doIgnore
             , transience
---            , isBrowserDialog -?> forceCenterFloat
---            --, isConsole -?> forceCenterFloat
---            , isRole =? gtkFile  -?> forceCenterFloat
+            , isBrowserDialog -?> forceCenterFloat
+            --, isConsole -?> forceCenterFloat
+            , isRole =? gtkFile  -?> forceCenterFloat
             , isDialog -?> doCenterFloat
             , isRole =? "pop-up" -?> doCenterFloat
             , isInProperty "_NET_WM_WINDOW_TYPE"
@@ -1046,16 +933,13 @@ myManageHook =
         tileBelowNoFocus = insertPosition Below Older
 
 ---------------------------------------------------------------------------
--- Event Actions
+-- X Event Actions
 ---------------------------------------------------------------------------
 
 myHandleEventHook = docksEventHook
                 <+> fadeWindowsEventHook
                 <+> handleEventHook def
                 <+> LF.fullscreenEventHook
-                <+> spotifyForceFloatingEventHook
-
-
 forceCenterFloat :: ManageHook
 forceCenterFloat = doFloatDep move
   where
@@ -1068,22 +952,14 @@ forceCenterFloat = doFloatDep move
     x = (1-w)/2
     y = (1-h)/2
 
-
-spotifyForceFloatingEventHook :: Event -> X All
-spotifyForceFloatingEventHook = dynamicPropertyChange "WM_NAME" (title =? "Spotify" --> floating)
-    where floating  = (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10))
-
-
-
-
 myStartupHook = do
 setWMName "LG3D"
---spawn "numlockx"
---spawn "[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources"
---spawn "sleep 2; xbacklight -set 40"
---spawn "pkill stalonetray; sleep 3; stalonetray"
---spawn "sleep 1; feh --bg-scale ~/Imagens/girl.jpg"
---spawn "xsetroot -cursor_name left_ptr"
+spawn "numlockx"
+spawn "[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources"
+spawn "sleep 2; xbacklight -set 40"
+spawn "pkill stalonetray; sleep 3; stalonetray"
+spawn "sleep 1; feh --bg-scale ~/Imagens/girl.jpg"
+spawn "xsetroot -cursor_name left_ptr"
 --spawn "Xcursor.theme: Adwaita" -- já carregado com o xresources
---spawn "compton"
---spawn "dmenu_run -y -18;sleep 0.5; pkill dmenu"
+spawn "compton"
+spawn "dmenu_run -y -18;sleep 0.5; pkill dmenu"

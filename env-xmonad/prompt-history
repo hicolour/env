@@ -1,1 +1,1 @@
-fromList [("Confirm Quit XMonad (esc/ENTER)",["","","","","","","","","","","","","",""])]
+fromList [("Confirm Quit XMonad (esc/ENTER)",["","","","","","","","","","","","","","","",""]),("Confirm Recompile and Restart XMonad (esc/ENTER)",["","","","","","","","","","","","","","","","","","","","","","","","","","","",""]),("Send Window to Project: ",["3","2:web","1:ter","","3","GCC"]),("Switch or Create Project: ",["4","","2:web","7","","2"])]
