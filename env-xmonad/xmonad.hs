@@ -394,6 +394,7 @@ inactive    = base02
 focusColor  = cyan
 unfocusColor = base02
 
+
 myFont      ="xft:misc ohsnap-11"
 --myFont      ="-ypn-envypn-Medium-R-Normal--13-130-75-75-C-90-ISO8859-1"
 myWideFont  = "xft:Eurostar Black Extended:"
@@ -546,22 +547,36 @@ myLayoutHook = showWorkspaceName
 
     -- --------------------------------------------
     -- |          |                    |          |
-    -- |          |                    |   Tabs   |
+    -- |----------|                    |----------|
     -- |          |                    |          |
     -- |----------|       Master       |----------|
     -- |          |                    |          |
-    -- |   Tabs   |                    |          |
+    -- |----------|                    |----------|
     -- |          |                    |          |
     -- --------------------------------------------
-    --
+
     threeCol = named "Unflexed"
          $ smartBorders
          $ avoidStruts
+         $ onlyTopGap
          $ addTopBar
-         $ myGaps
+--          $ myGaps
          $ mySpacing
          $ ThreeColMid 1 (1/10) (1/2)
 
+    --------------------------------------------------------------------------
+    -- Tabs Layout
+    --------------------------------------------------------------------------
+
+    -- --------------------------------------------
+    -- |                                          |
+    -- |                                          |
+    -- |                                          |
+    -- |                  Tabs                    |
+    -- |                                          |
+    -- |                                          |
+    -- |                                          |
+    -- --------------------------------------------
     tabs = named "Tabs"
          $ smartBorders
          $ avoidStruts
@@ -573,6 +588,17 @@ myLayoutHook = showWorkspaceName
     -----------------------------------------------------------------------
     -- Flexi SubLayouts
     -----------------------------------------------------------------------
+
+    -- Standard:
+    -- ---------------------------------
+    -- |                    |          |
+    -- |                    |          |
+    -- |                    |          |
+    -- |       Master       |----------|
+    -- |                    |          |
+    -- |                    |   Tabs   |
+    -- |                    |          |
+    -- ---------------------------------
 
     flex = trimNamed 5 "Flex"
               $ avoidStruts
@@ -718,12 +744,6 @@ myKeys conf = let
     , ("M-C-<KP_Right>"            , addName "Redim LD dir"                    $ withFocused (keysResizeWindow (5,0) (0,0)))
     , ("M-C-<KP_Up>"               , addName "Redim BAIXO levanta"             $ withFocused (keysResizeWindow (0,-5) (0,0)))
     , ("M-C-<KP_Down>"             , addName "Redim BAIXO desce"               $ withFocused (keysResizeWindow (0,5) (0,0)))
-
---    , ("M-m"                       , addName "MOC Open Player"                 $ spawn "urxvt -e mocp")
---    , ("M1-<Space>"                , addName "MOC Play/Pause"                  $ spawn "mocp -G")
---    , ("M1-]"                      , addName "MOC Next Music"                  $ spawn "mocp -f")
---    , ("M1-["                      , addName "MOC Previous Mucic"              $ spawn "mocp -r")
-
     ] ^++^
 
     -----------------------------------------------------------------------
@@ -753,7 +773,7 @@ myKeys conf = let
     , ("M-<F5>"                   , addName "NSP Rchst"                       $ spawn "/home/marek/projects/personal/rchst/rchst")
     , ("M-<F8>"                   , addName "NSP Wicd"                        $ namedScratchpadAction scratchpads "wicd-curses")
     , ("M-<F4>"                   , addName "NSP Pavucontrol"                 $ namedScratchpadAction scratchpads "pavucontrol")
-    , ("M-<F12>"                  , addName "NSP Spotify"                     $ namedScratchpadAction scratchpads "plex")
+    , ("M-<F12>"                  , addName "NSP Spotify"                     $ namedScratchpadAction scratchpads "spotify")
     ] ^++^
 
     -----------------------------------------------------------------------
@@ -814,11 +834,8 @@ myKeys conf = let
     ++ zipM "M-S-"              "Move w to ws"                          wsKeys [0..] (withNthWorkspace W.shift)
     ++ zipM "M-S-C-"            "Copy w to ws"                          wsKeys [0..] (withNthWorkspace copy)
     ) ^++^
-
-    -- TODO: consider a submap for nav/move to specific workspaces based on first initial
-
     -----------------------------------------------------------------------
-    -- Layouts & Sublayouts
+    -- Layouts & Sub-layouts
     -----------------------------------------------------------------------
 
     subKeys "Layout Management"
@@ -861,9 +878,7 @@ myKeys conf = let
 
     subKeys "Resize"
 
-    [
-
-      ("M-["                    , addName "Expand (L on BSP)"           $ tryMsgR (ExpandTowards L) (Shrink))
+    [ ("M-["                    , addName "Expand (L on BSP)"           $ tryMsgR (ExpandTowards L) (Shrink))
     , ("M-]"                    , addName "Expand (R on BSP)"           $ tryMsgR (ExpandTowards R) (Expand))
     , ("M-S-["                  , addName "Expand (U on BSP)"           $ tryMsgR (ExpandTowards U) (MirrorShrink))
     , ("M-S-]"                  , addName "Expand (D on BSP)"           $ tryMsgR (ExpandTowards D) (MirrorExpand))
@@ -913,17 +928,21 @@ myMouseBindings (XConfig {XMonad.modMask = myModMask}) = M.fromList $
 ---------------------------------------------------------------------------
 -- Startup
 ---------------------------------------------------------------------------
+myStartupHook = do
+    setWMName "LG3D"
+    setDefaultCursor xC_left_ptr
+
 
 quitXmonad :: X ()
 quitXmonad = io (exitWith ExitSuccess)
 
 rebuildXmonad :: X ()
 rebuildXmonad = do
-    spawn "pkill stalonetray; xmonad --recompile && xmonad --restart"
+    spawn "xmonad --recompile && xmonad --restart"
 
 restartXmonad :: X ()
 restartXmonad = do
-    spawn "pkill stalonetray; xmonad --restart"
+    spawn "xmonad --restart"
 
 
 
@@ -1014,11 +1033,7 @@ myManageHook =
             , resource =? "vlc"     -?> doFloat
             , resource =? "google-chrome" -?> doShift "2:web"
             , resource =? "steam"   -?> doFloat
---            , className =? spotifyClassName -?> doIgnore
             , transience
---            , isBrowserDialog -?> forceCenterFloat
---            --, isConsole -?> forceCenterFloat
---            , isRole =? gtkFile  -?> forceCenterFloat
             , isDialog -?> doCenterFloat
             , isRole =? "pop-up" -?> doCenterFloat
             , isInProperty "_NET_WM_WINDOW_TYPE"
@@ -1064,5 +1079,3 @@ spotifyForceFloatingEventHook = dynamicPropertyChange "WM_NAME" (title =? "Spoti
 
 
 
-myStartupHook = do
-setWMName "LG3D"

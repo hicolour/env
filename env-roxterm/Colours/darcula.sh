@@ -8,7 +8,7 @@ foreground=#d2d8d9
 
 0=#25292a           # HOST
 1=#f24840           # SYNTAX_STRING
-2=#629655           # COMMAND
+2=#f24840           # COMMAND
 3=#b68800           # COMMAND_COLOR2
 4=#2075c7           # PATH
 5=#797fd4           # SYNTAX_VAR
@@ -26,5 +26,4 @@ foreground=#d2d8d9
 
 cursor=#d2d8d9
 palette_size=16' |\
-sed -r 's/#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/#\1\1\2\2\3\3/;s/\s+#\s[^\n]+//' \
-> darcula
+sed -r 's/#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/#\1\1\2\2\3\3/;s/\s+#\s[^\n]+//' > darcula2
