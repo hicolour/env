@@ -8,10 +8,6 @@
 --     _|      _|  _|      _|    _|_|    _|    _|    _|_|_|    _|_|_|    --
 --                                                                       --
 ---------------------------------------------------------------------------
---                               Fork from                               --
---      Ethan Schoonover <es@ethanschoonover.com> @ethanschoonover       --
---                     https://github.com/altercation                    --
----------------------------------------------------------------------------
 --                       current as of XMonad 0.13                       --
 ---------------------------------------------------------------------------
 --                                Modules                                --
@@ -178,7 +174,6 @@ wsWRK   = "2:web"
 wsWRK2  = "3"
 wsGGC   = "GGC"
 
--- myWorkspaces = map show [1..9]
 myWorkspaces = [wsGEN, wsWRK, wsWRK2, wsSYS, wsMON, wsFLOAT, wsRW, wsTMP, wsGCC, wsAV]
 
 projects :: [Project]
@@ -252,16 +247,11 @@ myBrowserClass      = "Google-chrome-stable"
 myAltBrowser        = "firefox"
 myStatusBar         = "dzen2 -y 0 -x 0 -w 1000 -ta l "
 myIDE               = "./eclipse/java-oxygen/eclipse/eclipse"
---myMail              = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=bplaligjlefkphkdgeohajfaojnnfnpm"
 myMail              = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=egddcdhcadfhcbheacnhikllgjokeico"
 myKeep              = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=hcfcmgpnmpinpidjdgejehjchlbglpde"
 myTranslate         = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=fklgpoecafmhpbmoepkbhkhhbahodcdh"
---myLauncher          = "dmenu_run -o 0.9 -h 17 -fn 'misc ohsnap' -nb '#081c2b' -nf '#268bd2' -sf '#ffcc00' -sb '#4d3d00' -y 18 -p '>>>'"
---myLauncher          = "dmenu_run  -h 17 -fn 'misc ohsnap:bold' -sb '#081c2b' -sf '#00afaf' -nf '#ffcc00' -nb '#4d3d00' -y 18 -p '>>> funtoo linux '"
 
 myLauncher          = "rofictl"
---myLauncher          = "rofi -combi-modi window,drun -show combi -modi combi -width 90 -location 2 -columns 1"
---myLauncher          = "rofi -matching fuzzy -modi combi -show combi -combi-modi run,drun"
 
 ---------------------------------------------------------------------------
 -- Applications properties
@@ -294,9 +284,12 @@ scratchpads =
     ,   (NS "spotify"  spotifyCommand  isSpotify  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ]
     where role = stringProperty "WM_WINDOW_ROLE"
------------------------------------------------------------
 
--- ------------> DZEN Config TMP
+
+
+---------------------------------------------------------------------------
+-- Status Bar
+---------------------------------------------------------------------------
 
 myDzenPP = dzenPP
   {
@@ -305,7 +298,6 @@ myDzenPP = dzenPP
   , ppHidden           = wrap " ^fg(#d3d0c8)" " "
   , ppHiddenNoWindows  = wrap " ^fg(#747369)" " "
   , ppUrgent           = wrap "^fg(#8ab3b5)[^fg(#cdc5b3)" "^fg(#8ab3b5)]"
-
   , ppSep              = "  "
   , ppLayout           = wrap "^fg(#8E44AD)[^fg(#9B59B6)" "^fg(#8E44AD)]"
   , ppTitle            = (" " ++) . dzenColor "#5b709b" "" . dzenEscape
@@ -313,19 +305,16 @@ myDzenPP = dzenPP
   }
 
 
---myDzenXmonad="dzen2 -y 1030 -x 0 -w 1280 -ta l " ++ myDzenStyle
 myDzenXmonad="dzen2 -y 0 -x 0 -w 1000 -ta l " ++ myDzenStyle
 
 myDzenMonitoring="~/.dzen/dzen_xmonad.sh"
 
--- Dzen helpers
 myDzenStyle = "-fg '" ++ myFgColor ++
               "' -bg '" ++ myBgColor ++
               "' -fn '" ++ myFont ++
               "' -h 20"
 
 myFgColor = "#E74C3C"
---myBgColor = "#0f0f0f"
 myBgColor = "#1B1B1B"
 
 myFocusedFGColor = "#8ab1c1"
@@ -334,8 +323,7 @@ myAlertColor = "#934a5a"
 myColorH  = "#999999"
 myColorHN = "#686868"
 
--- myFont = "-ypn-envypn-Medium-R-Normal--13-130-75-75-C-90-ISO8859-1"
--- ------------> DZEN Config TMP
+
 
 
 -- I'm using a custom browser launching script (see myBrowser above) that
@@ -368,6 +356,9 @@ myColorHN = "#686868"
 
 myFocusFollowsMouse  = True
 myClickJustFocuses   = True
+
+baseFgColor = "#E74C3C"
+baseBgColor = "#1B1B1B"
 
 base03  = "#002b36"
 base02  = "#073642"
@@ -403,10 +394,8 @@ inactive    = base02
 focusColor  = cyan
 unfocusColor = base02
 
---myFont      ="xft:envypn-11"
 myFont      ="xft:misc ohsnap-11"
 --myFont      ="-ypn-envypn-Medium-R-Normal--13-130-75-75-C-90-ISO8859-1"
-myBigFont   = "-*-terminus-medium-*-*-*-*-240-*-*-*-*-*-*"
 myWideFont  = "xft:Eurostar Black Extended:"
             ++ "style=Regular:pixelsize=50:hinting=true"
 
@@ -512,7 +501,6 @@ barFull = avoidStruts $ Simplest
 
 myLayoutHook = showWorkspaceName
              $ avoidStruts
---             $ gaps [(U,20),(D,0),(L,0),(R,0)] --default gap rule krogulec
              $ onWorkspace wsFLOAT floatWorkSpace
              $ smartBorders
              $ LF.fullscreenFloat -- fixes floating windows going full screen, while retaining "bounded" fullscreen
@@ -1078,12 +1066,3 @@ spotifyForceFloatingEventHook = dynamicPropertyChange "WM_NAME" (title =? "Spoti
 
 myStartupHook = do
 setWMName "LG3D"
---spawn "numlockx"
---spawn "[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources"
---spawn "sleep 2; xbacklight -set 40"
---spawn "pkill stalonetray; sleep 3; stalonetray"
---spawn "sleep 1; feh --bg-scale ~/Imagens/girl.jpg"
---spawn "xsetroot -cursor_name left_ptr"
---spawn "Xcursor.theme: Adwaita" -- já carregado com o xresources
---spawn "compton"
---spawn "dmenu_run -y -18;sleep 0.5; pkill dmenu"
