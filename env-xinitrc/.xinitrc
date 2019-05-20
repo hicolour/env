@@ -70,7 +70,15 @@ _JAVA_AWT_WM_NONREPARENTING=1; export _JAVA_AWT_WM_NONREPARENTING
 #xloadimage -onroot
 #imlibsetroot  --composite    ~/.wallpaper/w004.png &
 #feh --bg-tile  ~/.wallpaper/bg-006.jpg &
-feh --bg-scale  ~/.wallpaper/bg-006.jpg &
+#feh --bg-scale  ~/.wallpaper/bg-006.jpg &
+
+w="~/.personal/wallpaper/bg-003.jpg"
+if [ -f ~/.personal/wallpaper/bg-003.jpg ]
+then
+	feh --bg-fill ~/.personal/wallpaper/bg-003.jpg &
+else
+	feh --bg-scale  ~/.wallpaper/bg-006.jpg &
+fi
 
 xbacklight -set 8 &
 
