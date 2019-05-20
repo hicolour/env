@@ -40,15 +40,46 @@ shopt -s histappend                       # append history file
 
 source <(doctl completion bash)
 
+
+# Jump down
+alias 1d="cd .."
+alias 2d="cd ../.."
+alias 3d="cd ../../.."
+alias 4d="cd ../../../.."
+alias 5d="cd ../../../../.."
+
 # History aliases
 alias h='history'
 alias hg='history | gr'
 
-# Adding color
+# Adding just color
 alias ls='ls -hN --color=auto --group-directories-first'
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
 alias ccat="highlight --out-format=ansi" # Color cat - print file with syntax highlighting.
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+
+alias la="ls -AFh"                   # List all files
+alias ld="ls -d */"                 # List only directories
+alias l.="ls -Ah | egrep '^\.'"      # List only dotfiles (hidden files)
+alias l1='ls -1AFh'                  # List files (one line at a time)
+alias lg="ls -AFh | grep"            # Grep through filenames (also see, hg)
+alias lp="ls -d `pwd`/*"            # List full paths
+alias lpg="ls -d `pwd`/* | grep"    # Grep through filenames but list full path
+alias lt="ls -Alth"                  # Sort by time
+alias ltr="ls -Altrh"                # Sort by time (reverse)
+alias lss="ls -AFlSh"                # Sort by size
+alias lsr="ls -AFlSrh"               # Sort by size (reverse)
+
+
+# Find here
+alias fh="find . -name "
+
+# Get my IP
+alias myip="curl http://ipecho.net/plain; echo"
 
 
 
@@ -63,6 +94,38 @@ rofi='rofi -font "ypn envypn 10"'
 alias gr='grep --color -E'
 
 alias y="yaourt --noconfirm"
+
+
+
+
+# Delete all untagged images.
+alias dockercleani='printf "\n>>> Deleting untagged images\n\n" && docker rmi $(docker images -q -f dangling=true)'
+
+alias norg="gron --ungron"
+alias ungron="gron --ungron"
+
+# git push
+alias gpd="git push origin develop"
+alias gpm="git push origin master"
+alias mergec="git merge --no-ff --no-commit"
+alias gclean="git clean -d -f -f"
+
+
+
+## pass options to free ##
+alias meminfo='free -m -l -t'
+
+## get top process eating memory
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+
+## get top process eating cpu ##
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+
+## Get server cpu info ##
+alias cpuinfo='lscpu'
+
 
 # Add PRIVATE scripts to PATH
 if [ -f ~/.personal/.private-bashrc ];
@@ -83,7 +146,7 @@ fi
 
 # export JAVA_HOME=/usr/lib/jvm/java-8-jdk/
 #export JAVA_HOME=/usr/lib/jvm/java-9-jdk/
-export JAVA_HOME=/usr/lib/jvm/java-10-jdk/
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk/
 
 PATH=$PATH:/$JAVA_HOME/bin/
 export PATH
