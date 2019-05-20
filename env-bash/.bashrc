@@ -32,7 +32,6 @@ HISTSIZE= HISTFILESIZE=
 export HISTIGNORE="ls*:rm*:cd*:CD*:ps*:exit*:reset*:clear*:synaptic*:mkdir*:cat*"
 export HISTCONTROL=ignoreboth:erasedups
 export PROMPT_COMMAND="history -a"        # update histfile after every command
-
 shopt -s histappend                       # append history file
 
 
@@ -82,6 +81,9 @@ alias fh="find . -name "
 alias myip="curl http://ipecho.net/plain; echo"
 
 
+
+alias cs='xclip -selection clipboard'
+alias vs='xclip -o -selection clipboard'
 
 
 alias su='yaourt -Suya --noconfirm; yaourt -Qtd'
