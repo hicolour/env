@@ -752,7 +752,7 @@ myKeys conf = let
     subKeys "Launchers"
     [ ("M-<Space>"                , addName "Launcher"                        $ spawn myLauncher)
     , ("M-M1-<Space>"             , addName "Windows Launcher"                $ spawn "rofictl window")
-    , ("M-<Return>"               , addName "Terminal"                        $ spawn myTerminal)
+    , ("M-<Return>"               , addName "Terminal"                        $ spawn myTerminal)8
     , ("M-r"                      , addName "Ranger"                          $ spawn "urxvt -e ranger")
     , ("<Print>"                  , addName "Print full"                      $ spawn "scrot -e 'mv $f ~/Imagens/ 2>/dev/null'")
     , ("M-<Print>"                , addName "Print por seleção"               $ spawn "sleep 0.2; scrot -s -e 'mv $f ~/Imagens/ 2>/dev/null'")
