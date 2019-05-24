@@ -2,3 +2,5 @@
 *.hi
 *.o
 *-x86_64-linux
+
+prompt-history

@@ -704,7 +704,7 @@ myKeys conf = let
     , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
     , ("M-x"                    , addName "Lock screen"                     $ spawn "slimlock")  -- "xset s activate"
     , ("M-F1"                   , addName "Show Keybindings"                $ return ())
-    , ("M-n"                , addName "Show Keybindings"                $ nextMatch History (return True))
+    , ("M-n"                    , addName "Show Keybindings"                $ nextMatch History (return True))
     ] ^++^
 
 
