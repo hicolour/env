@@ -704,7 +704,7 @@ myKeys conf = let
     , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
     , ("M-x"                    , addName "Lock screen"                     $ spawn "slimlock")  -- "xset s activate"
     , ("M-F1"                   , addName "Show Keybindings"                $ return ())
-    , ("M-n"                , addName "Show Keybindings"                $ nextMatch History (return True))
+    , ("M-n"                    , addName "Show Keybindings"                $ nextMatch History (return True))
     ] ^++^
 
 
@@ -717,15 +717,15 @@ myKeys conf = let
     , ("M-<KP_Delete>"             , addName "Power reset"                     $ confirmPrompt hotPromptTheme "Restart Linux" $ spawn "shutdown -r now")
     , ("<XF86PowerOff>"            , addName "Power off"                       $ confirmPrompt hotPromptTheme "Shutdown Linux" $ spawn "shutdown -h now")
 
-    , ("M1-<Right>"                , addName "Up brilho"                       $ spawn "xbacklight -inc 6")
-    , ("M1-<Left>"                 , addName "Down brilho"                     $ spawn "xbacklight -dec 6")
-    , ("<XF86MonBrightnessUp>"     , addName "Up brilho"                       $ spawn "xbacklight -inc 3")
-    , ("<XF86MonBrightnessDown>"   , addName "Down brilho"                     $ spawn "xbacklight -dec 3")
-    , ("M1-<Up>"                   , addName "Up audio"                        $ spawn "pamixer -i 10")
-    , ("M1-<Down>"                 , addName "Down audio"                      $ spawn "amixer set Master 5%-")
-    , ("M1-S-<Up>"                 , addName "Up audio beyond"                 $ spawn "pactl set-sink-volume 0 +10%")
-    , ("M1-S-<Down>"               , addName "Down audio beyond"               $ spawn "pactl set-sink-volume 0 -10%")
-    , ("M1-m"                      , addName "MUTE audio"                      $ spawn "amixer set Master toggle")
+    , ("M-M1-<Right>"              , addName "Up brightness"                   $ spawn "xbacklight -inc 6")
+    , ("M-M1-<Left>"               , addName "Down brightness"                 $ spawn "xbacklight -dec 6")
+    , ("<XF86MonBrightnessUp>"     , addName "Up brightness"                   $ spawn "xbacklight -inc 3")
+    , ("<XF86MonBrightnessDown>"   , addName "Down brightness"                 $ spawn "xbacklight -dec 3")
+    , ("M-M1-<Up>"                 , addName "Up audio"                        $ spawn "pamixer -i 10")
+    , ("M-M1-<Down>"               , addName "Down audio"                      $ spawn "amixer set Master 5%-")
+    , ("M-M1-S-<Up>"               , addName "Up audio beyond"                 $ spawn "pactl set-sink-volume 0 +10%")
+    , ("M-M1-S-<Down>"             , addName "Down audio beyond"               $ spawn "pactl set-sink-volume 0 -10%")
+    , ("M-M1-m"                    , addName "MUTE audio"                      $ spawn "amixer set Master toggle")
     , ("<XF86AudioRaiseVolume>"    , addName "Up audio"                        $ spawn "amixer set Master 5%+")
     , ("<XF86AudioLowerVolume>"    , addName "Down audio"                      $ spawn "amixer set Master 5%-")
     , ("<XF86AudioMute>"           , addName "MUTE audio"                      $ spawn "amixer set Master toggle")
@@ -782,23 +782,23 @@ myKeys conf = let
 
     subKeys "Windows"
     (
-    [ ("M-<Backspace>"                    , addName "Kill"                            kill1)
-    , ("M-S-<Backspace>"                  , addName "Kill all"                        $ confirmPrompt hotPromptTheme "kill all" $ killAll)
-    , ("M-d"                    , addName "Duplicate w to all ws"           $ toggleCopyToAll)
-    , ("M-b"                    , addName "Promote"                         $ promote)
-    , ("M-g"                    , addName "Un-merge from sublayout"         $ withFocused (sendMessage . UnMerge))
-    , ("M-S-g"                  , addName "Merge all into sublayout"        $ withFocused (sendMessage . MergeAll))
+    [ ("M-<Backspace>"            , addName "Kill"                            kill1)
+    , ("M-S-<Backspace>"          , addName "Kill all"                        $ confirmPrompt hotPromptTheme "kill all" $ killAll)
+    , ("M-d"                      , addName "Duplicate w to all ws"           $ toggleCopyToAll)
+    , ("M-b"                      , addName "Promote"                         $ promote)
+    , ("M-g"                      , addName "Un-merge from sublayout"         $ withFocused (sendMessage . UnMerge))
+    , ("M-S-g"                    , addName "Merge all into sublayout"        $ withFocused (sendMessage . MergeAll))
 
-    , ("M-z m"                  , addName "Focus master"                    $ windows W.focusMaster)
+    , ("M-z m"                    , addName "Focus master"                    $ windows W.focusMaster)
 
 
-    , ("M-'"                    , addName "Navigate tabs D"                 $ bindOn LD [("Tabs", windows W.focusDown), ("", onGroup W.focusDown')])
-    , ("M-;"                    , addName "Navigate tabs U"                 $ bindOn LD [("Tabs", windows W.focusUp), ("", onGroup W.focusUp')])
-    , ("C-'"                    , addName "Swap tab D"                      $ windows W.swapDown)
-    , ("C-;"                    , addName "Swap tab U"                      $ windows W.swapUp)
+    , ("M-'"                      , addName "Navigate tabs D"                 $ bindOn LD [("Tabs", windows W.focusDown), ("", onGroup W.focusDown')])
+    , ("M-;"                      , addName "Navigate tabs U"                 $ bindOn LD [("Tabs", windows W.focusUp), ("", onGroup W.focusUp')])
+    , ("C-'"                      , addName "Swap tab D"                      $ windows W.swapDown)
+    , ("C-;"                      , addName "Swap tab U"                      $ windows W.swapUp)
 
     -- ComboP specific (can remove after demo)
-    , ("M-C-S-m"                , addName "Combo swap"                      $ sendMessage $ SwapWindow)
+    , ("M-C-S-m"                  , addName "Combo swap"                      $ sendMessage $ SwapWindow)
     ]
 
     ++ zipM' "M-"               "Navigate window"                           dirKeys dirs windowGo True
