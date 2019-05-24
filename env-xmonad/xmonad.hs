@@ -730,6 +730,8 @@ myKeys conf = let
     , ("<XF86AudioLowerVolume>"    , addName "Down audio"                      $ spawn "amixer set Master 5%-")
     , ("<XF86AudioMute>"           , addName "MUTE audio"                      $ spawn "amixer set Master toggle")
 
+
+    -- MAKE FLOATING / MOVE & RESIZe
     , ("M-<KP_Left>"               , addName "Esquerda"                        $ withFocused (keysMoveWindow (-5,0)))
     , ("M-<KP_Right>"              , addName "Direita"                         $ withFocused (keysMoveWindow (5,0)))
     , ("M-<KP_Up>"                 , addName "Levanta"                         $ withFocused (keysMoveWindow (0,-5)))
@@ -752,7 +754,7 @@ myKeys conf = let
     subKeys "Launchers"
     [ ("M-<Space>"                , addName "Launcher"                        $ spawn myLauncher)
     , ("M-M1-<Space>"             , addName "Windows Launcher"                $ spawn "rofictl window")
-    , ("M-<Return>"               , addName "Terminal"                        $ spawn myTerminal)8
+    , ("M-<Return>"               , addName "Terminal"                        $ spawn myTerminal)
     , ("M-r"                      , addName "Ranger"                          $ spawn "urxvt -e ranger")
     , ("<Print>"                  , addName "Print full"                      $ spawn "scrot -e 'mv $f ~/Imagens/ 2>/dev/null'")
     , ("M-<Print>"                , addName "Print por seleção"               $ spawn "sleep 0.2; scrot -s -e 'mv $f ~/Imagens/ 2>/dev/null'")
