@@ -118,7 +118,7 @@ main () {
 
 menu () {
     items="auto internal external span spanex mirror"
-    result=$((for item in $items; do echo $item; done) | launcher "Display Mode")
+    result=$((for item in $items; do echo $item; done) | rofictl "Display Mode")
     case ${result:-} in
         in*)    internal ;;
         ex*)    external ;;

@@ -289,6 +289,8 @@ scratchpads =
     ,   (NS "terminal-2"  "roxterm --role scratchpad-2" (role =? "scratchpad-2")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "htop"  "roxterm --role scratchpad-htop -e htop" (role =? "scratchpad-htop")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "glances"  "roxterm --role scratchpad-glances -e glances" (role =? "scratchpad-glances")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    -- Need to fix displayctl menu
+    ,   (NS "displayctl"  "roxterm --role scratchpad-displayctl -e 'displayctl menu'" (role =? "scratchpad-displayctl")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "wicd-curses" wicdCursesCommand isWicdCurses (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "wicd" wicdGtkCommand isWicdGtk (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "pavucontrol"  pavucontrolCommand isPavucontrol (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
@@ -727,37 +729,41 @@ myKeys conf = let
     , ("M-<KP_Delete>"             , addName "Power reset"                     $ confirmPrompt hotPromptTheme "Restart Linux" $ spawn "shutdown -r now")
     , ("<XF86PowerOff>"            , addName "Power off"                       $ confirmPrompt hotPromptTheme "Shutdown Linux" $ spawn "shutdown -h now")
 
-    , ("M-M1-<Right>"              , addName "Up brightness"                   $ spawn "xbacklight -inc 6")
-    , ("M-M1-<Left>"               , addName "Down brightness"                 $ spawn "xbacklight -dec 6")
-    , ("<XF86MonBrightnessUp>"     , addName "Up brightness"                   $ spawn "xbacklight -inc 3")
-    , ("<XF86MonBrightnessDown>"   , addName "Down brightness"                 $ spawn "xbacklight -dec 3")
+    , ("M-M1-<Right>"              , addName "Up brightness"                   $ spawn "xbacklight -inc 6  & notify-send  \"Bright Up\"")
+    , ("M-M1-<Left>"               , addName "Down brightness"                 $ spawn "xbacklight -dec 6  & notify-send  \"Bright Down\"")
+    , ("<XF86MonBrightnessUp>"     , addName "Up brightness"                   $ spawn "xbacklight -inc 6  & notify-send  \"Bright Up\"")
+    , ("<XF86MonBrightnessDown>"   , addName "Down brightness"                 $ spawn "xbacklight -dec 6  & notify-send  \"Bright Down\"")
+    -- XF86XK_MonBrightnessUp XF86XK_MonBrightnessDown
 
-    , ("M-M1-<Up>"                 , addName "Up audio"                        $ spawn "pamixer -i 10")
-    , ("M-M1-<Down>"               , addName "Down audio"                      $ spawn "amixer set Master 5%-")
-    , ("M-M1-S-<Up>"               , addName "Up audio beyond"                 $ spawn "pactl set-sink-volume 0 +10%")
-    , ("M-M1-S-<Down>"             , addName "Down audio beyond"               $ spawn "pactl set-sink-volume 0 -10%")
-    , ("M-M1-m"                    , addName "MUTE audio"                      $ spawn "amixer set Master toggle")
-    , ("<XF86AudioRaiseVolume>"    , addName "Up audio"                        $ spawn "amixer set Master 5%+")
-    , ("<XF86AudioLowerVolume>"    , addName "Down audio"                      $ spawn "amixer set Master 5%-")
+    , ("M-M1-<Up>"                 , addName "Up audio"                        $ spawn "pamixer -i 5 & notify-send  \"Audio Up\" $(pamixer --get-volume-human)")
+    , ("M-M1-<Down>"               , addName "Down audio"                      $ spawn "pamixer -d 5 & notify-send  \"Audio Down\" $(pamixer --get-volume-human)")
+    , ("M-M1-S-<Up>"               , addName "Up audio beyond"                 $ spawn "pactl set-sink-volume 0 +10% & notify-send  \"Audio Up Beyond\" $(pamixer --get-volume-human)")
+    , ("M-M1-S-<Down>"             , addName "Down audio beyond"               $ spawn "pactl set-sink-volume 0 -10% & notify-send  \"Audio Down Beyond\" $(pamixer --get-volume-human)")
+    , ("M-M1-m"                    , addName "MUTE audio"                      $ spawn "pamixer -t & notify-send  \"Audio Mute\"")
+    , ("<XF86AudioRaiseVolume>"    , addName "Up audio"                        $ spawn "pamixer -i 5 & notify-send  \"Audio Up\" $(pamixer --get-volume-human)")
+    , ("<XF86AudioLowerVolume>"    , addName "Down audio"                      $ spawn "pamixer -d 5 & notify-send  \"Audio Down\" $(pamixer --get-volume-human)")
     , ("<XF86AudioMute>"           , addName "MUTE audio"                      $ spawn "amixer set Master toggle")
 
 
+    , ("M-o"                    , addName "Display (output) launcher"       $ namedScratchpadAction scratchpads "displayctl")
 
-    -- MAKE FLOATING / MOVE & RESIZe
-    , ("M-<KP_Left>"               , addName "Esquerda"                        $ withFocused (keysMoveWindow (-5,0)))
-    , ("M-<KP_Right>"              , addName "Direita"                         $ withFocused (keysMoveWindow (5,0)))
-    , ("M-<KP_Up>"                 , addName "Levanta"                         $ withFocused (keysMoveWindow (0,-5)))
-    , ("M-<KP_Down>"               , addName "Desce"                           $ withFocused (keysMoveWindow (0,5)))
 
-    , ("M-S-<KP_Left>"             , addName "Redim LE esq"                    $ withFocused (keysResizeWindow (5,0) (1,0)))
-    , ("M-S-<KP_Right>"            , addName "Redim LE dir"                    $ withFocused (keysResizeWindow (-5,0) (1,0)))
-    , ("M-S-<KP_Up>"               , addName "Redim CIMA levanta"              $ withFocused (keysResizeWindow (0,5) (0,1)))
-    , ("M-S-<KP_Down>"             , addName "Redim CIMA desce"                $ withFocused (keysResizeWindow (0,-5) (0,1)))
 
-    , ("M-C-<KP_Left>"             , addName "Redim LD esq"                    $ withFocused (keysResizeWindow (-5,0) (0,0)))
-    , ("M-C-<KP_Right>"            , addName "Redim LD dir"                    $ withFocused (keysResizeWindow (5,0) (0,0)))
-    , ("M-C-<KP_Up>"               , addName "Redim BAIXO levanta"             $ withFocused (keysResizeWindow (0,-5) (0,0)))
-    , ("M-C-<KP_Down>"             , addName "Redim BAIXO desce"               $ withFocused (keysResizeWindow (0,5) (0,0)))
+    -- Make floating and move/resize - consume keypads
+--     , ("M-<KP_Left>"               , addName "Esquerda"                        $ withFocused (keysMoveWindow (-5,0)))
+--     , ("M-<KP_Right>"              , addName "Direita"                         $ withFocused (keysMoveWindow (5,0)))
+--     , ("M-<KP_Up>"                 , addName "Levanta"                         $ withFocused (keysMoveWindow (0,-5)))
+--     , ("M-<KP_Down>"               , addName "Desce"                           $ withFocused (keysMoveWindow (0,5)))
+--
+--     , ("M-S-<KP_Left>"             , addName "Redim LE esq"                    $ withFocused (keysResizeWindow (5,0) (1,0)))
+--     , ("M-S-<KP_Right>"            , addName "Redim LE dir"                    $ withFocused (keysResizeWindow (-5,0) (1,0)))
+--     , ("M-S-<KP_Up>"               , addName "Redim CIMA levanta"              $ withFocused (keysResizeWindow (0,5) (0,1)))
+--     , ("M-S-<KP_Down>"             , addName "Redim CIMA desce"                $ withFocused (keysResizeWindow (0,-5) (0,1)))
+--
+--     , ("M-C-<KP_Left>"             , addName "Redim LD esq"                    $ withFocused (keysResizeWindow (-5,0) (0,0)))
+--     , ("M-C-<KP_Right>"            , addName "Redim LD dir"                    $ withFocused (keysResizeWindow (5,0) (0,0)))
+--     , ("M-C-<KP_Up>"               , addName "Redim BAIXO levanta"             $ withFocused (keysResizeWindow (0,-5) (0,0)))
+--     , ("M-C-<KP_Down>"             , addName "Redim BAIXO desce"               $ withFocused (keysResizeWindow (0,5) (0,0)))
     ] ^++^
 
     -----------------------------------------------------------------------
@@ -767,8 +773,7 @@ myKeys conf = let
     [ ("M-a"                    , addName "Notify w current X selection"    $ unsafeWithSelection "notify-send")
 --NW    , ("M-u"                    , addName "Copy current browser URL"        $ spawn "with-url copy")
 --NW    , ("M-o"                    , addName "Display (output) launcher"       $ spawn "displayctl menu")
---NW     , ("<XF86XK_MonBrightnessUp>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -inc 5  & notify-send  \"Bright Up\"")
---NW     , ("<xF86XK_MonBrightnessDown>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -dec 5")
+
     , ("M-<XF86Display>"        , addName "Display - force internal"        $ spawn "displayctl internal")
     , ("M-i"                    , addName "Network (Interface) launcher"    $ spawn "wicd-gtk")
     , ("M-/"                    , addName "On-screen keys"                  $ spawn "killall screenkey &>/dev/null || screenkey --no-systray")
@@ -789,7 +794,7 @@ myKeys conf = let
     , ("M-r"                      , addName "Ranger"                          $ spawn "urxvt -e ranger")
     , ("<Print>"                  , addName "Print full"                      $ spawn "scrot -e 'mv $f ~/Imagens/ 2>/dev/null'")
     , ("M-<Print>"                , addName "Print por seleção"               $ spawn "sleep 0.2; scrot -s -e 'mv $f ~/Imagens/ 2>/dev/null'")
-    , ("M-o"                      , addName "Browser"                         $ spawn myBrowser)
+--     , ("M-o"                      , addName "Browser"                         $ spawn myBrowser)
     , ("M-\\"                     , addName "Browser Alternativo"             $ spawn myAltBrowser)
     , ("M-<Home>"                 , addName "E-mail"                          $ spawn myMail)
     , ("M-<Insert>"               , addName "Keep"                            $ spawn myKeep)
