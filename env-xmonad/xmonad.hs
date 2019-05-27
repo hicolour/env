@@ -725,8 +725,10 @@ myKeys conf = let
     subKeys "System"
     [ ("M-x"                       , addName "Lock screen"                     $ spawn "slimlock")
 
-    , ("M-<KP_Insert>"             , addName "Power off"                       $ confirmPrompt hotPromptTheme "Shutdown Linux" $ spawn "shutdown -h now")
-    , ("M-<KP_Delete>"             , addName "Power reset"                     $ confirmPrompt hotPromptTheme "Restart Linux" $ spawn "shutdown -r now")
+-- Consume keypads
+--     , ("M-<KP_Insert>"             , addName "Power off"                       $ confirmPrompt hotPromptTheme "Shutdown Linux" $ spawn "shutdown -h now")
+--     , ("M-<KP_Delete>"             , addName "Power reset"                     $ confirmPrompt hotPromptTheme "Restart Linux" $ spawn "shutdown -r now")
+
     , ("<XF86PowerOff>"            , addName "Power off"                       $ confirmPrompt hotPromptTheme "Shutdown Linux" $ spawn "shutdown -h now")
 
     , ("M-M1-<Right>"              , addName "Up brightness"                   $ spawn "xbacklight -inc 6  & notify-send  \"Bright Up\"")
