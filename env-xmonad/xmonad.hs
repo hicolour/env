@@ -712,9 +712,9 @@ myKeys conf = let
     -- System / Utilities
     -----------------------------------------------------------------------
     subKeys "Xmonad"
-    [ ("M-q"                    , addName "Restart XMonad"                  $ confirmPrompt hotPromptTheme "Restart XMonad" $ restartXmonad)
-    , ("M-C-q"                  , addName "Rebuild & restart XMonad"        $ confirmPrompt hotPromptTheme "Recompile and Restart XMonad" $ rebuildXmonad)
-    , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
+    [ ("M-q"                       , addName "Restart XMonad"                  $ confirmPrompt hotPromptTheme "Restart XMonad" $ restartXmonad)
+    , ("M-C-q"                     , addName "Rebuild & restart XMonad"        $ confirmPrompt hotPromptTheme "Recompile and Restart XMonad" $ rebuildXmonad)
+    , ("M-S-q"                     , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
     ] ^++^
 
 
@@ -724,10 +724,6 @@ myKeys conf = let
 
     subKeys "System"
     [ ("M-x"                       , addName "Lock screen"                     $ spawn "slimlock")
-
--- Consume keypads
---     , ("M-<KP_Insert>"             , addName "Power off"                       $ confirmPrompt hotPromptTheme "Shutdown Linux" $ spawn "shutdown -h now")
---     , ("M-<KP_Delete>"             , addName "Power reset"                     $ confirmPrompt hotPromptTheme "Restart Linux" $ spawn "shutdown -r now")
 
     , ("<XF86PowerOff>"            , addName "Power off"                       $ confirmPrompt hotPromptTheme "Shutdown Linux" $ spawn "shutdown -h now")
 
@@ -747,43 +743,22 @@ myKeys conf = let
     , ("<XF86AudioMute>"           , addName "MUTE audio"                      $ spawn "amixer set Master toggle")
 
 
-    , ("M-o"                    , addName "Display (output) launcher"       $ namedScratchpadAction scratchpads "displayctl")
-
-
-
-    -- Make floating and move/resize - consume keypads
---     , ("M-<KP_Left>"               , addName "Esquerda"                        $ withFocused (keysMoveWindow (-5,0)))
---     , ("M-<KP_Right>"              , addName "Direita"                         $ withFocused (keysMoveWindow (5,0)))
---     , ("M-<KP_Up>"                 , addName "Levanta"                         $ withFocused (keysMoveWindow (0,-5)))
---     , ("M-<KP_Down>"               , addName "Desce"                           $ withFocused (keysMoveWindow (0,5)))
---
---     , ("M-S-<KP_Left>"             , addName "Redim LE esq"                    $ withFocused (keysResizeWindow (5,0) (1,0)))
---     , ("M-S-<KP_Right>"            , addName "Redim LE dir"                    $ withFocused (keysResizeWindow (-5,0) (1,0)))
---     , ("M-S-<KP_Up>"               , addName "Redim CIMA levanta"              $ withFocused (keysResizeWindow (0,5) (0,1)))
---     , ("M-S-<KP_Down>"             , addName "Redim CIMA desce"                $ withFocused (keysResizeWindow (0,-5) (0,1)))
---
---     , ("M-C-<KP_Left>"             , addName "Redim LD esq"                    $ withFocused (keysResizeWindow (-5,0) (0,0)))
---     , ("M-C-<KP_Right>"            , addName "Redim LD dir"                    $ withFocused (keysResizeWindow (5,0) (0,0)))
---     , ("M-C-<KP_Up>"               , addName "Redim BAIXO levanta"             $ withFocused (keysResizeWindow (0,-5) (0,0)))
---     , ("M-C-<KP_Down>"             , addName "Redim BAIXO desce"               $ withFocused (keysResizeWindow (0,5) (0,0)))
+    , ("M-<XF86Display>"           , addName "Display - force internal"        $ spawn "displayctl internal")
+    , ("M-o"                       , addName "Display (output) launcher"       $ namedScratchpadAction scratchpads "displayctl")
     ] ^++^
 
     -----------------------------------------------------------------------
     -- Actions
     -----------------------------------------------------------------------
     subKeys "Actions"
-    [ ("M-a"                    , addName "Notify w current X selection"    $ unsafeWithSelection "notify-send")
---NW    , ("M-u"                    , addName "Copy current browser URL"        $ spawn "with-url copy")
---NW    , ("M-o"                    , addName "Display (output) launcher"       $ spawn "displayctl menu")
+    [ ("M-a"                       , addName "Notify w current X selection"    $ unsafeWithSelection "notify-send")
 
-    , ("M-<XF86Display>"        , addName "Display - force internal"        $ spawn "displayctl internal")
-    , ("M-i"                    , addName "Network (Interface) launcher"    $ spawn "wicd-gtk")
-    , ("M-/"                    , addName "On-screen keys"                  $ spawn "killall screenkey &>/dev/null || screenkey --no-systray")
-    , ("M-S-/"                  , addName "On-screen keys settings"         $ spawn "screenkey --show-settings")
-    , ("M1-p"                   , addName "Capture screen"                  $ spawn "screenshot" )
-    , ("M1-S-p"                 , addName "Capture screen - area select"    $ spawn "screenshot area" )
-    , ("M1-r"                   , addName "Record screen"                   $ spawn "screencast" )
-    , ("M1-S-r"                 , addName "Record screen - area select"     $ spawn "screencast area" )
+    , ("M-M1-/"                       , addName "On-screen keys"                  $ spawn "killall screenkey &>/dev/null || screenkey --no-systray")
+    , ("M-M1-S-/"                     , addName "On-screen keys settings"         $ spawn "screenkey --show-settings")
+    , ("M-M1-s"                       , addName "Capture screen"                  $ spawn "screenshot" )
+    , ("M-M1-S-s"                     , addName "Capture screen - area select"    $ spawn "screenshot area" )
+    , ("M-M1-r"                       , addName "Record screen"                   $ spawn "screencast" )
+    , ("M-M1-S-r"                     , addName "Record screen - area select"     $ spawn "screencast area" )
     ] ^++^
 
     -----------------------------------------------------------------------
@@ -793,10 +768,9 @@ myKeys conf = let
     [ ("M-<Space>"                , addName "Launcher"                        $ spawn myLauncher)
     , ("M-M1-<Space>"             , addName "Windows Launcher"                $ spawn "rofictl window")
     , ("M-<Return>"               , addName "Terminal"                        $ spawn myTerminal)
-    , ("M-r"                      , addName "Ranger"                          $ spawn "urxvt -e ranger")
-    , ("<Print>"                  , addName "Print full"                      $ spawn "scrot -e 'mv $f ~/Imagens/ 2>/dev/null'")
-    , ("M-<Print>"                , addName "Print por seleção"               $ spawn "sleep 0.2; scrot -s -e 'mv $f ~/Imagens/ 2>/dev/null'")
---     , ("M-o"                      , addName "Browser"                         $ spawn myBrowser)
+
+    , ("M-r"                      , addName "Ranger"                          $ spawn "roxterm -e ranger")
+    , ("M-b"                      , addName "Browser"                         $ spawn myBrowser)
     , ("M-\\"                     , addName "Browser Alternativo"             $ spawn myAltBrowser)
     , ("M-<Home>"                 , addName "E-mail"                          $ spawn myMail)
     , ("M-<Insert>"               , addName "Keep"                            $ spawn myKeep)
@@ -829,7 +803,7 @@ myKeys conf = let
     [ ("M-<Backspace>"            , addName "Kill"                            kill1)
     , ("M-S-<Backspace>"          , addName "Kill all"                        $ confirmPrompt hotPromptTheme "kill all" $ killAll)
     , ("M-d"                      , addName "Duplicate w to all ws"           $ toggleCopyToAll)
-    , ("M-b"                      , addName "Promote"                         $ promote)
+    , ("M-p"                      , addName "Promote"                         $ promote)
     , ("M-g"                      , addName "Un-merge from sublayout"         $ withFocused (sendMessage . UnMerge))
     , ("M-S-g"                    , addName "Merge all into sublayout"        $ withFocused (sendMessage . MergeAll))
 
@@ -853,6 +827,24 @@ myKeys conf = let
     ++ zipM' "M-S-"             "Navigate screen"                           arrowKeys dirs screenGo True
     ++ zipM' "M-C-"             "Move window to screen"                     arrowKeys dirs windowToScreen True
     ++ zipM' "M-S-"             "Swap workspace to screen"                  arrowKeys dirs screenSwap True
+
+
+
+    -- Make floating and move/resize - consume keypads
+--     , ("M-<KP_Left>"               , addName "Esquerda"                        $ withFocused (keysMoveWindow (-5,0)))
+--     , ("M-<KP_Right>"              , addName "Direita"                         $ withFocused (keysMoveWindow (5,0)))
+--     , ("M-<KP_Up>"                 , addName "Levanta"                         $ withFocused (keysMoveWindow (0,-5)))
+--     , ("M-<KP_Down>"               , addName "Desce"                           $ withFocused (keysMoveWindow (0,5)))
+--
+--     , ("M-S-<KP_Left>"             , addName "Redim LE esq"                    $ withFocused (keysResizeWindow (5,0) (1,0)))
+--     , ("M-S-<KP_Right>"            , addName "Redim LE dir"                    $ withFocused (keysResizeWindow (-5,0) (1,0)))
+--     , ("M-S-<KP_Up>"               , addName "Redim CIMA levanta"              $ withFocused (keysResizeWindow (0,5) (0,1)))
+--     , ("M-S-<KP_Down>"             , addName "Redim CIMA desce"                $ withFocused (keysResizeWindow (0,-5) (0,1)))
+--
+--     , ("M-C-<KP_Left>"             , addName "Redim LD esq"                    $ withFocused (keysResizeWindow (-5,0) (0,0)))
+--     , ("M-C-<KP_Right>"            , addName "Redim LD dir"                    $ withFocused (keysResizeWindow (5,0) (0,0)))
+--     , ("M-C-<KP_Up>"               , addName "Redim BAIXO levanta"             $ withFocused (keysResizeWindow (0,-5) (0,0)))
+--     , ("M-C-<KP_Down>"             , addName "Redim BAIXO desce"               $ withFocused (keysResizeWindow (0,5) (0,0)))
 
     ) ^++^
 
