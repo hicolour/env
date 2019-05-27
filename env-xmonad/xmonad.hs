@@ -130,7 +130,7 @@ main = do
         $ withNavigation2DConfig myNav2DConf
         $ withUrgencyHook LibNotifyUrgencyHook
         $ ewmh
-        $ addDescrKeys' ((myModMask, xK_F1), showKeybindings) myKeys
+        $ addDescrKeys' ((myModMask, xK_F12), showKeybindings) myKeys
         $ myConfig xmproc
 
 myConfig p = def
@@ -272,12 +272,23 @@ pavucontrolCommand      = "pavucontrol"
 pavucontrolClassName    = "Pavucontrol"
 isPavucontrol          = (className =? pavucontrolClassName)
 
+rchstCommand      = "/home/marek/projects/personal/rchst/rchst"
+rchstClassName    = "Rofi"
+isRchst          = (className =? rchstClassName)
+
+
+
 ---------------------------------------------------------------------------
 -- Scratchpads
 ---------------------------------------------------------------------------
+
+
 scratchpads =
-    [   (NS "terminal"  "roxterm --role scratchpad" (role =? "scratchpad")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
-    ,   (NS "htop"  "roxterm --role scratchpad -e htop" (role =? "scratchpad")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    [   (NS "rchst"  rchstCommand isRchst  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    ,   (NS "terminal-1"  "roxterm --role scratchpad-1" (role =? "scratchpad-1")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    ,   (NS "terminal-2"  "roxterm --role scratchpad-2" (role =? "scratchpad-2")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    ,   (NS "htop"  "roxterm --role scratchpad-htop -e htop" (role =? "scratchpad-htop")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    ,   (NS "glances"  "roxterm --role scratchpad-glances -e glances" (role =? "scratchpad-glances")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "wicd-curses" wicdCursesCommand isWicdCurses (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "wicd" wicdGtkCommand isWicdGtk (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "pavucontrol"  pavucontrolCommand isPavucontrol (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
@@ -698,13 +709,10 @@ myKeys conf = let
     -----------------------------------------------------------------------
     -- System / Utilities
     -----------------------------------------------------------------------
-    subKeys "System"
+    subKeys "Xmonad"
     [ ("M-q"                    , addName "Restart XMonad"                  $ confirmPrompt hotPromptTheme "Restart XMonad" $ restartXmonad)
     , ("M-C-q"                  , addName "Rebuild & restart XMonad"        $ confirmPrompt hotPromptTheme "Recompile and Restart XMonad" $ rebuildXmonad)
     , ("M-S-q"                  , addName "Quit XMonad"                     $ confirmPrompt hotPromptTheme "Quit XMonad" $ io (exitWith ExitSuccess))
-    , ("M-x"                    , addName "Lock screen"                     $ spawn "slimlock")  -- "xset s activate"
-    , ("M-F1"                   , addName "Show Keybindings"                $ return ())
-    , ("M-n"                    , addName "Show Keybindings"                $ nextMatch History (return True))
     ] ^++^
 
 
@@ -712,8 +720,10 @@ myKeys conf = let
     -- Actions keys https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Util-EZConfig.html
     -----------------------------------------------------------------------
 
-    subKeys "Actions"
-    [ ("M-<KP_Insert>"             , addName "Power off"                       $ confirmPrompt hotPromptTheme "Shutdown Linux" $ spawn "shutdown -h now")
+    subKeys "System"
+    [ ("M-x"                       , addName "Lock screen"                     $ spawn "slimlock")
+
+    , ("M-<KP_Insert>"             , addName "Power off"                       $ confirmPrompt hotPromptTheme "Shutdown Linux" $ spawn "shutdown -h now")
     , ("M-<KP_Delete>"             , addName "Power reset"                     $ confirmPrompt hotPromptTheme "Restart Linux" $ spawn "shutdown -r now")
     , ("<XF86PowerOff>"            , addName "Power off"                       $ confirmPrompt hotPromptTheme "Shutdown Linux" $ spawn "shutdown -h now")
 
@@ -721,6 +731,7 @@ myKeys conf = let
     , ("M-M1-<Left>"               , addName "Down brightness"                 $ spawn "xbacklight -dec 6")
     , ("<XF86MonBrightnessUp>"     , addName "Up brightness"                   $ spawn "xbacklight -inc 3")
     , ("<XF86MonBrightnessDown>"   , addName "Down brightness"                 $ spawn "xbacklight -dec 3")
+
     , ("M-M1-<Up>"                 , addName "Up audio"                        $ spawn "pamixer -i 10")
     , ("M-M1-<Down>"               , addName "Down audio"                      $ spawn "amixer set Master 5%-")
     , ("M-M1-S-<Up>"               , addName "Up audio beyond"                 $ spawn "pactl set-sink-volume 0 +10%")
@@ -729,6 +740,7 @@ myKeys conf = let
     , ("<XF86AudioRaiseVolume>"    , addName "Up audio"                        $ spawn "amixer set Master 5%+")
     , ("<XF86AudioLowerVolume>"    , addName "Down audio"                      $ spawn "amixer set Master 5%-")
     , ("<XF86AudioMute>"           , addName "MUTE audio"                      $ spawn "amixer set Master toggle")
+
 
 
     -- MAKE FLOATING / MOVE & RESIZe
@@ -746,6 +758,25 @@ myKeys conf = let
     , ("M-C-<KP_Right>"            , addName "Redim LD dir"                    $ withFocused (keysResizeWindow (5,0) (0,0)))
     , ("M-C-<KP_Up>"               , addName "Redim BAIXO levanta"             $ withFocused (keysResizeWindow (0,-5) (0,0)))
     , ("M-C-<KP_Down>"             , addName "Redim BAIXO desce"               $ withFocused (keysResizeWindow (0,5) (0,0)))
+    ] ^++^
+
+    -----------------------------------------------------------------------
+    -- Actions
+    -----------------------------------------------------------------------
+    subKeys "Actions"
+    [ ("M-a"                    , addName "Notify w current X selection"    $ unsafeWithSelection "notify-send")
+--NW    , ("M-u"                    , addName "Copy current browser URL"        $ spawn "with-url copy")
+--NW    , ("M-o"                    , addName "Display (output) launcher"       $ spawn "displayctl menu")
+--NW     , ("<XF86XK_MonBrightnessUp>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -inc 5  & notify-send  \"Bright Up\"")
+--NW     , ("<xF86XK_MonBrightnessDown>"        , addName "Display - force internal"        $ spawn "/usr/bin/xbacklight -dec 5")
+    , ("M-<XF86Display>"        , addName "Display - force internal"        $ spawn "displayctl internal")
+    , ("M-i"                    , addName "Network (Interface) launcher"    $ spawn "wicd-gtk")
+    , ("M-/"                    , addName "On-screen keys"                  $ spawn "killall screenkey &>/dev/null || screenkey --no-systray")
+    , ("M-S-/"                  , addName "On-screen keys settings"         $ spawn "screenkey --show-settings")
+    , ("M1-p"                   , addName "Capture screen"                  $ spawn "screenshot" )
+    , ("M1-S-p"                 , addName "Capture screen - area select"    $ spawn "screenshot area" )
+    , ("M1-r"                   , addName "Record screen"                   $ spawn "screencast" )
+    , ("M1-S-r"                 , addName "Record screen - area select"     $ spawn "screencast area" )
     ] ^++^
 
     -----------------------------------------------------------------------
@@ -770,12 +801,16 @@ myKeys conf = let
     -- Launchers
     -----------------------------------------------------------------------
     subKeys "Scratchpads"
-    [ ("M-<F2>"                   , addName "NSP Terminal"                    $ namedScratchpadAction scratchpads "terminal")
-    , ("M-<F3>"                   , addName "NSP Htop"                        $ namedScratchpadAction scratchpads "htop")
-    , ("M-<F5>"                   , addName "NSP Rchst"                       $ spawn "/home/marek/projects/personal/rchst/rchst")
+    [ ("M-<F1>"                   , addName "NSP Rchst"                       $ namedScratchpadAction scratchpads "rchst")
+    , ("M-<F2>"                   , addName "NSP Terminal"                    $ namedScratchpadAction scratchpads "terminal-1")
+    , ("M-<F3>"                   , addName "NSP Terminal"                    $ namedScratchpadAction scratchpads "terminal-2")
+    , ("M-<F4>"                   , addName "NSP Htop"                        $ namedScratchpadAction scratchpads "htop")
+    , ("M-<F5>"                   , addName "NSP Glances"                     $ namedScratchpadAction scratchpads "glances")
+    , ("M-<F6>"                   , addName "-- EMPTY SLOT --"                $ namedScratchpadAction scratchpads "emtpy")
+    , ("M-<F7>"                   , addName "-- EMPTY SLOT --"                $ namedScratchpadAction scratchpads "emtpy")
     , ("M-<F8>"                   , addName "NSP Wicd"                        $ namedScratchpadAction scratchpads "wicd-curses")
-    , ("M-<F4>"                   , addName "NSP Pavucontrol"                 $ namedScratchpadAction scratchpads "pavucontrol")
-    , ("M-<F12>"                  , addName "NSP Spotify"                     $ namedScratchpadAction scratchpads "spotify")
+    , ("M-<F9>"                   , addName "NSP Pavucontrol"                 $ namedScratchpadAction scratchpads "pavucontrol")
+    , ("M-<F11>"                  , addName "NSP Spotify"                     $ namedScratchpadAction scratchpads "spotify")
     ] ^++^
 
     -----------------------------------------------------------------------
