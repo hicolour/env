@@ -1,5 +1,40 @@
 # Env!
-__Env!__ is a toolkit for configuration of the efficient work enviroment's on [ArchLinux](https://www.archlinux.org/) distribution with __Suckless__ philosophy.
+__Env!__ is a toolkit for configuration of the efficient work environments's on [ArchLinux](https://www.archlinux.org/) distribution with __Suckless__ philosophy.
+
+
+
+
+
+
+
+
+
+
+### 
+
+#### How To
+
+1. Check window props: 
+
+```shell
+xprop
+```
+
+2. Check key codes of pressed keys 
+```shell
+xev | grep 'keycode'
+```
+
+
+
+
+
+
+
+
+
+==== CLEAN UP =====
+
 
 ## Suckless
 
@@ -185,4 +220,10 @@ Sm4tik icons icons pack
 
 ### How To
 
-1. Check window props: ```xprop ```
+1. Check window props: 
+```xprop ```
+
+2. Check key codes of pressed keys 
+```shell
+xev | grep 'keycode'
+```

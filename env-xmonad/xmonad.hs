@@ -242,39 +242,45 @@ projects =
 
 myTerminal          = "roxterm"
 myAltTerminal       = "xfce4-terminal"
-myBrowser           = "google-chrome-stable" -- chrome with WS profile dirs
-myBrowserClass      = "Google-chrome-stable"
-myAltBrowser        = "firefox"
+
+myBrowser           = "browser-qutebrowser"
+myBrowserClass      = "qutebrowser"
+
+myAltBrowser        = "browser-chrome"
+myAltBrowserClass   = "Google-chrome-stable"
+
+
 myStatusBar         = "dzen2 -y 0 -x 0 -w 1000 -ta l "
-myIDE               = "./eclipse/java-oxygen/eclipse/eclipse"
+
+myIDE               = "intellij-idea-ultimate-edition"
+myAltIDE            = "atom"
+
 myMail              = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=egddcdhcadfhcbheacnhikllgjokeico"
 myKeep              = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=hcfcmgpnmpinpidjdgejehjchlbglpde"
 myTranslate         = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=fklgpoecafmhpbmoepkbhkhhbahodcdh"
 
 myLauncher          = "rofictl"
 
----------------------------------------------------------------------------
--- Applications properties
----------------------------------------------------------------------------
+
 spotifyCommand      = "spotify"
 spotifyClassName    = "Spotify"
 isSpotify           = (className =? spotifyClassName)
 
 wicdGtkCommand      = "wicd-gtk"
 wicdGtkClassName    = "wicd-client.py"
-isWicdGtk         = (className =? wicdGtkClassName)
+isWicdGtk           = (className =? wicdGtkClassName)
 
-wicdCursesCommand      = "roxterm --role wicd-curses -e wicd-curses"
-wicdCursesClassName    = "Roxterm"
-isWicdCurses         = (className =? wicdCursesClassName)   <&&> (stringProperty "WM_WINDOW_ROLE" =? "wicd-curses")
+wicdCursesCommand   = "roxterm --role wicd-curses -e wicd-curses"
+wicdCursesClassName = "Roxterm"
+isWicdCurses        = (className =? wicdCursesClassName)   <&&> (stringProperty "WM_WINDOW_ROLE" =? "wicd-curses")
 
-pavucontrolCommand      = "pavucontrol"
-pavucontrolClassName    = "Pavucontrol"
-isPavucontrol          = (className =? pavucontrolClassName)
+pavucontrolCommand  = "pavucontrol"
+pavucontrolClassName = "Pavucontrol"
+isPavucontrol       = (className =? pavucontrolClassName)
 
-rchstCommand      = "/home/marek/projects/personal/rchst/rchst"
-rchstClassName    = "Rofi"
-isRchst          = (className =? rchstClassName)
+rchstCommand        = "/home/marek/projects/personal/rchst/rchst"
+rchstClassName      = "Rofi"
+isRchst             = (className =? rchstClassName)
 
 
 
@@ -753,29 +759,39 @@ myKeys conf = let
     subKeys "Actions"
     [ ("M-a"                       , addName "Notify w current X selection"    $ unsafeWithSelection "notify-send")
 
-    , ("M-M1-/"                       , addName "On-screen keys"                  $ spawn "killall screenkey &>/dev/null || screenkey --no-systray")
-    , ("M-M1-S-/"                     , addName "On-screen keys settings"         $ spawn "screenkey --show-settings")
-    , ("M-M1-s"                       , addName "Capture screen"                  $ spawn "screenshot" )
-    , ("M-M1-S-s"                     , addName "Capture screen - area select"    $ spawn "screenshot area" )
-    , ("M-M1-r"                       , addName "Record screen"                   $ spawn "screencast" )
-    , ("M-M1-S-r"                     , addName "Record screen - area select"     $ spawn "screencast area" )
+    , ("M-M1-/"                    , addName "On-screen keys"                  $ spawn "killall screenkey &>/dev/null || screenkey --no-systray")
+    , ("M-M1-S-/"                  , addName "On-screen keys settings"         $ spawn "screenkey --show-settings")
+    , ("M-M1-s"                    , addName "Capture screen"                  $ spawn "screenshot" )
+    , ("M-M1-S-s"                  , addName "Capture screen - area select"    $ spawn "screenshot area" )
+    , ("M-M1-r"                    , addName "Record screen"                   $ spawn "screencast" )
+    , ("M-M1-S-r"                  , addName "Record screen - area select"     $ spawn "screencast area" )
     ] ^++^
 
     -----------------------------------------------------------------------
     -- Launchers
     -----------------------------------------------------------------------
     subKeys "Launchers"
-    [ ("M-<Space>"                , addName "Launcher"                        $ spawn myLauncher)
+    [ ("M-<Return>"               , addName "Terminal"                        $ spawn myTerminal)
+
+    , ("M-<Space>"                , addName "Launcher"                        $ spawn myLauncher)
     , ("M-M1-<Space>"             , addName "Windows Launcher"                $ spawn "rofictl window")
+
+    , ("M-l"                      , addName "Rofi Lpass"                      $ spawn "rofictl-lpass")
+
+    , ("M-\\"                     , addName "File Manager Ranger"             $ spawn "roxterm -e ranger")
+    , ("M-S-\\"                   , addName "File Manager Thunar"             $ spawn "thunar")
+
     , ("M-<Return>"               , addName "Terminal"                        $ spawn myTerminal)
 
-    , ("M-r"                      , addName "Ranger"                          $ spawn "roxterm -e ranger")
-    , ("M-b"                      , addName "Browser"                         $ spawn myBrowser)
-    , ("M-\\"                     , addName "Browser Alternativo"             $ spawn myAltBrowser)
-    , ("M-<Home>"                 , addName "E-mail"                          $ spawn myMail)
-    , ("M-<Insert>"               , addName "Keep"                            $ spawn myKeep)
-    , ("M-<End>"                  , addName "Translate"                       $ spawn myTranslate)
+    , ("M-/"                      , addName "Browser"                         $ spawn myBrowser)
+    , ("M-S-/"                    , addName "Alt Browser"             $ spawn myAltBrowser)
+
+--     , ("M-<Home>"                 , addName "E-mail"                          $ spawn myMail)
+--     , ("M-<Insert>"               , addName "Keep"                            $ spawn myKeep)
+--     , ("M-<End>"                  , addName "Translate"                       $ spawn myTranslate)
+
     , ("M-<Delete>"               , addName "IDE"                             $ spawn myIDE)
+    , ("M-S-<Delete>"             , addName "Alt IDE"                         $ spawn myAltIDE)
     ] ^++^
 
     ---------------------------------------------------------------------
@@ -803,10 +819,12 @@ myKeys conf = let
     [ ("M-<Backspace>"            , addName "Kill"                            kill1)
     , ("M-S-<Backspace>"          , addName "Kill all"                        $ confirmPrompt hotPromptTheme "kill all" $ killAll)
     , ("M-d"                      , addName "Duplicate w to all ws"           $ toggleCopyToAll)
+    , ("M-S-d"                    , addName "Kill other duplicates"           $ killAllOtherCopies)
     , ("M-p"                      , addName "Promote"                         $ promote)
     , ("M-g"                      , addName "Un-merge from sublayout"         $ withFocused (sendMessage . UnMerge))
     , ("M-S-g"                    , addName "Merge all into sublayout"        $ withFocused (sendMessage . MergeAll))
 
+    , ("M-z u"                    , addName "Focus urgent"                    focusUrgent)
     , ("M-z m"                    , addName "Focus master"                    $ windows W.focusMaster)
 
 
@@ -821,7 +839,6 @@ myKeys conf = let
 
     ++ zipM' "M-"               "Navigate window"                           dirKeys dirs windowGo True
     -- ++ zipM' "M-S-"               "Move window"                               dirKeys dirs windowSwap True
-    -- TODO: following may necessitate use of a "passthrough" binding that can send C- values to focused w
     ++ zipM' "M1-"              "Move window"                               dirKeys dirs windowSwap True
     ++ zipM  "M-C-"             "Merge w/sublayout"                         dirKeys dirs (sendMessage . pullGroup)
     ++ zipM' "M-S-"             "Navigate screen"                           arrowKeys dirs screenGo True
@@ -891,8 +908,7 @@ myKeys conf = let
 
 
     -- If following is run on a floating window, the sequence first tiles it.
-    -- Not perfect, but works.
-    , ("M-f"                , addName "Fullscreen"                      $ sequence_ [ (withFocused $ windows . W.sink)
+    , ("M-f"                   , addName "Fullscreen"                      $ sequence_ [ (withFocused $ windows . W.sink)
                                                                         , (sendMessage $ XMonad.Layout.MultiToggle.Toggle FULL) ])
 
     -- Fake fullscreen fullscreens into the window rect. The expand/shrink
@@ -901,10 +917,6 @@ myKeys conf = let
     , ("M-S-f"                  , addName "Fake fullscreen"             $ sequence_ [ (P.sendKey P.noModMask xK_F11)
                                                                                     , (tryMsgR (ExpandTowards L) (Shrink))
                                                                                     , (tryMsgR (ExpandTowards R) (Expand)) ])
-    , ("C-S-h"                  , addName "Ctrl-h passthrough"          $ P.sendKey controlMask xK_h)
-    , ("C-S-j"                  , addName "Ctrl-j passthrough"          $ P.sendKey controlMask xK_j)
-    , ("C-S-k"                  , addName "Ctrl-k passthrough"          $ P.sendKey controlMask xK_k)
-    , ("C-S-l"                  , addName "Ctrl-l passthrough"          $ P.sendKey controlMask xK_l)
     ] ^++^
 
 
