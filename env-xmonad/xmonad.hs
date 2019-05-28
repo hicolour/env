@@ -759,7 +759,7 @@ myKeys conf = let
     subKeys "Actions"
     [ ("M-a"                       , addName "Notify w current X selection"    $ unsafeWithSelection "notify-send")
 
-    , ("M-M1-/"                    , addName "On-screen keys"                  $ spawn "killall screenkey &>/dev/null || screenkey --no-systray")
+    , ("M-M1-/"                    , addName "On-screen keys (on/off) "        $ spawn "killall screenkey &>/dev/null || screenkey --no-systray")
     , ("M-M1-S-/"                  , addName "On-screen keys settings"         $ spawn "screenkey --show-settings")
     , ("M-M1-s"                    , addName "Capture screen"                  $ spawn "screenshot" )
     , ("M-M1-S-s"                  , addName "Capture screen - area select"    $ spawn "screenshot area" )
@@ -780,8 +780,6 @@ myKeys conf = let
 
     , ("M-\\"                     , addName "File Manager Ranger"             $ spawn "roxterm -e ranger")
     , ("M-S-\\"                   , addName "File Manager Thunar"             $ spawn "thunar")
-
-    , ("M-<Return>"               , addName "Terminal"                        $ spawn myTerminal)
 
     , ("M-/"                      , addName "Browser"                         $ spawn myBrowser)
     , ("M-S-/"                    , addName "Alt Browser"             $ spawn myAltBrowser)
