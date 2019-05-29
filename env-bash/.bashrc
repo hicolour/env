@@ -49,7 +49,11 @@ alias 5d="cd ../../../../.."
 
 # History aliases
 alias h='history'
-alias hg='history | gr'
+# alias hg='history | gr'
+
+alias hg='history | fzf | echo $1' 
+
+
 
 # Adding just color
 alias ls='ls -hN --color=auto --group-directories-first'

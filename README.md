@@ -10,17 +10,17 @@ __Env!__ is a toolkit for configuration of the efficient work environments's on 
 
 
 
-### 
+###
 
 #### How To
 
-1. Check window props: 
+1. Check window props:
 
 ```shell
 xprop
 ```
 
-2. Check key codes of pressed keys 
+2. Check key codes of pressed keys
 ```shell
 xev | grep 'keycode'
 ```
@@ -28,6 +28,13 @@ xev | grep 'keycode'
 
 
 
+
+###
+
+* entr - Run arbitrary commands when files change
+```
+echo ~/.bashrc | entr notify-send "hello"
+```
 
 
 
@@ -220,10 +227,10 @@ Sm4tik icons icons pack
 
 ### How To
 
-1. Check window props: 
+1. Check window props:
 ```xprop ```
 
-2. Check key codes of pressed keys 
+2. Check key codes of pressed keys
 ```shell
 xev | grep 'keycode'
 ```

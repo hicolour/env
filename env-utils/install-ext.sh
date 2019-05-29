@@ -11,6 +11,10 @@ y thunar
 # smb for thunar
 y gvfs-smb
 
+# A FUSE filesystem that supports reading/writing from MTP devices
+p simple-mtpfs
+
+
 
 y zotero
 y masterpdfeditor
@@ -68,6 +72,8 @@ p net-tools
 # Power managmentt
 p upower
 p powertop
+# Interactive batteries viewer
+p battop
 
 
 # Virtualboc
