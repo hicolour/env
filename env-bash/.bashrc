@@ -111,8 +111,11 @@ alias norg="gron --ungron"
 alias ungron="gron --ungron"
 
 # git push
-alias gspd="git push origin develop"
-alias gplm="git push origin master"
+alias gpsd="git push origin develop"
+alias gpld="git pull origin develop"
+alias gpsm="git push origin master"
+alias gplm="git pull origin master"
+
 alias mergec="git merge --no-ff --no-commit"
 alias gclean="git clean -d -f -f"
 
