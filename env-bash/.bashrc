@@ -49,10 +49,10 @@ alias 5d="cd ../../../../.."
 
 # History aliases
 alias h='history'
-# alias hg='history | gr'
+alias hg='history | gr'
 
-alias hg='history | fzf | echo $1' 
-
+hsa() { history | awk '{$1=$2=$3=""; print $0}' | fzf | xargs -0 -I {} xdotool type {} ; }
+hs() { history | awk '{$1=$2=$3=""; print $0}' | fzf | xargs -I {} xdotool type {} ; }
 
 
 # Adding just color
@@ -111,8 +111,8 @@ alias norg="gron --ungron"
 alias ungron="gron --ungron"
 
 # git push
-alias gpd="git push origin develop"
-alias gpm="git push origin master"
+alias gspd="git push origin develop"
+alias gplm="git push origin master"
 alias mergec="git merge --no-ff --no-commit"
 alias gclean="git clean -d -f -f"
 
