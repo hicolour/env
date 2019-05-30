@@ -55,6 +55,11 @@ hsa() { history | awk '{$1=$2=$3=""; print $0}' | fzf | xargs -0 -I {} xdotool t
 hs() { history | awk '{$1=$2=$3=""; print $0}' | fzf | xargs -I {} xdotool type {} ; }
 
 
+
+# Process
+
+psk() { ps -afx|  fzf |  xargs -0 -I {} echo {} | awk '{ printf $1 }' | xargs -0 -I {}  kill -9  {}; }
+
 # Adding just color
 alias ls='ls -hN --color=auto --group-directories-first'
 alias grep="grep --color=auto"
