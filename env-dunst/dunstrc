@@ -1,7 +1,7 @@
 [global]
     #font = envypn-10
     #font=ohsnap 10
-    font=envypn 15
+    font=envypn 11
 
 
 
@@ -146,7 +146,7 @@
 
 
 [urgency_normal]
-    background = "#528e8a"
+    background = "#629655"
     foreground = "#EEEEEE"
     timeout = 10
 

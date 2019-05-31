@@ -1079,6 +1079,7 @@ myManageHook =
             , resource =? "vlc"     -?> doFloat
             , resource =? "google-chrome" -?> doShift "2:web"
             , resource =? "steam"   -?> doFloat
+            , className =? "jetbrains-toolbox" -?> doCenterFloat,
             , transience
             , isDialog -?> doCenterFloat
             , isRole =? "pop-up" -?> doCenterFloat
