@@ -29,15 +29,49 @@ xev | grep 'keycode'
 
 
 
-###
+### Pure Gold
+
+#### Terminal
+
+##### Core Utils
+* fzf - Command-line fuzzy finder
+```
+du -a | awk '{print $2}'  | fzf
+```
 
 * entr - Run arbitrary commands when files change
 ```
 echo ~/.bashrc | entr notify-send "hello"
 ```
 
+##### SysOps
+* [htop](https://hisham.hm/htop/) - Interactive process viewer  / [Htop explianed](https://peteris.rocks/blog/htop/)
+* [glances](https://nicolargo.github.io/glances/) -  CLI curses-based monitoring tool
+* [ncdu](https://github.com/fabiofalci/sconsify) - Disk usage analyzer with an ncurses interface
+* [nmap](https://nmap.org/) - Utility for network discovery and security auditing
 
 
+
+#### X
+
+##### Core
+* [xmonad]
+
+##### Core Utils
+* [dmenu](https://tools.suckless.org/dmenu/) - Generic menu for X
+* [rofi](https://github.com/DaveDavenport/rofi) - A window switcher, application launcher and dmenu replacement
+* [slimlock](https://github.com/dannyn/slimlock) - Unholy screen locker (without SLiM) / consider (https://github.com/i3/i3lock),(https://github.com/pavanjadhaw/betterlockscreen)
+
+##### Apps
+* [qutebrowser](https://www.qutebrowser.org/) A keyboard-driven, vim-like browser based on PyQt5
+
+* [obs](https://?/) - Open Broadcast
+* [krita](https://?/) - Edit and paint images
+* [kdenlive](https://?/) -  Non-linear video editor for Linux using the MLT video framework
+
+* [zenmap](https://nmap.org/zenmap/) - GUI interface for nmap - network discovery and security auditing
+
+* [zeal](https://zealdocs.org/) - An offline API documentation browser
 
 
 ==== CLEAN UP =====
@@ -87,26 +121,13 @@ Hardware addons:
 
 ## Suckless programs
 
-### App candidates for mouse-less adventure
 
- * [xmonad] of course :)
-
-#### Luncher
- * [rofi](https://github.com/DaveDavenport/rofi)
- * [dmenu](https://tools.suckless.org/dmenu/)
-
-### Systems Tools
-  * [htop](https://hisham.hm/htop/) Interactive process viewer
-	* [glances](https://nicolargo.github.io/glances/) CLI curses-based monitoring tool
-  * [ncdu](https://github.com/fabiofalci/sconsify) Disk usage analyzer with an ncurses interface
 
 
 
 ####
  * [simplenotes](https://github.com/insanum/sncli) `yaourt sncli-git`
 
-#### Browser
- * [qutebrowser](https://www.qutebrowser.org/) A keyboard-driven, vim-like browser based on PyQt5
 
 #### Resources
   - Userscripts: https://github.com/qutebrowser/qutebrowser/tree/master/misc/userscripts
@@ -114,55 +135,6 @@ Hardware addons:
 
  #### music
  * [sconsify](https://github.com/fabiofalci/sconsify)
-
-
-
-
-
- #### lockscreen
- * slimlock
- * consider (https://github.com/i3/i3lock) &  (https://github.com/pavanjadhaw/betterlockscreen)
-
-
-
-
- ### Guis Tools
-
- #### Video streaming
- * [obs](https://?/) - `#gui` - Open Broadcast
-
- #### Photo/ Graphic
- * [krita](https://?/) - `#gui` - Krita
-
-
- #### Video editing
- * [kdenlive](https://?/) - `#gui` - Kdenlive
-
- ### Tools
-
- Place to collect the best information/tutotrials about tools.
-
- ### Base
-
- * [htop](http://hisham.hm/htop/) - ```#console``` - Interactive process viewer
-   * [htop explained](https://peteris.rocks/blog/htop/)
-
- ### Console tools
- * [fzf]() - ```console``` - Command-line fuzzy finder
-
- #### Network
- * [nmap](https://nmap.org/) - `#Console` - Network Browser
- * [zenmap](https://nmap.org/zenmap/) - `#GUI` - Newtwork Browser
-
-
- ### Dev
- * [zeal](https://zealdocs.org/) - `#Console` - API Browser
-
-
-
-
-
-
 
 
 
