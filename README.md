@@ -34,14 +34,17 @@ xev | grep 'keycode'
 #### Terminal
 
 ##### Core Utils
-* fzf - Command-line fuzzy finder
+* [roxterm](https://github.com/realh/roxterm) - A highly configurable terminal emulator
+
+
+* [fzf](https://github.com/junegunn/fzf) - Command-line fuzzy finder
 ```
 du -a | awk '{print $2}'  | fzf
 ```
 
-* entr - Run arbitrary commands when files change
+* [entr](http://eradman.com/entrproject/) - Run arbitrary commands when files change
 ```
-echo ~/.bashrc | entr notify-send "hello"
+echo ~/.bashrc | entr notify-send "updated"
 ```
 
 ##### SysOps
