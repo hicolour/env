@@ -50,6 +50,10 @@ echo ~/.bashrc | entr notify-send "hello"
 * [ncdu](https://github.com/fabiofalci/sconsify) - Disk usage analyzer with an ncurses interface
 * [nmap](https://nmap.org/) - Utility for network discovery and security auditing
 
+##### Apps
+
+* [joplin](https://joplinapp.org/) - Joplin - a note taking and to-do application with synchronization capabilities
+
 
 
 #### X
@@ -60,7 +64,7 @@ echo ~/.bashrc | entr notify-send "hello"
 ##### Core Utils
 * [dmenu](https://tools.suckless.org/dmenu/) - Generic menu for X
 * [rofi](https://github.com/DaveDavenport/rofi) - A window switcher, application launcher and dmenu replacement
-* [slimlock](https://github.com/dannyn/slimlock) - Unholy screen locker (without SLiM) / consider (https://github.com/i3/i3lock),(https://github.com/pavanjadhaw/betterlockscreen)
+* [slimlock](https://github.com/dannyn/slimlock) - Unholy screen locker (without SLiM) / consider [i3lock](https://github.com/i3/i3lock), [betterlockscreen](https://github.com/pavanjadhaw/betterlockscreen)
 
 ##### Apps
 * [qutebrowser](https://www.qutebrowser.org/) A keyboard-driven, vim-like browser based on PyQt5
@@ -73,6 +77,7 @@ echo ~/.bashrc | entr notify-send "hello"
 
 * [zeal](https://zealdocs.org/) - An offline API documentation browser
 
+* [keepassx]() - Password manager
 
 ==== CLEAN UP =====
 
@@ -195,14 +200,3 @@ xmonad --recstart
 
 Sm4tik icons icons pack
 ![Sm4tik icons] (meta/sm4tik.png)
-
-
-### How To
-
-1. Check window props:
-```xprop ```
-
-2. Check key codes of pressed keys
-```shell
-xev | grep 'keycode'
-```
