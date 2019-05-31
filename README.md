@@ -59,7 +59,7 @@ echo ~/.bashrc | entr notify-send "hello"
 #### X
 
 ##### Core
-* [xmonad]
+* [xmonad](https://xmonad.org/) - the tilling window manager that rocks
 
 ##### Core Utils
 * [dmenu](https://tools.suckless.org/dmenu/) - Generic menu for X
