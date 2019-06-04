@@ -41,7 +41,7 @@ s env-rofi/config .config/rofi/config
 s env-dunst .config/dunst
 
 # Midnight Commander
-#s env-mc .config/mc
+s env-mc .config/mc
 
 # Roxterm
 s env-roxterm .config/roxterm.sourceforge.net

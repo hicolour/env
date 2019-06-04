@@ -39,6 +39,10 @@ shopt -s histappend                       # append history file
 
 source <(doctl completion bash)
 
+# Jump to project
+jp() { find ~/projects/ -maxdepth 3 -type d | fzf | xargs -0 -I {} xdotool type "cd {}" ; }
+
+
 
 # Jump down
 alias 1d="cd .."
@@ -47,18 +51,7 @@ alias 3d="cd ../../.."
 alias 4d="cd ../../../.."
 alias 5d="cd ../../../../.."
 
-# History aliases
-alias h='history'
-alias hg='history | gr'
 
-hsa() { history | awk '{$1=$2=$3=""; print $0}' | fzf | xargs -0 -I {} xdotool type {} ; }
-hs() { history | awk '{$1=$2=$3=""; print $0}' | fzf | xargs -I {} xdotool type {} ; }
-
-
-
-# Process
-
-psk() { ps -afx|  fzf |  xargs -0 -I {} echo {} | awk '{ printf $1 }' | xargs -0 -I {}  kill -9  {}; }
 
 # Adding just color
 alias ls='ls -hN --color=auto --group-directories-first'
@@ -107,7 +100,17 @@ alias gr='grep --color -E'
 alias y="yaourt --noconfirm"
 
 
+# History aliases
+alias h='history'
+alias hg='history | gr'
 
+hsa() { history | awk '{$1=$2=$3=""; print $0}' | fzf | xargs -0 -I {} xdotool type {} ; }
+hs() { stty -echo && history | grep ""$@ | awk '{$1=$2=$3=""; print $0}' | fzf | xargs -I {} xdotool type {}  && stty echo; }
+hgs() { stty -echo && history | grep -E '"$@"'  && stty echo ;}
+
+# Process
+
+psk() { ps -afx|  fzf |  xargs -0 -I {} echo {} | awk '{ printf $1 }' | xargs -0 -I {}  kill -9  {}; }
 
 # Delete all untagged images.
 alias dockercleani='printf "\n>>> Deleting untagged images\n\n" && docker rmi $(docker images -q -f dangling=true)'
@@ -243,6 +246,14 @@ if [ -f $1 ] ; then
 }
 
 
+
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
 
 
 
