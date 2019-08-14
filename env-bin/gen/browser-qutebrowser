@@ -28,7 +28,7 @@ log "Input WSPORT:"$WSPORT
 
 
 
-CONFIGDIR=${XDG_CONFIG_HOME:-${HOME}/.config/qutebrowser}
+CONFIGDIR=${XDG_CONFIG_HOME:-${HOME}/.config/qutebrowser-custom}
 log "Base browser CONFIGDIR:"${CONFIGDIR}
 #CACHEDIR=${XDG_CACHE_HOME:-${HOME}/.cache/browser}
 
