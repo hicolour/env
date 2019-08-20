@@ -192,6 +192,14 @@ y unarar
 y envypn-font
 y ttf-envy-code-r
 
+# A monospace bitmap font, aimed at programmers (OTB Format)
+p dina-font-otb
+# Monospace bitmap font (OTB version)
+p terminus-font-otb
+
+
+
+
 #alsi system info
 y alsi
 

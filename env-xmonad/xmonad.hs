@@ -396,6 +396,7 @@ blue    = "#268bd2"
 cyan    = "#2aa198"
 green   = "#859900"
 
+
 -- sizes
 gap         = 9
 topbar      = 3
@@ -403,7 +404,6 @@ border      = 2
 prompt      = 20
 status      = 20
 tabbar      = 15
-
 myNormalBorderColor     = "#000000"
 myFocusedBorderColor    = active
 
@@ -414,7 +414,14 @@ focusColor  = cyan
 unfocusColor = base02
 
 
-myFont      ="xft:misc ohsnap-11"
+
+myPromptFont    ="xft:misc ohsnap-11"
+myFont          ="xft:misc ohsnap-11"
+
+
+
+-- myPromptFont  ="Monospace"
+-- myFont      ="-misc-dina-medium-r-normal--15-68-75-160-c-60-iso8859-1"
 --myFont      ="-ypn-envypn-Medium-R-Normal--13-130-75-75-C-90-ISO8859-1"
 myWideFont  = "xft:Eurostar Black Extended:"
             ++ "style=Regular:pixelsize=50:hinting=true"
@@ -447,7 +454,7 @@ myTabTheme = def
     }
 
 myPromptTheme = def
-    { font                  = myFont
+    { font                  = myPromptFont
     , bgColor               = base03
     , fgColor               = active
     , fgHLight              = base03
@@ -1122,7 +1129,3 @@ forceCenterFloat = doFloatDep move
 spotifyForceFloatingEventHook :: Event -> X All
 spotifyForceFloatingEventHook = dynamicPropertyChange "WM_NAME" (title =? "Spotify" --> floating)
     where floating  = (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10))
-
-
-
-

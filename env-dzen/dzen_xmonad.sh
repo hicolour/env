@@ -7,7 +7,8 @@ export color_sec2="^fg(#747369)"
 
 #export font="-*-terminus-medium-*-*-*-16-*-*-*-*-*-*-u"
 #export font="-xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso8859-1"
-export font="-ypn-envypn-Medium-R-Normal--13-130-75-75-C-90-ISO8859-1"
+#export font="-ypn-envypn-Medium-R-Normal--13-130-75-75-C-90-ISO8859-1"
+export font="-misc-dina-medium-r-normal--15-68-75-160-c-60-iso8859-1"
 # export font="*ypn*envypn*"
 #font="Anonymous Pro 16"
 

@@ -5,7 +5,6 @@ else
 fi
 
 rofi -matching fuzzy -modi combi -show $SHOW  \
-     -font "monospace 11" \
      -separator-style none -columns 1 -bw 0 \
           -line-margin 0 -line-padding 2 \
     		 -hide-scrollbar \
