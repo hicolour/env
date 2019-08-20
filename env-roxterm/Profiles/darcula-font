@@ -13,7 +13,7 @@ scroll_on_output=1
 scrollback_lines=12000
 
 
-font=Monospace 11
+font=Dina Medium 9
 
 allow_bold=0
 
