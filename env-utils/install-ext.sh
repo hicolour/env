@@ -37,6 +37,8 @@ p nmap
 # Editors
 p vim
 p atom
+## Open Source version of Visual Studio Code 
+p code
 
 #y sublime-text
 

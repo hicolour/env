@@ -73,9 +73,9 @@ _JAVA_AWT_WM_NONREPARENTING=1; export _JAVA_AWT_WM_NONREPARENTING
 #feh --bg-scale  ~/.wallpaper/bg-006.jpg &
 
 w="~/.personal/wallpaper/bg-003.jpg"
-if [ -f ~/.personal/wallpaper/bg-003.jpg ]
+if [ -f ~/.personal/wallpaper/bg-007.jpg ]
 then
-	feh --bg-fill ~/.personal/wallpaper/bg-003.jpg &
+	feh --bg-fill ~/.personal/wallpaper/bg-007.jpg &
 else
 	feh --bg-scale  ~/.wallpaper/bg-006.jpg &
 fi
