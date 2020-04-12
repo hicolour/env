@@ -134,8 +134,9 @@ main = do
         $ myConfig xmproc
 
 myConfig p = def
-        { borderWidth        = border
-        , clickJustFocuses   = myClickJustFocuses
+        { 
+-- borderWidth        = border
+         clickJustFocuses   = myClickJustFocuses
         , focusFollowsMouse  = myFocusFollowsMouse
         , normalBorderColor  = myNormalBorderColor
         , focusedBorderColor = myFocusedBorderColor
@@ -1013,7 +1014,7 @@ myLogHook h = do
                  | otherwise = pad ws
 
     fadeWindowsLogHook myFadeHook
-    ewmhDesktopsLogHook
+    --ewmhDesktopsLogHook //freezing issue ?
     --dynamicLogWithPP $ defaultPP
     dynamicLogWithPP $ def
 

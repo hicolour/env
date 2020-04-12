@@ -27,4 +27,4 @@ sed '13q;d' "$WEATHER_REPORT_FILE" | grep -o "m\\(-\\)*[0-9]\\+" | sort -n -t 'm
 
 
 
-sample "weather" "${WHITE_BRIGHT}$weather_icon$status"
+sample "weather" "${WHITE_BRIGHT}${status}"

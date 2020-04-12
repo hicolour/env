@@ -82,7 +82,8 @@ fi
 
 xbacklight -set 8 &
 
-xcompmgr  &
+picom &
+#xcompmgr  &
 
 
 # hotot-gtk2 &

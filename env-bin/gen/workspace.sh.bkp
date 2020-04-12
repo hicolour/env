@@ -133,5 +133,4 @@ main () {
     esac
 }
 
-#main $*
-echo PERSONAL
+main $*

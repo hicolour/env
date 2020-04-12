@@ -20,5 +20,5 @@ allow_bold=0
 browser=/usr/bin/google-chrome-stable
 colour_scheme=darcula
 background_type=2
-saturation=0.901099
+saturation=0.850282
 full_screen=0

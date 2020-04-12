@@ -203,7 +203,7 @@ crypto_market="$(ifexist crypto_market)"
 
 #${mail}${rss}${weather}${crypto_miner}
 #${crypto_miner}${crypto_market}${currency}
-echo "${weather}${net}${memory}${cpu}${power}${dropbox}${net_balance}${packages}${date}${clock}"
+echo "${currency}${crypto_market}${weather}${net}${memory}${cpu}${power}${dropbox}${net_balance}${packages}${date}${clock}"
 
 sleep $SLEEP; done
 

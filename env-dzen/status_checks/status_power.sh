@@ -20,6 +20,7 @@ source $HOME/.dzen/utils.sh
 # fi
 
 
+# Simplify https://www.reddit.com/r/learnpython/comments/ag3uw2/whats_wrong_with_directly_reading_battery_charge/ 
 
 VERBOSE=0
 
