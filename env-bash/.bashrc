@@ -30,7 +30,8 @@ HISTSIZE= HISTFILESIZE=
 # export HISTCONTROL=ignoreboth
 # #export HISTCONTROL=erasedups
 export HISTIGNORE="ls*:rm*:cd*:CD*:ps*:exit*:reset*:clear*:synaptic*:mkdir*:cat*"
-export HISTCONTROL=ignoreboth:erasedups
+#export HISTCONTROL=ignoreboth:erasedups
+export HISTCONTROL=ignoredups:erasedups
 export PROMPT_COMMAND="history -a"        # update histfile after every command
 shopt -s histappend                       # append history file
 
@@ -88,7 +89,7 @@ alias cs='xclip -selection clipboard'
 alias vs='xclip -o -selection clipboard'
 
 
-alias su='yaourt -Suya --noconfirm; yaourt -Qtd'
+alias upg='yaourt -Suya --noconfirm; yaourt -Qtd'
 
 alias la='ls -lah'
 
@@ -105,8 +106,83 @@ alias h='history'
 alias hg='history | gr'
 
 hsa() { history | awk '{$1=$2=$3=""; print $0}' | fzf | xargs -0 -I {} xdotool type {} ; }
-hs() { stty -echo && history | grep ""$@ | awk '{$1=$2=$3=""; print $0}' | fzf | xargs -I {} xdotool type {}  && stty echo; }
-hgs() { stty -echo && history | grep -E '"$@"'  && stty echo ;}
+hs() { stty -echo && history | grep ""$@ | awk '{$1=$2=$3=""; print $0}' | fzf +m | xargs -I {} xdotool type {}  && stty echo; }
+
+cg() {
+  local dir
+  cmd=$(stty -echo && history | grep ""$@ | awk '{$1=$2=$3=""; print $0}' | fzf +m) &&
+  xdotool type "$cmd" && stty echo;
+}
+
+# fh() {
+#   eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
+# }
+
+fkill() {
+  local pid
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    echo $pid | xargs kill -${1:-9}
+  fi
+}
+
+#git 
+fbr() {
+  local branches branch
+  branches=$(git --no-pager branch -vv) &&
+  branch=$(echo "$branches" | fzf +m) &&
+  git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+}
+fshow() {
+  git log --graph --color=always \
+      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+      --bind "ctrl-m:execute:
+                (grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
+
+
+fd() {
+  local dir
+  dir=$(find ${1:-.} -path '*/\.*' -prune \
+                  -o -type d -print 2> /dev/null | fzf +m) &&
+  cd "$dir"
+}
+
+fdr() {
+  local declare dirs=()
+  get_parent_dirs() {
+    if [[ -d "${1}" ]]; then dirs+=("$1"); else return; fi
+    if [[ "${1}" == '/' ]]; then
+      for _dir in "${dirs[@]}"; do echo $_dir; done
+    else
+      get_parent_dirs $(dirname "$1")
+    fi
+  }
+  local DIR=$(get_parent_dirs $(realpath "${1:-$PWD}") | fzf-tmux --tac)
+  cd "$DIR"
+}
+
+cf() {
+  local file
+
+  file="$(locate -Ai -0 $@ | grep -z -vE '~$' | fzf --read0 -0 -1)"
+
+  if [[ -n $file ]]
+  then
+     if [[ -d $file ]]
+     then
+        cd -- $file
+     else
+        cd -- ${file:h}
+     fi
+  fi
+}
 
 # Process
 
@@ -164,7 +240,6 @@ fi
 # export JAVA_HOME=/usr/lib/jvm/java-8-jdk/
 #export JAVA_HOME=/usr/lib/jvm/java-9-jdk/
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk/
-
 export PATH=$PATH:/$JAVA_HOME/bin/
 
 

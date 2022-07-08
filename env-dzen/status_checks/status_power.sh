@@ -30,6 +30,7 @@ DEVNAME_PATTERN='/org/freedesktop/UPower/devices/battery_BAT'
 ALERTTHR=20
 LOWTHR=40
 FULL=95
+EMPTY=10
 
 power=""
 
@@ -52,6 +53,10 @@ do
               echo "Battery state:$state"
             fi
 
+            if [ $EMPTY -gt $batteryLevel ]
+            then
+                notify-send "battery" "battery level is critical!: ${batteryLevel}%!"
+            fi
 
             if [ $ALERTTHR -gt $batteryLevel ]
             then
@@ -68,6 +73,8 @@ do
 
              fi
             fi
+
+            
 
             timetoempty=`upower -i $DEVNAME | grep "time to empty" | cut -d ':' -f2 | grep -o "[0-9]*.[0-9] [h,m]"`
             timetofull=`upower -i $DEVNAME | grep "time to full" | cut -d ':' -f2 | grep -o "[0-9]*.[0-9] [h,m]"`

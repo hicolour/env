@@ -23,7 +23,7 @@ INTERNAL_OUTPUT="eDP1"
 #  xrandr --output $INTERNAL_OUTPUT --on --auto
 # fi
 
-~/.personal/env-screen.sh
+#~/.personal/env-screen.sh
 
 
 # --mode 1024x768

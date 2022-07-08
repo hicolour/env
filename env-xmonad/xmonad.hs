@@ -134,7 +134,7 @@ main = do
         $ myConfig xmproc
 
 myConfig p = def
-        { 
+        {
 -- borderWidth        = border
          clickJustFocuses   = myClickJustFocuses
         , focusFollowsMouse  = myFocusFollowsMouse
@@ -161,7 +161,7 @@ wsBSA   = "BSA"
 wsCOM   = "COM"
 wsDOM   = "DOM"
 wsDMO   = "DMO"
-wsFLOAT = "6"
+wsSLACK = "6"
 wsGEN   = "1:ter"
 wsGCC   = "GCC"
 wsMON   = "5"
@@ -174,8 +174,9 @@ wsVIX   = "VIX"
 wsWRK   = "2:web"
 wsWRK2  = "3"
 wsGGC   = "GGC"
+wsFLOAT = "FLOAT"
 
-myWorkspaces = [wsGEN, wsWRK, wsWRK2, wsSYS, wsMON, wsFLOAT, wsRW, wsTMP, wsGCC, wsAV]
+myWorkspaces = [wsGEN, wsWRK, wsWRK2, wsSYS, wsMON, wsSLACK, wsRW, wsTMP, wsGCC, wsAV, wsFLOAT]
 
 projects :: [Project]
 projects =
@@ -223,9 +224,13 @@ projects =
                                                 spawnOn wsWRK myBrowser
                 }
 
-    , Project   { projectName       = wsRAD
+    , Project   { projectName       = wsSLACK
                 , projectDirectory  = "~/"
                 , projectStartHook  = Just $ do spawn myBrowser
+                }
+    , Project   { projectName       = wsRAD
+                            , projectDirectory  = "~/"
+            --                , projectStartHook  = Just $ do spawn myBrowser
                 }
 -}
 --    , Project   { projectName       = wsTMP
