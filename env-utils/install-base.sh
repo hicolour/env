@@ -163,6 +163,10 @@ p gvfs-smb
 p fzf
 
 
+# Disk Usage/Free Utility
+p duf
+
+
 ## Utitlities used in dozen status bars
 # Calculate in bash
 p bc
