@@ -110,6 +110,8 @@ import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Fullscreen as LF
 import XMonad.Layout.NoBorders
 
+import XMonad.Hooks.DynamicLog
+
 
 ---------------------------------------------------------------------------
 -- Main
@@ -327,7 +329,9 @@ myDzenPP = dzenPP
   , ppSep              = "  "
   , ppLayout           = wrap "^fg(#8E44AD)[^fg(#9B59B6)" "^fg(#8E44AD)]"
   , ppTitle            = (" " ++) . dzenColor "#5b709b" "" . dzenEscape
-  , ppSort             = fmap (.namedScratchpadFilterOutWorkspace) $ ppSort defaultPP
+  , ppSort             = fmap
+                                                           (namedScratchpadFilterOutWorkspace.)
+                                                           (ppSort def)
   }
 
 
@@ -484,6 +488,7 @@ hotPromptTheme = myPromptTheme
     , position              = Top
     }
 
+{-
 myXPConfig = defaultXPConfig
     {
           position = Top
@@ -491,6 +496,7 @@ myXPConfig = defaultXPConfig
         , defaultText = "test"
         , alwaysHighlight = True
         }
+-}
 
 
 
