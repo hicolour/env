@@ -1,0 +1,23 @@
+/**
+ *
+ * Author : Aditya Shakya (adi1090x)
+ * Github : @adi1090x
+ * 
+
+*    		 -color-window "#222222, #222222, #b1b4b3" \
+*     		 -color-normal "#262626, #b1b4b3, #262626, #262626, #42E66C" \
+*     		 -color-active "#222222, #E356A7, #222222, #007763, #b1b4b3" \
+*     		 -color-urgent "#222222, #b1b4b3, #222222, #77003d, #b1b4b3" \
+*     		  -kb-row-tab ""
+
+ * Colors
+ **/
+
+* {
+    background:     #222222;
+    background-alt: #282A36FF;
+    foreground:     #b1b4b3;
+    selected:       #FFF;
+    active:         #50FA7BFF;
+    urgent:         #FF5555FF;
+}
