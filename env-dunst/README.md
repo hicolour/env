@@ -1,4 +1,0 @@
-env-dunst
-=========
-
-Dunst config

@@ -1,0 +1,73 @@
+$ ghc --make xmonad.hs -i -ilib -fforce-recomp -main-is main -dynamic -v0 -outputdir /home/marek/.xmonad/build-x86_64-linux -o /home/marek/.xmonad/xmonad-x86_64-linux
+
+xmonad.hs:333:61: warning: [-Wdeprecations]
+    In the use of ‘namedScratchpadFilterOutWorkspace’
+    (imported from XMonad.Util.NamedScratchpad):
+    Deprecated: "Use XMonad.Util.WorkspaceCompare.filterOutWs [scratchpadWorkspaceTag] instead"
+    |
+333 |                                                            (namedScratchpadFilterOutWorkspace.)
+    |                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+xmonad.hs:686:58: warning: [-Wdeprecations]
+    In the use of data constructor ‘HiddenNonEmptyWS’
+    (imported from XMonad.Actions.CycleWS):
+    Deprecated: "Use hiddenWS :&: Not emptyWS instead."
+    |
+686 | shiftAndView' dir = findWorkspace getSortByIndexNoSP dir HiddenNonEmptyWS 1
+    |                                                          ^^^^^^^^^^^^^^^^
+
+xmonad.hs:688:56: warning: [-Wdeprecations]
+    In the use of data constructor ‘HiddenNonEmptyWS’
+    (imported from XMonad.Actions.CycleWS):
+    Deprecated: "Use hiddenWS :&: Not emptyWS instead."
+    |
+688 | nextNonEmptyWS = findWorkspace getSortByIndexNoSP Next HiddenNonEmptyWS 1
+    |                                                        ^^^^^^^^^^^^^^^^
+
+xmonad.hs:690:56: warning: [-Wdeprecations]
+    In the use of data constructor ‘HiddenNonEmptyWS’
+    (imported from XMonad.Actions.CycleWS):
+    Deprecated: "Use hiddenWS :&: Not emptyWS instead."
+    |
+690 | prevNonEmptyWS = findWorkspace getSortByIndexNoSP Prev HiddenNonEmptyWS 1
+    |                                                        ^^^^^^^^^^^^^^^^
+
+xmonad.hs:693:16: warning: [-Wdeprecations]
+    In the use of ‘namedScratchpadFilterOutWorkspace’
+    (imported from XMonad.Util.NamedScratchpad):
+    Deprecated: "Use XMonad.Util.WorkspaceCompare.filterOutWs [scratchpadWorkspaceTag] instead"
+    |
+693 |         fmap (.namedScratchpadFilterOutWorkspace) getSortByIndex
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+xmonad.hs:718:31: warning: [-Wdeprecations]
+    In the use of ‘tryMessage_’
+    (imported from XMonad.Actions.MessageFeedback):
+    Deprecated: "Use tryMessageWithNoRefreshToCurrent instead."
+    |
+718 |     tryMsgR x y = sequence_ [(tryMessage_ x y), refresh]
+    |                               ^^^^^^^^^^^
+
+xmonad.hs:1044:36: warning: [-Wdeprecations]
+    In the use of ‘namedScratchpadFilterOutWorkspace’
+    (imported from XMonad.Util.NamedScratchpad):
+    Deprecated: "Use XMonad.Util.WorkspaceCompare.filterOutWs [scratchpadWorkspaceTag] instead"
+     |
+1044 |                                   (namedScratchpadFilterOutWorkspace.)
+     |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+xmonad.hs:1092:20: warning: [-Wdeprecations]
+    In the use of ‘defaultConfig’
+    (imported from XMonad, but defined in XMonad.Config):
+    Deprecated: "Use def (from Data.Default, and re-exported by XMonad and XMonad.Config) instead."
+     |
+1092 |     <+> manageHook defaultConfig
+     |                    ^^^^^^^^^^^^^
+
+xmonad.hs:1122:21: warning: [-Wdeprecations]
+    In the use of ‘docksEventHook’
+    (imported from XMonad.Hooks.ManageDocks):
+    Deprecated: "Use docks instead."
+     |
+1122 | myHandleEventHook = docksEventHook
+     |                     ^^^^^^^^^^^^^^
