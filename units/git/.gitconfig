@@ -1,8 +1,8 @@
 [user]
 
-    #Default User
-	email = marek.prochera@amartus.com
-	name = Marek Prochera
+#Default User
+email = marek.prochera@gmail.com
+name = Marek Prochera
 
 [includeIf "gitdir:~/projects/work/"]
     path = ~/work/.gitconfig
