@@ -1,6 +1,6 @@
 # Env!
 
-`Env` is a __zero depdency__ toolkit for configuration of the efficient work environments's that follows  __suckless__ philosophy.
+`Env` is a __zero depdency__ toolkit for configuration of the minimalist & efficient work environments's that follows  __suckless__ philosophy.
 
  * To operate it requires only bash.
  * Currently optimized for [ArchLinux](https://www.archlinux.org/) distribution 
@@ -19,7 +19,7 @@
   * `dev`
   * `dev-scala`
   
-`Env` `pkgs` and `units` that are specific to your enviroment can managed inside private repository that should be  cloned and maintained in the same main directory.
+`Env` `pkgs` and `units` that are specific to your enviroment can managed inside private repository that should be cloned and maintained in the same main directory.
 
 
 Aditionaly following directories should be considered: 
@@ -68,3 +68,5 @@ link $UNIT_DIR/.bashrc $HOME/.bashrc
 ```
 
 -----
+
+
