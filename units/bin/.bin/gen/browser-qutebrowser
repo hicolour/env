@@ -50,6 +50,8 @@ if [[ -z $SUFFIX ]]; then
    INCOGNITO=" --incognito "
 fi
 
+
+SUFFIX=$WSTAG
 log "suffix"$SUFFIX
 log "wstag "$WSTAG
 log "launching browser for" $SUFFIX

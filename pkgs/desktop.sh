@@ -14,7 +14,7 @@
 # * Basic web browsing
 ###########################################################################
 
-. ./core/core.sh
+. ./core/env.sh
 
 apps=(
     xorg-server
@@ -27,6 +27,7 @@ apps=(
     demenu
     roxterm
     # dunst
+    qutebrowser             # A keyboard-driven, vim-like browser based on PyQt5
 )
 
 

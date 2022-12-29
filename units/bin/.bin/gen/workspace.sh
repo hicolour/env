@@ -53,8 +53,8 @@ declare -A WORKSPACE_CONTEXT_MAPPING
 WORKSPACE_TAG_MAPPING=(
   ["wrk"]="WORK"            \
   ["tmp"]="INCOGNITO"       \
-  ["priv"]="PERSONAL"       \
-  ["gen"]="PERSONAL")
+  ["priv"]="PRIVATE"       \
+  ["gen"]="PRIVATE")
 
 : <<EOF
 
@@ -134,4 +134,4 @@ main () {
 }
 
 #main $*
-echo PERSONAL
+echo PRIVATE

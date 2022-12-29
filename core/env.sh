@@ -68,11 +68,13 @@ env(){
 
       units=($@)
 
-      for package in ${units[@]}; do 
-            if pacman -Qs $package > /dev/null; then
-                  color '32;1' " $package"
+      info "Package check ... for $fbname"
+      for package in ${units[@]}; do
+
+            if pacman -Qs $package > /dev/null ; then
+                  color '32;1'  "  ✓ ᗧ̿ $package "
             else
-                  color '34;1' " $package"
+                  color '34;1' "  ✗ ᗧ̿ $package"
             fi
       done
 
@@ -89,7 +91,7 @@ env(){
             # sudo pacman -S $unit
             if [[ -f "units/$package/unit.sh" ]]
             then
-                  color '34;1' " $package"
+                  color '34;1'  "  ✓ ▶ $package "
                   units/$package/unit.sh
             fi
       done

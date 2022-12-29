@@ -1,9 +1,9 @@
 base: 
-		./pkg/base.sh
+		./pkgs/base.sh
 
 desktop: 
-		./pkg/desktop.sh		
+		./pkgs/desktop.sh		
 
 dev: 
-		./pkg/dev.sh		
+		./pkgs/dev.sh		
 
