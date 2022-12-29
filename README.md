@@ -1,5 +1,9 @@
 # Env!
-__Env!__ is a toolkit for configuration of the efficient work environments's on [ArchLinux](https://www.archlinux.org/) distribution with __Suckless__ philosophy.
+
+__Env!__ is a __zero depdency__ toolkit for configuration of the efficient work environments's that follows  __suckless__ philosophy.
+
+ * To oprate it requires only bash.
+ * Currently focused on on [ArchLinux](https://www.archlinux.org/) distribution 
 
 
 
