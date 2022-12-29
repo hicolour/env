@@ -1,6 +1,11 @@
 # Env!
 
-`Env` is a __zero depdency__ toolkit for configuration of the minimalist & efficient work environments's that follows  __suckless__ philosophy.
+`Env` is a __zero depdency__ toolkit for configuration of the efficient work environments's that follows  __suckless__ philosophy.
+
+In oposite to `Nix` or `Ansible` , `Env` is minimalistic and comes with 0-hassle - as task in hand does not requires advanced toolset.
+
+`Env` utilize concept of building advanced functions out of little utilities that if primary foundation of unix ecosystem.
+
 
  * To operate it requires only bash.
  * Currently optimized for [ArchLinux](https://www.archlinux.org/) distribution 
