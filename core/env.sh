@@ -52,11 +52,8 @@ info(){
 }
 
 link(){
-      line
-      color '34;1' "setup : $1"
-      color '35;1' "linking : $1 to $2"
-      # rm -rf ~/$2
-      rm $2
+      color '36;0' "         $1 -> $2"
+      rm -rf $2
       ln -s $1 $2
       }
 
@@ -91,7 +88,7 @@ env(){
             # sudo pacman -S $unit
             if [[ -f "units/$package/unit.sh" ]]
             then
-                  color '34;1'  "  ✓ ▶ $package "
+                  color '34;1'  "  🤖 ✓ ▶ $package "
                   units/$package/unit.sh
             fi
       done
