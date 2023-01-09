@@ -57,6 +57,12 @@ link(){
       ln -s $1 $2
       }
 
+slink(){
+      color '36;0' "         $1 -> $2"
+      sudo rm -rf $2
+      sudo ln -s $1 $2
+      }
+
 
 env(){
 
@@ -85,7 +91,39 @@ env(){
 
       for package in ${units[@]}; do 
             
-            # sudo pacman -S $unit
+            color '34;1'  "  ᗧ̿ $package"
+            # sudo pacman -S $package
+            if pacman -Ss $package > /dev/null ; then
+                  # echo "The package $package is available"
+                  sudo pacman -S $package --noconfirm  >> /dev/null
+                  # PID=$!
+                  # i=1
+                  # sp="/-\|"
+                  # echo -n ' '
+                  # while [ -d /proc/$PID ]
+                  # do
+                  # printf "\b${sp:i++%${#sp}:1}"
+                  # done
+                  if [ $? -eq 0 ] 
+                  then
+                  color '32;1'  "  ✓ $package"
+                  else
+                  color '31;1'  "  X $package"
+                  fi
+            else
+                  echo "The package $package is not availble, falling back to aur"
+                  yay -S $package --noconfirm  >> /dev/null 
+
+
+                  if [ $? -eq 0 ] 
+                  then
+                  color '32;1'  "  ✓ $package"
+                  else
+                  color '31;1'  "  X $package"
+                  fi
+            fi
+
+
             if [[ -f "units/$package/unit.sh" ]]
             then
                   color '34;1'  "  🤖 ✓ ▶ $package "

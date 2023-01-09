@@ -37,7 +37,7 @@ INTERNAL_OUTPUT="eDP1"
 #xrandr --output eDP1 --auto --left-of DP1 --auto --left-of DP2 --auto
 
 xset m 6/1 1
-xsetroot -cursor_name left_ptr
+#xsetroot -cursor_name left_ptr
 
 
 # Notifications
@@ -80,9 +80,9 @@ else
 	feh --bg-scale  ~/.wallpaper/bg-006.jpg &
 fi
 
-xbacklight -set 8 &
+#xbacklight -set 8 &
 
-picom &
+#picom &
 #xcompmgr  &
 
 

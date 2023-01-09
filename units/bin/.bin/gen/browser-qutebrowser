@@ -37,8 +37,8 @@ log "Base browser CONFIGDIR:"${CONFIGDIR}
 #[ -d "$CONFIGDIR" ] || { mkdir -p "$CONFIGDIR"; chattr +C "$CONFIGDIR"; }
 #[ -d "$CACHEDIR" ] || { mkdir -p "$CACHEDIR"; chattr +C "$CACHEDIR"; }
 
-SUFFIX_NAME=BROWSER_PROFILE_FOR_$WSTAG
-SUFFIX="${!SUFFIX_NAME}"
+# SUFFIX_NAME=BROWSER_PROFILE_FOR_$WSTAG
+# SUFFIX="${!SUFFIX_NAME}"
 
 log $SUFFIX
 
@@ -52,13 +52,16 @@ fi
 
 
 SUFFIX=$WSTAG
-log "suffix"$SUFFIX
-log "wstag "$WSTAG
-log "launching browser for" $SUFFIX
+
+echo "--->$SUFFIX"
+# log "suffix"$SUFFIX
+# log "wstag "$WSTAG
+
 
 
 
 SUFFIX_LOWERCASE="${SUFFIX,,}"
+
 
 log "Profiledir:"${CONFIGDIR}/${SUFFIX_LOWERCASE}
 

@@ -17,6 +17,7 @@ apps=(
     fzf                 # Command-line fuzzy finder
     duf                 # Disk Usage/Free Utility
     neofetch            # A CLI system information tool written in BASH that supports displaying images.
+    displaying          # 
     # dosfstools          # Managment of the DOS filesystem - msotlp mkfs.vfat, mkfs.msdos
     # exfat-utils         # exFat utilities
     # ntfsprogs

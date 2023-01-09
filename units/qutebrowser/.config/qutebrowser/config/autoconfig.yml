@@ -6,6 +6,12 @@
 
 config_version: 2
 settings:
+  content.blocking.method:
+    global: both
+  content.media.audio_capture:
+    https://teams.microsoft.com: true
+  content.media.video_capture:
+    https://teams.microsoft.com: true
   content.notifications.enabled:
     https://www.reddit.com: false
     https://www.youtube.com: false

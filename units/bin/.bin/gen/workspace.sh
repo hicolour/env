@@ -46,14 +46,14 @@ EOF
 # WORKSPACE NAMES
 #-----------------------------------------------------------------------
 
-declare -A WORKSPACE_TAG_MAPPINGdef
+declare -A WORKSPACE_TAG_MAPPING
 declare -A WORKSPACE_CONTEXT_MAPPING
 
 
 WORKSPACE_TAG_MAPPING=(
   ["wrk"]="WORK"            \
   ["tmp"]="INCOGNITO"       \
-  ["priv"]="PRIVATE"       \
+  ["priv"]="PRIVATE"       \     \
   ["gen"]="PRIVATE")
 
 : <<EOF
@@ -111,6 +111,11 @@ main () {
 
     TAG="${WORKSPACE_TAG_MAPPING[$WS]}"
     # echo "TAG:"$TAG
+
+    if [ -z "$TAG" ]
+    then
+      TAG="PRIVATE"
+    fi  
     # CONTEXT="${WORKSPACE_TAG_MAPPING['$CONTEXT']]}"
 
     # WORKSPACE_NAME_WITH_INCOGNITO_BROWSER_PROFILE=$(echo $WORKSPACE_NAME_WITH_INCOGNITO_BROWSER_PROFILE | tr " " "\n" | grep $WS )
@@ -124,14 +129,16 @@ main () {
     #     PORT=$(( 9222 + ${PORT_OFFSET:-0} ))
     # fi
 
-    case $1 in
-        port) echo -n "$PORT" ;;
-        name) echo -n "$WS" ;;
-        tag) echo -n "$TAG" ;;
-        context) echo -n "$CONTEXT" ;;
-        *|tag|task) echo -n "$TAG" ;;
-    esac
+    # case $1 in
+    #     port) echo -n "$PORT" ;;
+    #     name) echo -n "$WS" ;;
+    #     tag) echo -n "$TAG" ;;
+    #     context) echo -n "$CONTEXT" ;;
+    #     *|tag|task) echo -n "$TAG" ;;
+    # esac
+
+    echo -n $TAG
 }
 
-#main $*
-echo PRIVATE
+main $*
+# echo PRIVATE

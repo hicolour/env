@@ -551,7 +551,7 @@ c.content.cookies.accept = 'all'
 ## User agent to send. Unset to send the default. Note that the value
 ## read from JavaScript is always the global value.
 ## Type: String
-c.content.headers.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.128 Safari/537.36"
+c.content.headers.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.124 Safari/537.36"
 
 ## Enable host blocking.
 ## Type: Bool
@@ -562,12 +562,12 @@ c.content.headers.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.
 ## host per line - A zip-file of any of the above, with either only one
 ## file, or a file   named `hosts` (with any extension).
 ## Type: List of Url
-c.content.host_blocking.lists = ['https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts',
-                                'https://www.malwaredomainlist.com/hostslist/hosts.txt',
-                                'http://someonewhocares.org/hosts/hosts',
-                                'http://winhelp2002.mvps.org/hosts.zip',
-                                'http://malwaredomains.lehigh.edu/files/justdomains.zip',
-                                'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext']
+# c.content.host_blocking.lists = ['https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts',
+#                                 'https://www.malwaredomainlist.com/hostslist/hosts.txt',
+#                                 'http://someonewhocares.org/hosts/hosts',
+#                                 'http://winhelp2002.mvps.org/hosts.zip',
+#                                 'http://malwaredomains.lehigh.edu/files/justdomains.zip',
+#                                 'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext']
 
 
 ## List of domains that should always be loaded, despite being ad-
@@ -575,7 +575,7 @@ c.content.host_blocking.lists = ['https://raw.githubusercontent.com/StevenBlack/
 ## required to exactly match the requested domain. Local domains are
 ## always exempt from hostblocking.
 ## Type: List of String
-c.content.host_blocking.whitelist = ['ad.eanalyzer.de']
+# c.content.host_blocking.whitelist = ['ad.eanalyzer.de']
 
 ## Enable hyperlink auditing (`<a ping>`).
 ## Type: Bool
@@ -740,7 +740,7 @@ c.content.host_blocking.whitelist = ['ad.eanalyzer.de']
 ## Directory to save downloads to. If unset, a sensible OS-specific
 ## default is used.
 ## Type: Directory
-c.downloads.location.directory = "$HOME/download/tmp/"
+c.downloads.location.directory = "$HOME/tmp/download"
 
 ## Prompt the user for the download location. If set to false,
 ## `downloads.location.directory` will be used.
@@ -844,7 +844,7 @@ c.fonts.statusbar = '10pt envypn'
 
 ## Font used in the tab bar.
 ## Type: QtFont
-c.fonts.tabs = '10pt envypn'
+# c.fonts.tabs = '10pt envypn'
 
 ## Font family for cursive fonts.
 ## Type: FontFamily

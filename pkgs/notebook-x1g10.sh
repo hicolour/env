@@ -1,35 +1,15 @@
 #!/bin/sh
 
 ###########################################################################
-# Set of base programs required to provide functional desktop enviroment
+# Thinkpad X1 Carbon Gen 10
 #
-# * Login manager
-# * Tiling windows manager
-# * Status bar
-# * Application launcher
-# * Wallpaper launcher
-# * Basic file managment
-# * Network managment
-# * Actual time manager
-# * Basic web browsing
 ###########################################################################
 
 . ./core/env.sh
 
 apps=(
-    xorg-server
-    xorg-xinit
-    xterm
-    xmonad
-    xmonad-contrib
-    dzen2
-    rofi
-    demenu
-    roxterm
-    # dunst
-    qutebrowser             # A keyboard-driven, vim-like browser based on PyQt5
-    python-adblock          # Brave's adblock library in Python
-    slim
+    # xf86-video-intel     # RandR-based backlight control application
+    
 )
 
 

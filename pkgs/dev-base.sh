@@ -8,13 +8,11 @@
 
 apps=(
     git
-    # jq
+    git-lfs
+    jq
     # yq 
-    # scala
-    # sbt
-    # intellij-idea-ultimate-edition
-    # docer
-    # docker-compose
+    docker
+    docker-compose
 )
 
 

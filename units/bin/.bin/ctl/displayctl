@@ -269,6 +269,7 @@ get_edids () {
 
 get_internal_output () {
     read line # eat first line
+    internal=""
     while read line
     do
         if [ "${line#*connected}" != "${line}" ]

@@ -17,19 +17,7 @@
 . ./core/env.sh
 
 apps=(
-    xorg-server
-    xorg-xinit
-    xterm
-    xmonad
-    xmonad-contrib
-    dzen2
-    rofi
-    demenu
-    roxterm
-    # dunst
-    qutebrowser             # A keyboard-driven, vim-like browser based on PyQt5
-    python-adblock          # Brave's adblock library in Python
-    slim
+    acpilight     # A backward-compatible xbacklight replacement based on ACPI
 )
 
 
