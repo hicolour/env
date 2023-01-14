@@ -753,10 +753,10 @@ myKeys conf = let
 
     , ("<XF86PowerOff>"            , addName "Power off"                       $ confirmPrompt hotPromptTheme "Shutdown Linux" $ spawn "shutdown -h now")
 
-    , ("M-M1-<Right>"              , addName "Up brightness"                   $ spawn "xbacklight -inc 6  & notify-send  \"Bright Up\"")
-    , ("M-M1-<Left>"               , addName "Down brightness"                 $ spawn "xbacklight -dec 6  & notify-send  \"Bright Down\"")
-    , ("<XF86MonBrightnessUp>"     , addName "Up brightness"                   $ spawn "xbacklight -inc 6  & notify-send  \"Bright Up\"")
-    , ("<XF86MonBrightnessDown>"   , addName "Down brightness"                 $ spawn "xbacklight -dec 6  & notify-send  \"Bright Down\"")
+    , ("M-M1-<Right>"              , addName "Up brightness"                   $ spawn "xbacklight -inc 1  & notify-send  \"Bright Up\"")
+    , ("M-M1-<Left>"               , addName "Down brightness"                 $ spawn "xbacklight -dec 1  & notify-send  \"Bright Down\"")
+    , ("<XF86MonBrightnessUp>"     , addName "Up brightness"                   $ spawn "xbacklight -inc 1  & notify-send  \"Bright Up\"")
+    , ("<XF86MonBrightnessDown>"   , addName "Down brightness"                 $ spawn "xbacklight -dec 1  & notify-send  \"Bright Down\"")
     -- XF86XK_MonBrightnessUp XF86XK_MonBrightnessDown
 
     , ("M-M1-<Up>"                 , addName "Up audio"                        $ spawn "pamixer -i 5 & notify-send  \"Audio Up\" $(pamixer --get-volume-human)")

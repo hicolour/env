@@ -553,6 +553,7 @@ c.content.cookies.accept = 'all'
 ## Type: String
 c.content.headers.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.124 Safari/537.36"
 
+
 ## Enable host blocking.
 ## Type: Bool
 # c.content.host_blocking.enabled = True
@@ -1465,6 +1466,7 @@ c.url.start_pages = ['https://google.com']
 # config.bind('/', 'set-cmd-text /')
 # config.bind(':', 'set-cmd-text :')
 config.bind(',p', 'spawn --userscript qute-lastpass.py')
+# config.bind(',p', 'spawn --userscript qute-1password.py fill_password')
 
 # config.bind(';I', 'hint images tab')
 # config.bind(';O', 'hint links fill :open -t -r {hint-url}')

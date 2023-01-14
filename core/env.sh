@@ -93,8 +93,10 @@ env(){
             
             color '34;1'  "  ᗧ̿ $package"
             # sudo pacman -S $package
-            if pacman -Ss $package > /dev/null ; then
-                  # echo "The package $package is available"
+  
+
+            if pacman -Ss $package | grep $package' '| grep -v '^ ' > /dev/null ; then
+                  color '37;1'  "  The package $package is available"
                   sudo pacman -S $package --noconfirm  >> /dev/null
                   # PID=$!
                   # i=1
@@ -111,7 +113,7 @@ env(){
                   color '31;1'  "  X $package"
                   fi
             else
-                  echo "The package $package is not availble, falling back to aur"
+                  color '37;1'  "  The package $package is not availble, falling back to aur"
                   yay -S $package --noconfirm  >> /dev/null 
 
 

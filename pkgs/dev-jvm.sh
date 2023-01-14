@@ -9,6 +9,7 @@
 apps=(
     jdk17-openjdk
     sbt
+    ttf-fira-code                           # Editor font - mainly for Intellij
     intellij-idea-ultimate-edition
 
 )
