@@ -1466,6 +1466,8 @@ c.url.start_pages = ['https://google.com']
 # config.bind('/', 'set-cmd-text /')
 # config.bind(':', 'set-cmd-text :')
 config.bind(',p', 'spawn --userscript qute-lastpass.py')
+# config.bind(',p', 'spawn --userscript qute-1pass')
+# config.bind(',p', 'spawn --userscript qute-pass.py')
 # config.bind(',p', 'spawn --userscript qute-1password.py fill_password')
 
 # config.bind(';I', 'hint images tab')

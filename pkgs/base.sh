@@ -18,9 +18,10 @@ apps=(
     duf                 # Disk Usage/Free Utility
     neofetch            # A CLI system information tool written in BASH that supports displaying images.
     displaying          # 
-    # dosfstools          # Managment of the DOS filesystem - msotlp mkfs.vfat, mkfs.msdos
-    # exfat-utils         # exFat utilities
+    # dosfstools        # Managment of the DOS filesystem - msotlp mkfs.vfat, mkfs.msdos
+    # exfat-utils       # exFat utilities
     # ntfsprogs
+    dog                 # Command-line DNS client like dig
     bin                 # personal addons
 )
 

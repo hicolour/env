@@ -80,6 +80,22 @@ flock -n 200 || { (>&2 echo "$SCRIPTNAME already running (locked)"); exit 1; }
 # Main
 # ----------------------------------------------------------------------
 
+mainDbg () {
+
+    CMDBASE="xrandr -d $DISPLAY"
+
+    # cache xrandr output since it's the slowest call
+    #XRANDRV="$(xrandr -q --verbose)"
+    XRANDRV="$(${CMDBASE} --verbose)"
+
+    # parse cached xrandr output to identify outputs
+    # TODO: test on a system without an "internal" laptop display
+    INTERNAL_OUTPUT="$(echo "$XRANDRV" | get_internal_output)"
+    echo $INTERNAL_OUTPUT
+}
+
+
+
 main () {
 
     CMDBASE="xrandr -d $DISPLAY"
@@ -272,12 +288,18 @@ get_internal_output () {
     internal=""
     while read line
     do
-        if [ "${line#*connected}" != "${line}" ]
+        # if [ "${line#*connected}" != "${line}" ]
+        # then
+        #     output="$line"
+        # elif [ "${line#*Brightness}" != "${line}" ]
+        # then
+        #     internal="$(echo $output | cut -d ' ' -f1)"
+        # fi
+
+
+        if [ "${line#*eDP}" != "${line}" ]
         then
-            output="$line"
-        elif [ "${line#*Backlight}" != "${line}" ]
-        then
-            internal="$(echo $output | cut -d ' ' -f1)"
+            internal="$(echo $line | cut -d ' ' -f1)"
         fi
     done
     echo "$internal"

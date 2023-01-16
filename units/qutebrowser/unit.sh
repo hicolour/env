@@ -33,6 +33,7 @@ link $UNIT_DIR/.config/qutebrowser/config/autoconfig.yml $HOME/.config/qutebrows
 link $UNIT_DIR/.config/qutebrowser/data/userscripts/qute-lastpass.py $HOME/.config/qutebrowser-custom/private/data/userscripts/qute-lastpass.py
 link $UNIT_DIR/.config/qutebrowser/data/userscripts/qute-1password.py $HOME/.config/qutebrowser-custom/private/data/userscripts/qute-1password.py
 link $UNIT_DIR/.config/qutebrowser/data/userscripts/qute-1pass $HOME/.config/qutebrowser-custom/private/data/userscripts/qute-1pass
+link $UNIT_DIR/.config/qutebrowser/data/userscripts/qute-pass.py $HOME/.config/qutebrowser-custom/private/data/userscripts/qute-pass.py
 
 
 # Work profile 

@@ -26,11 +26,14 @@ apps=(
     rofi
     # demenu
     roxterm
-    # dunst
+    dunst                   # Customizable and lightweight notification-daemon
+    libnotify               # Library for sending desktop notifications
     qutebrowser             # A keyboard-driven, vim-like browser based on PyQt5
     python-adblock          # Brave's adblock library in Python
     slim
     spotify
+    maim                    # Utility to take a screenshot using imlib2
+    xclip                   # Command line interface to the X11 clipboard
 )
 
 

@@ -91,40 +91,46 @@ env(){
 
       for package in ${units[@]}; do 
             
-            color '34;1'  "  ᗧ̿ $package"
-            # sudo pacman -S $package
-  
-
-            if pacman -Ss $package | grep $package' '| grep -v '^ ' > /dev/null ; then
-                  color '37;1'  "  The package $package is available"
-                  sudo pacman -S $package --noconfirm  >> /dev/null
-                  # PID=$!
-                  # i=1
-                  # sp="/-\|"
-                  # echo -n ' '
-                  # while [ -d /proc/$PID ]
-                  # do
-                  # printf "\b${sp:i++%${#sp}:1}"
-                  # done
-                  if [ $? -eq 0 ] 
-                  then
-                  color '32;1'  "  ✓ $package"
-                  else
-                  color '31;1'  "  X $package"
-                  fi
+            if grep -q "NO_PKG=true" "units/$package/unit.sh"; then
+                  color '34;1'  "  ᗧ̿ No $package"
             else
-                  color '37;1'  "  The package $package is not availble, falling back to aur"
-                  yay -S $package --noconfirm  >> /dev/null 
 
+            
+                  color '34;1'  "  ᗧ̿ $package"
+                  # sudo pacman -S $package
+      
 
-                  if [ $? -eq 0 ] 
-                  then
-                  color '32;1'  "  ✓ $package"
+                  if pacman -Ss $package | grep $package' '| grep -v '^ ' > /dev/null ; then
+                        color '37;1'  "  The package $package is available"
+                        sudo pacman -S $package --noconfirm  >> /dev/null
+                        # PID=$!
+                        # i=1
+                        # sp="/-\|"
+                        # echo -n ' '
+                        # while [ -d /proc/$PID ]
+                        # do
+                        # printf "\b${sp:i++%${#sp}:1}"
+                        # done
+                        if [ $? -eq 0 ] 
+                        then
+                        color '32;1'  "  ✓ $package"
+                        else
+                        color '31;1'  "  X $package"
+                        fi
                   else
-                  color '31;1'  "  X $package"
-                  fi
-            fi
+                        color '37;1'  "  The package $package is not availble, falling back to aur"
+                        yay -S $package --noconfirm  >> /dev/null 
 
+
+                        if [ $? -eq 0 ] 
+                        then
+                        color '32;1'  "  ✓ $package"
+                        else
+                        color '31;1'  "  X $package"
+                        fi
+                  fi
+
+            fi
 
             if [[ -f "units/$package/unit.sh" ]]
             then

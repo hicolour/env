@@ -8,7 +8,7 @@
 --     _|      _|  _|      _|    _|_|    _|    _|    _|_|_|    _|_|_|    --
 --                                                                       --
 ---------------------------------------------------------------------------
---                       current as of XMonad 0.13                       --
+--                       Current as of XMonad 0.17.1                     --
 ---------------------------------------------------------------------------
 --                                Modules                                --
 ---------------------------------------------------------------------------
@@ -93,6 +93,7 @@ import XMonad.Util.EZConfig                 -- removeKeys, additionalKeys
 import XMonad.Util.Loggers
 import XMonad.Util.NamedActions
 import XMonad.Util.NamedScratchpad
+import XMonad.Util.WorkspaceCompare
 import XMonad.Util.NamedWindows
 import XMonad.Util.Paste as P               -- testing
 import XMonad.Util.Run                      -- for spawnPipe and hPutStrLn
@@ -135,7 +136,7 @@ main = do
         $ addDescrKeys' ((myModMask, xK_F12), showKeybindings) myKeys
         $ myConfig xmproc
 
-myConfig p = def
+myConfig p = docks $ def
         {
 -- borderWidth        = border
          clickJustFocuses   = myClickJustFocuses
@@ -270,7 +271,7 @@ myTranslate         = "/opt/google/chrome/google-chrome --profile-directory=Defa
 myLauncher          = "rofictl"
 
 
-spotifyCommand      = "spotify"
+spotifyCommand      = "spotify2"
 spotifyClassName    = "Spotify"
 isSpotify           = (className =? spotifyClassName)
 
@@ -286,7 +287,7 @@ pavucontrolCommand  = "pavucontrol"
 pavucontrolClassName = "Pavucontrol"
 isPavucontrol       = (className =? pavucontrolClassName)
 
-rchstCommand        = "/home/marek/projects/personal/rchst/rchst"
+rchstCommand        = "/home/marek/projects/private/rchst/rchst"
 rchstClassName      = "Rofi"
 isRchst             = (className =? rchstClassName)
 
@@ -330,7 +331,7 @@ myDzenPP = dzenPP
   , ppLayout           = wrap "^fg(#8E44AD)[^fg(#9B59B6)" "^fg(#8E44AD)]"
   , ppTitle            = (" " ++) . dzenColor "#5b709b" "" . dzenEscape
   , ppSort             = fmap
-                                                           (namedScratchpadFilterOutWorkspace.)
+                                                           (filterOutWs [scratchpadWorkspaceTag].)
                                                            (ppSort def)
   }
 
@@ -683,14 +684,14 @@ shiftAndView dir = findWorkspace getSortByIndex dir (WSIs notSP) 1
         >>= \t -> (windows . W.shift $ t) >> (windows . W.greedyView $ t)
 
 -- hidden, non-empty workspaces less scratchpad
-shiftAndView' dir = findWorkspace getSortByIndexNoSP dir HiddenNonEmptyWS 1
+shiftAndView' dir = findWorkspace getSortByIndexNoSP dir (hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
         >>= \t -> (windows . W.shift $ t) >> (windows . W.greedyView $ t)
-nextNonEmptyWS = findWorkspace getSortByIndexNoSP Next HiddenNonEmptyWS 1
+nextNonEmptyWS = findWorkspace getSortByIndexNoSP Next (hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
         >>= \t -> (windows . W.view $ t)
-prevNonEmptyWS = findWorkspace getSortByIndexNoSP Prev HiddenNonEmptyWS 1
+prevNonEmptyWS = findWorkspace getSortByIndexNoSP Prev (hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
         >>= \t -> (windows . W.view $ t)
 getSortByIndexNoSP =
-        fmap (.namedScratchpadFilterOutWorkspace) getSortByIndex
+        fmap (.filterOutWs [scratchpadWorkspaceTag]) getSortByIndex
 
 -- toggle any workspace but scratchpad
 myToggle = windows $ W.view =<< W.tag . head . filter
@@ -715,7 +716,7 @@ myKeys conf = let
     swapMaster' (W.Stack f u d) = W.Stack f [] $ reverse u ++ d
 
     -- try sending one message, fallback if unreceived, then refresh
-    tryMsgR x y = sequence_ [(tryMessage_ x y), refresh]
+    tryMsgR x y = sequence_ [(tryMessageWithNoRefreshToCurrent x y), refresh]
 
     -- warpCursor = warpToWindow (9/10) (9/10)
 
@@ -1041,7 +1042,7 @@ myLogHook h = do
         , ppOrder               = id
         , ppOutput              = hPutStrLn h
         , ppSort                = fmap
-                                  (namedScratchpadFilterOutWorkspace.)
+                                  (filterOutWs [scratchpadWorkspaceTag].)
                                   (ppSort def)
                                   --(ppSort defaultPP)
         , ppExtras              = [] }
@@ -1089,7 +1090,7 @@ myManageHook =
         manageSpecific
     <+> manageDocks
     <+> namedScratchpadManageHook scratchpads
-    <+> manageHook defaultConfig
+    <+> manageHook def { terminal = "urxvt" }
     <+> LF.fullscreenManageHook
     <+> manageSpawn
     where
@@ -1119,8 +1120,7 @@ myManageHook =
 -- Event Actions
 ---------------------------------------------------------------------------
 
-myHandleEventHook = docksEventHook
-                <+> fadeWindowsEventHook
+myHandleEventHook =  fadeWindowsEventHook
                 <+> handleEventHook def
                 <+> LF.fullscreenEventHook
                 <+> spotifyForceFloatingEventHook
