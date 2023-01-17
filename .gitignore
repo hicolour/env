@@ -3,3 +3,7 @@ env-xmonad/xmonad.state
 .idea/
 *.iml
 .vagrant
+xmonad.errors
+xmonad-x86_64-linux
+prompt-history
+build-x86_64-linux

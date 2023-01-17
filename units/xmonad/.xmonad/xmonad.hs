@@ -8,7 +8,7 @@
 --     _|      _|  _|      _|    _|_|    _|    _|    _|_|_|    _|_|_|    --
 --                                                                       --
 ---------------------------------------------------------------------------
---                       Current as of XMonad 0.17.1                     --
+--                       current as of XMonad 0.13                       --
 ---------------------------------------------------------------------------
 --                                Modules                                --
 ---------------------------------------------------------------------------
@@ -93,7 +93,6 @@ import XMonad.Util.EZConfig                 -- removeKeys, additionalKeys
 import XMonad.Util.Loggers
 import XMonad.Util.NamedActions
 import XMonad.Util.NamedScratchpad
-import XMonad.Util.WorkspaceCompare
 import XMonad.Util.NamedWindows
 import XMonad.Util.Paste as P               -- testing
 import XMonad.Util.Run                      -- for spawnPipe and hPutStrLn
@@ -136,7 +135,7 @@ main = do
         $ addDescrKeys' ((myModMask, xK_F12), showKeybindings) myKeys
         $ myConfig xmproc
 
-myConfig p = docks $ def
+myConfig p = def
         {
 -- borderWidth        = border
          clickJustFocuses   = myClickJustFocuses
@@ -165,7 +164,7 @@ wsCOM   = "COM"
 wsDOM   = "DOM"
 wsDMO   = "DMO"
 wsSLACK = "6"
-wsGEN   = "1:priv"
+wsGEN   = "1:ter"
 wsGCC   = "GCC"
 wsMON   = "5"
 wsOSS   = "OSS"
@@ -174,12 +173,12 @@ wsRW    = "7"
 wsSYS   = "4"
 wsTMP   = "8"
 wsVIX   = "VIX"
-wsWRK   = "2 @w t"
+wsWRK   = "2:web"
 wsWRK2  = "3"
 wsGGC   = "GGC"
 wsFLOAT = "FLOAT"
 
-myWorkspaces = [wsGEN, wsWRK, wsWRK2, wsSYS, wsMON, wsSLACK, wsRW, wsTMP, wsGCC, wsAV]
+myWorkspaces = [wsGEN, wsWRK, wsWRK2, wsSYS, wsMON, wsSLACK, wsRW, wsTMP, wsGCC, wsAV, wsFLOAT]
 
 projects :: [Project]
 projects =
@@ -187,17 +186,14 @@ projects =
     [ Project   { projectName       = wsGEN
                 , projectDirectory  = "~/"
                 , projectStartHook  = Nothing
-                -- , projectStartHook  = Just $ do spawnOn wsGEN myTerminal
+--                , projectStartHook  = Just $ do spawnOn wsGEN myTerminal
                 }
 
 
     , Project   { projectName       = wsWRK
-                , projectDirectory  = "~/projects/work"
+                , projectDirectory  = "~/"
                 , projectStartHook  = Nothing
-                -- , projectStartHook  = Just $ do spawnOn wsWRK myTerminal
-                --                                 spawnOn wsWRK myTerminal
-                --                                 spawnOn wsWRK myTerminal
-                --                                 spawnOn wsWRK myTerminal                                                                                                
+--                , projectStartHook  = Just $ do spawn $ myBrowser
                 }
 
     , Project   { projectName       = wsWRK2
@@ -265,7 +261,7 @@ myAltBrowserClass   = "Google-chrome-stable"
 myStatusBar         = "dzen2 -y 0 -x 0 -w 1000 -ta l "
 
 myIDE               = "intellij-idea-ultimate-edition"
-myAltIDE            = "code"
+myAltIDE            = "atom"
 
 myMail              = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=egddcdhcadfhcbheacnhikllgjokeico"
 myKeep              = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=hcfcmgpnmpinpidjdgejehjchlbglpde"
@@ -290,7 +286,7 @@ pavucontrolCommand  = "pavucontrol"
 pavucontrolClassName = "Pavucontrol"
 isPavucontrol       = (className =? pavucontrolClassName)
 
-rchstCommand        = "/home/marek/projects/private/rchst/rchst"
+rchstCommand        = "/home/marek/projects/personal/rchst/rchst"
 rchstClassName      = "Rofi"
 isRchst             = (className =? rchstClassName)
 
@@ -430,14 +426,17 @@ unfocusColor = base02
 
 
 
--- myPromptFont    ="xos4 Terminus:style=Regular"
--- myFont          ="xos4 Terminus:style=Regular"
-
-
 myPromptFont    ="xft:misc ohsnap-11"
 myFont          ="xft:misc ohsnap-11"
 
--- myFont          ="xos4 Terminus:style=Regular"
+-- myFont                = "-*-terminus-bold-*-*-*-*-120-*-*-*-*-*-*"
+
+-- myFont ="xos4 Terminus:style=Regular"
+
+
+-- https://github.com/aptlin/dots/blob/140665f2a600bfa7d48fbbdcc7f9399213903d3d/xmonad/.xmonad/xmonad.hs
+
+
 
 
 -- myPromptFont  ="Monospace"
@@ -450,7 +449,8 @@ myWideFont  = "xft:Eurostar Black Extended:"
 -- (I find this a cleaner and less visually intrusive solution)
 
 topBarTheme = def
-    { fontName              = myFont
+    { 
+        fontName              = myFont
     , inactiveBorderColor   = base03
     , inactiveColor         = base03
     , inactiveTextColor     = base03
@@ -543,8 +543,8 @@ data FULLBAR = FULLBAR deriving (Read, Show, Eq, Typeable)
 instance Transformer FULLBAR Window where
     transform FULLBAR x k = k barFull (\_ -> x)
 
---barFull = avoidStruts $ noFrillsDeco shrinkText topBarTheme $ addTabs shrinkText myTabTheme $ Simplest
-barFull = avoidStruts $ Simplest
+barFull = avoidStruts $ noFrillsDeco shrinkText topBarTheme $ addTabs shrinkText myTabTheme $ Simplest
+-- barFull = avoidStruts $ Simplest
 
 -- cf http://xmonad.org/xmonad-docs/xmonad-contrib/src/XMonad-Config-Droundy.html
 
@@ -558,7 +558,7 @@ myLayoutHook = showWorkspaceName
              $ fullBarToggle
              $ mirrorToggle
              $ reflectToggle
-             $ tabs ||| flex ||| threeCol
+             $ tabs ||| flex ||| threeCol ||| simpleThree ||| exp
   where
 
 --    testTall = Tall 1 (1/50) (2/3)
@@ -608,7 +608,7 @@ myLayoutHook = showWorkspaceName
          $ avoidStruts
          $ onlyTopGap
          $ addTopBar
---          $ myGaps
+         $ myGaps
          $ mySpacing
          $ ThreeColMid 1 (1/10) (1/2)
 
@@ -668,6 +668,40 @@ myLayoutHook = showWorkspaceName
                     ||| (suffixed "Std 1/2" $ ResizableTall 1 (1/20) (1/2) [])
 
 
+-- smartTall
+    exp = named "Smart Tall"
+            $ addTopBar
+            $ onlyTopGap
+        -- $ mySpacing
+            -- $ myGaps
+        -- $ boringAuto
+            $ ifWider smallMonResWidth wideScreen normalScreen
+            where
+                wideScreen = reflectHoriz $ Tall 1 0.03 (2/3)
+                normalScreen = Mirror $ Tall 1 0.03 (4/5)
+
+    smartTabbed = named "Smart Tabbed"
+              $ addTopBar
+              $ myGaps
+              $ tabbed shrinkText myTabTheme
+
+    simpleThree = named "Three Col"
+              $ avoidStruts
+              $ addTopBar
+              $ onlyTopGap
+            --   $ mySpacing
+            --   $ myGaps
+              $ ThreeColMid 1 (3/100) (1/2)
+
+
+    oneUp =   named "1UP"
+              $ avoidStruts
+              $ myGaps
+              $ combineTwoP (ThreeCol 1 (3/100) (1/2))
+                            (Simplest)
+                            (Tall 1 0.03 0.5)
+                            (ClassName "Google-chrome-beta")
+
 ---------------------------------------------------------------------------
 -- Bindings
 ---------------------------------------------------------------------------
@@ -692,11 +726,11 @@ shiftAndView dir = findWorkspace getSortByIndex dir (WSIs notSP) 1
         >>= \t -> (windows . W.shift $ t) >> (windows . W.greedyView $ t)
 
 -- hidden, non-empty workspaces less scratchpad
-shiftAndView' dir = findWorkspace getSortByIndexNoSP dir HiddenNonEmptyWS(hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
+shiftAndView' dir = findWorkspace getSortByIndexNoSP dir (hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
         >>= \t -> (windows . W.shift $ t) >> (windows . W.greedyView $ t)
-nextNonEmptyWS = findWorkspace getSortByIndexNoSP Next HiddenNonEmptyWS(hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
+nextNonEmptyWS = findWorkspace getSortByIndexNoSP Next (hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
         >>= \t -> (windows . W.view $ t)
-prevNonEmptyWS = findWorkspace getSortByIndexNoSP Prev HiddenNonEmptyWS(hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
+prevNonEmptyWS = findWorkspace getSortByIndexNoSP Prev (hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
         >>= \t -> (windows . W.view $ t)
 getSortByIndexNoSP =
         fmap (.filterOutWs [scratchpadWorkspaceTag]) getSortByIndex
@@ -717,7 +751,6 @@ myKeys conf = let
 
     zipM  m nm ks as f = zipWith (\k d -> (m ++ k, addName nm $ f d)) ks as
     zipM' m nm ks as f b = zipWith (\k d -> (m ++ k, addName nm $ f d b)) ks as
-    
 
     -- from xmonad.layout.sublayouts
     focusMaster' st = let (f:fs) = W.integrate st
@@ -812,7 +845,7 @@ myKeys conf = let
     , ("M-S-\\"                   , addName "File Manager Thunar"             $ spawn "thunar")
 
     , ("M-/"                      , addName "Browser"                         $ spawn myBrowser)
-    , ("M-S-/"                    , addName "Alt Browser"                     $ spawn myAltBrowser)
+    , ("M-S-/"                    , addName "Alt Browser"             $ spawn myAltBrowser)
 
 --     , ("M-<Home>"                 , addName "E-mail"                          $ spawn myMail)
 --     , ("M-<Insert>"               , addName "Keep"                            $ spawn myKeep)
@@ -1099,7 +1132,7 @@ myManageHook =
         manageSpecific
     <+> manageDocks
     <+> namedScratchpadManageHook scratchpads
-    <+> manageHook def { terminal = "urxvt" }
+    <+> manageHook def { terminal = "roxterm" }
     <+> LF.fullscreenManageHook
     <+> manageSpawn
     where
@@ -1129,7 +1162,7 @@ myManageHook =
 -- Event Actions
 ---------------------------------------------------------------------------
 
-myHandleEventHook =  fadeWindowsEventHook
+myHandleEventHook = fadeWindowsEventHook
                 <+> handleEventHook def
                 <+> LF.fullscreenEventHook
                 <+> spotifyForceFloatingEventHook
