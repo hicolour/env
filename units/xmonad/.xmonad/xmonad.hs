@@ -165,7 +165,7 @@ wsCOM   = "COM"
 wsDOM   = "DOM"
 wsDMO   = "DMO"
 wsSLACK = "6"
-wsGEN   = "1:ter"
+wsGEN   = "1:priv"
 wsGCC   = "GCC"
 wsMON   = "5"
 wsOSS   = "OSS"
@@ -174,12 +174,12 @@ wsRW    = "7"
 wsSYS   = "4"
 wsTMP   = "8"
 wsVIX   = "VIX"
-wsWRK   = "2:web"
+wsWRK   = "2 @w t"
 wsWRK2  = "3"
 wsGGC   = "GGC"
 wsFLOAT = "FLOAT"
 
-myWorkspaces = [wsGEN, wsWRK, wsWRK2, wsSYS, wsMON, wsSLACK, wsRW, wsTMP, wsGCC, wsAV, wsFLOAT]
+myWorkspaces = [wsGEN, wsWRK, wsWRK2, wsSYS, wsMON, wsSLACK, wsRW, wsTMP, wsGCC, wsAV]
 
 projects :: [Project]
 projects =
@@ -187,14 +187,17 @@ projects =
     [ Project   { projectName       = wsGEN
                 , projectDirectory  = "~/"
                 , projectStartHook  = Nothing
---                , projectStartHook  = Just $ do spawnOn wsGEN myTerminal
+                -- , projectStartHook  = Just $ do spawnOn wsGEN myTerminal
                 }
 
 
     , Project   { projectName       = wsWRK
-                , projectDirectory  = "~/"
+                , projectDirectory  = "~/projects/work"
                 , projectStartHook  = Nothing
---                , projectStartHook  = Just $ do spawn $ myBrowser
+                -- , projectStartHook  = Just $ do spawnOn wsWRK myTerminal
+                --                                 spawnOn wsWRK myTerminal
+                --                                 spawnOn wsWRK myTerminal
+                --                                 spawnOn wsWRK myTerminal                                                                                                
                 }
 
     , Project   { projectName       = wsWRK2
@@ -262,7 +265,7 @@ myAltBrowserClass   = "Google-chrome-stable"
 myStatusBar         = "dzen2 -y 0 -x 0 -w 1000 -ta l "
 
 myIDE               = "intellij-idea-ultimate-edition"
-myAltIDE            = "atom"
+myAltIDE            = "code"
 
 myMail              = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=egddcdhcadfhcbheacnhikllgjokeico"
 myKeep              = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=hcfcmgpnmpinpidjdgejehjchlbglpde"
@@ -271,7 +274,7 @@ myTranslate         = "/opt/google/chrome/google-chrome --profile-directory=Defa
 myLauncher          = "rofictl"
 
 
-spotifyCommand      = "spotify2"
+spotifyCommand      = "spotify"
 spotifyClassName    = "Spotify"
 isSpotify           = (className =? spotifyClassName)
 
@@ -427,9 +430,14 @@ unfocusColor = base02
 
 
 
+-- myPromptFont    ="xos4 Terminus:style=Regular"
+-- myFont          ="xos4 Terminus:style=Regular"
+
+
 myPromptFont    ="xft:misc ohsnap-11"
 myFont          ="xft:misc ohsnap-11"
 
+-- myFont          ="xos4 Terminus:style=Regular"
 
 
 -- myPromptFont  ="Monospace"
@@ -684,11 +692,11 @@ shiftAndView dir = findWorkspace getSortByIndex dir (WSIs notSP) 1
         >>= \t -> (windows . W.shift $ t) >> (windows . W.greedyView $ t)
 
 -- hidden, non-empty workspaces less scratchpad
-shiftAndView' dir = findWorkspace getSortByIndexNoSP dir (hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
+shiftAndView' dir = findWorkspace getSortByIndexNoSP dir HiddenNonEmptyWS(hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
         >>= \t -> (windows . W.shift $ t) >> (windows . W.greedyView $ t)
-nextNonEmptyWS = findWorkspace getSortByIndexNoSP Next (hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
+nextNonEmptyWS = findWorkspace getSortByIndexNoSP Next HiddenNonEmptyWS(hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
         >>= \t -> (windows . W.view $ t)
-prevNonEmptyWS = findWorkspace getSortByIndexNoSP Prev (hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
+prevNonEmptyWS = findWorkspace getSortByIndexNoSP Prev HiddenNonEmptyWS(hiddenWS :&: XMonad.Actions.CycleWS.Not emptyWS) 1
         >>= \t -> (windows . W.view $ t)
 getSortByIndexNoSP =
         fmap (.filterOutWs [scratchpadWorkspaceTag]) getSortByIndex
@@ -709,6 +717,7 @@ myKeys conf = let
 
     zipM  m nm ks as f = zipWith (\k d -> (m ++ k, addName nm $ f d)) ks as
     zipM' m nm ks as f b = zipWith (\k d -> (m ++ k, addName nm $ f d b)) ks as
+    
 
     -- from xmonad.layout.sublayouts
     focusMaster' st = let (f:fs) = W.integrate st
@@ -803,7 +812,7 @@ myKeys conf = let
     , ("M-S-\\"                   , addName "File Manager Thunar"             $ spawn "thunar")
 
     , ("M-/"                      , addName "Browser"                         $ spawn myBrowser)
-    , ("M-S-/"                    , addName "Alt Browser"             $ spawn myAltBrowser)
+    , ("M-S-/"                    , addName "Alt Browser"                     $ spawn myAltBrowser)
 
 --     , ("M-<Home>"                 , addName "E-mail"                          $ spawn myMail)
 --     , ("M-<Insert>"               , addName "Keep"                            $ spawn myKeep)

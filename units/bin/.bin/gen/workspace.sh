@@ -51,9 +51,9 @@ declare -A WORKSPACE_CONTEXT_MAPPING
 
 
 WORKSPACE_TAG_MAPPING=(
-  ["wrk"]="WORK"            \
-  ["tmp"]="INCOGNITO"       \
-  ["priv"]="PRIVATE"       \     \
+  ["wrk"]="WORK"           \
+  ["tmp"]="INCOGNITO"      \
+  ["priv"]="PRIVATE"       \
   ["gen"]="PRIVATE")
 
 : <<EOF
