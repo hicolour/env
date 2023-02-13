@@ -286,7 +286,7 @@ pavucontrolCommand  = "pavucontrol"
 pavucontrolClassName = "Pavucontrol"
 isPavucontrol       = (className =? pavucontrolClassName)
 
-rchstCommand        = "/home/marek/projects/personal/rchst/rchst"
+rchstCommand        = "/home/marek/projects/private/rchst/rchst"
 rchstClassName      = "Rofi"
 isRchst             = (className =? rchstClassName)
 
@@ -441,7 +441,7 @@ myFont          ="xft:misc ohsnap-11"
 
 -- myPromptFont  ="Monospace"
 -- myFont      ="-misc-dina-medium-r-normal--15-68-75-160-c-60-iso8859-1"
---myFont      ="-ypn-envypn-Medium-R-Normal--13-130-75-75-C-90-ISO8859-1"
+-- myFont      ="-ypn-envypn-Medium-R-Normal--13-130-75-75-C-90-ISO8859-1"
 myWideFont  = "xft:Eurostar Black Extended:"
             ++ "style=Regular:pixelsize=50:hinting=true"
 

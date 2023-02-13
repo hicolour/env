@@ -10,8 +10,9 @@ apps=(
     git
     git-lfs
     jq
-    # yq 
+    postman-bin    
     docker
+    dive-bin                # A tool for exploring each layer in a docker image
     docker-compose
 )
 

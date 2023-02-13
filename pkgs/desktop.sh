@@ -19,6 +19,7 @@
 apps=(
     xorg-server
     xorg-xinit
+    xorg-xkill
     xterm
     xmonad
     xmonad-contrib
@@ -34,49 +35,19 @@ apps=(
     spotify
     maim                    # Utility to take a screenshot using imlib2
     xclip                   # Command line interface to the X11 clipboard
+    neofetch                # A CLI system information tool written in BASH that supports displaying images.
+
 )
 
 
 env "${apps[@]}"
 
-# # Pacman utilities e.g. rankmirrors
-# p pacman-contrib
+# xcompmgr
+# xcape                  # Configure modifier keys to act as other keys when pressed and released on their own
 
-# #xorg
-# p xorg-server
-# p xorg-xinit
-# p xterm
-
-# # Xmonad
-# p xmonad
-# p xmonad-contrib
-
-# p xcompmgr
-
-# p xorg-xrandr
-
-# # Toolbar
-# p dzen2
-
-# # App Toolbar
-# p dmenu
-# p rofi
-
-# #  Configure modifier keys to act as other keys when pressed and released on their own
-# p xcape
 
 # # inotify-tools is a C librarp and a set of command-line programs for Linux providing a  simple interface to inotify.
 # p inotify-tools
-
-
-# # General Utils
-# p htop
-# p glances
-# p mc
-# p unzip
-
-# # A CLI system information tool written in BASH that supports displaying images.
-# p neofetch
 
 # # Login Manager
 # p slim
