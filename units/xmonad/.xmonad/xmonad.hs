@@ -163,8 +163,6 @@ wsBSA   = "BSA"
 wsCOM   = "COM"
 wsDOM   = "DOM"
 wsDMO   = "DMO"
-wsSLACK = "6"
-wsGEN   = "1:ter"
 wsGCC   = "GCC"
 wsMON   = "5"
 wsOSS   = "OSS"
@@ -173,35 +171,72 @@ wsRW    = "7"
 wsSYS   = "4"
 wsTMP   = "8"
 wsVIX   = "VIX"
-wsWRK   = "2:web"
-wsWRK2  = "3"
+wsWRK   = "wrk@1"
+wsWRK2  = "wrk@2"
 wsGGC   = "GGC"
 wsFLOAT = "FLOAT"
+wsTERM3 = "3:tw"
 
-myWorkspaces = [wsGEN, wsWRK, wsWRK2, wsSYS, wsMON, wsSLACK, wsRW, wsTMP, wsGCC, wsAV, wsFLOAT]
+wsPRIV  = "1:p" 
+wsTERM1 = "2:t"
+wsTERM2 = "3:tw"
+wsIDE1  = "4:i"
+wsIDE2  = "5:i"
+wsGEN1   = "6:g"
+wsGEN2   = "7:g"
+wsSLACK = "8:s"
+
+
+myWorkspaces = [wsPRIV, wsTERM1, wsTERM2,  wsIDE1, wsIDE2, wsGEN1, wsGEN2, wsSLACK, wsWRK, wsWRK2]
 
 projects :: [Project]
 projects =
+    
 
-    [ Project   { projectName       = wsGEN
+    [ Project   { projectName       = wsTERM1
                 , projectDirectory  = "~/"
-                , projectStartHook  = Nothing
---                , projectStartHook  = Just $ do spawnOn wsGEN myTerminal
+                , projectStartHook  = Just $ do 
+                    sendMessage (JumpToLayout "Flex")
+                    spawnOn wsTERM1 myTerminal
+                    spawnOn wsTERM1 myTerminal
+                    spawnOn wsTERM1 myTerminal
                 }
 
+    , Project   { projectName       = wsTERM2
+                , projectDirectory  = "~/"
+                , projectStartHook  = Just $ do 
+                    sendMessage (JumpToLayout "Flex")
+                    spawnOn wsTERM1 myTerminal
+                    spawnOn wsTERM1 myTerminal
+                    spawnOn wsTERM1 myTerminal
+
+                }
+
+    , Project   { projectName       = wsTERM3
+                , projectDirectory  = "~/projects/work"
+                , projectStartHook  = Just $ do spawn $ myTerminal
+                }
 
     , Project   { projectName       = wsWRK
                 , projectDirectory  = "~/"
-                , projectStartHook  = Nothing
+                , projectStartHook  = Just $ do spawn $ myBrowser
 --                , projectStartHook  = Just $ do spawn $ myBrowser
                 }
 
     , Project   { projectName       = wsWRK2
-                , projectDirectory  = "~/"
+                , projectDirectory  = "~"
                 , projectStartHook  = Just $ do spawnOn wsWRK2 myAltTerminal
                 }
 
+    , Project   { projectName       = wsIDE1
+                , projectDirectory  = "~/"
+                , projectStartHook  = Just $ do spawnOn wsIDE1 myIDE
+                }
 
+    , Project   { projectName       = wsIDE2
+                , projectDirectory  = "~/"
+                , projectStartHook  = Just $ do spawnOn wsIDE2 myAltIDE
+                }
 
     , Project   { projectName       = wsSYS
                 , projectDirectory  = "~/"
@@ -213,6 +248,16 @@ projects =
                 , projectStartHook  = Just $ do spawn $ myAltBrowser ++ " https://mail.google.com/mail"
 
                 }
+
+    , Project   { projectName       = wsPRIV
+                , projectDirectory  = "~/"
+                , projectStartHook  = Just $ do spawn myBrowser    
+                } 
+
+    , Project   { projectName       = wsSLACK
+                , projectDirectory  = "~/"
+                , projectStartHook  = Just $ do spawn myCommunicator    
+                }           
 
 {-
     , Project   { projectName       = wsMON
@@ -254,6 +299,8 @@ myAltTerminal       = "xfce4-terminal"
 myBrowser           = "browser-qutebrowser"
 myBrowserClass      = "qutebrowser"
 
+
+
 myAltBrowser        = "browser-chrome"
 myAltBrowserClass   = "Google-chrome-stable"
 
@@ -261,13 +308,18 @@ myAltBrowserClass   = "Google-chrome-stable"
 myStatusBar         = "dzen2 -y 0 -x 0 -w 1000 -ta l "
 
 myIDE               = "intellij-idea-ultimate-edition"
-myAltIDE            = "atom"
+myAltIDE            = "code"
 
 myMail              = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=egddcdhcadfhcbheacnhikllgjokeico"
 myKeep              = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=hcfcmgpnmpinpidjdgejehjchlbglpde"
 myTranslate         = "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=fklgpoecafmhpbmoepkbhkhhbahodcdh"
 
 myLauncher          = "rofictl"
+
+myCommunicator      = "slack"
+slackClassName      = "Slack"
+isSlack             = (className =? slackClassName)
+
 
 
 spotifyCommand      = "spotify"
@@ -306,10 +358,11 @@ scratchpads =
     ,   (NS "glances"  "roxterm --role scratchpad-glances -e glances" (role =? "scratchpad-glances")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     -- Need to fix displayctl menu
     ,   (NS "displayctl"  "roxterm --role scratchpad-displayctl -e 'displayctl menu'" (role =? "scratchpad-displayctl")  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
-    ,   (NS "wicd-curses" wicdCursesCommand isWicdCurses (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
-    ,   (NS "wicd" wicdGtkCommand isWicdGtk (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    -- ,   (NS "wicd-curses" wicdCursesCommand isWicdCurses (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    -- ,   (NS "wicd" wicdGtkCommand isWicdGtk (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "pavucontrol"  pavucontrolCommand isPavucontrol (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "spotify"  spotifyCommand  isSpotify  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    -- ,   (NS "slack"  myCommunicator isSlack (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ]
     where role = stringProperty "WM_WINDOW_ROLE"
 
@@ -428,6 +481,9 @@ unfocusColor = base02
 
 myPromptFont    ="xft:misc ohsnap-11"
 myFont          ="xft:misc ohsnap-11"
+
+
+-- myFont       = "-*-terminus-medium-*-*-*-*-160-*-*-*-*-*-*"
 
 -- myFont                = "-*-terminus-bold-*-*-*-*-120-*-*-*-*-*-*"
 
@@ -558,7 +614,7 @@ myLayoutHook = showWorkspaceName
              $ fullBarToggle
              $ mirrorToggle
              $ reflectToggle
-             $ tabs ||| flex ||| threeCol ||| simpleThree ||| exp
+             $ flex ||| threeCol ||| tabs ||| simpleThree ||| exp
   where
 
 --    testTall = Tall 1 (1/50) (2/3)
@@ -868,6 +924,7 @@ myKeys conf = let
     , ("M-<F7>"                   , addName "-- EMPTY SLOT --"                $ namedScratchpadAction scratchpads "emtpy")
     , ("M-<F8>"                   , addName "NSP Wicd"                        $ namedScratchpadAction scratchpads "wicd-curses")
     , ("M-<F9>"                   , addName "NSP Pavucontrol"                 $ namedScratchpadAction scratchpads "pavucontrol")
+    , ("M-<F10>"                  , addName "NSP Slack"                       $ namedScratchpadAction scratchpads "slack")    
     , ("M-<F11>"                  , addName "NSP Spotify"                     $ namedScratchpadAction scratchpads "spotify")
     ] ^++^
 
@@ -1093,6 +1150,7 @@ myFadeHook = composeAll
     [ opaque -- default to opaque
     , isUnfocused --> opacity 1.0
     , (className =? "Terminator") <&&> (isUnfocused) --> opacity 0.9
+    , (className =? "roxterm") <&&> (isUnfocused) --> opacity 0.8
     , (className =? "URxvt") <&&> (isUnfocused) --> opacity 1.0
     , fmap ("Google" `isPrefixOf`) className --> opaque
     , isDialog --> opaque
@@ -1141,6 +1199,9 @@ myManageHook =
             , resource =? "stalonetray"    -?> doIgnore
             , resource =? "vlc"     -?> doFloat
             , resource =? "google-chrome" -?> doShift "2:web"
+            , resource =? "jetbrains-idea" -?> doShift wsIDE1
+            , resource =? "code-oss" -?> doShift wsIDE2
+            , resource =? "slack" -?> doShift wsSLACK
             , resource =? "steam"   -?> doFloat
             , className =? "jetbrains-toolbox" -?> doCenterFloat
             , transience

@@ -9,31 +9,58 @@
 #
 # this script also initializes control ports for each browser instance
 
+
 BROWSER="google-chrome"
 BROWSER_CMD="google-chrome-stable"
-WSTAG=$(ws)
-WSPORT=$(ws port)
+WSTAG=$(workspace.sh)
+WSPORT=$(workspace.sh port)
+
+log "Input WSTAG:"$WSTAG
+log "Input WSPORT:"$WSPORT
+
+
+# WSTAG=$(ws)
+# WSPORT=$(ws port)
 
 echo $WSTAG
 echo $WSPORT
 
 
 
-CONFIGDIR=${XDG_CONFIG_HOME:-${HOME}/.config}
+CONFIGDIR=${XDG_CONFIG_HOME:-${HOME}/.config/chrome-custom}
 CACHEDIR=${XDG_CACHE_HOME:-${HOME}/.cache/browser}
 
-# make directories if missing, set no COW for btrfs
-[ -d "$CONFIGDIR" ] || { mkdir -p "$CONFIGDIR"; chattr +C "$CONFIGDIR"; }
-[ -d "$CACHEDIR" ] || { mkdir -p "$CACHEDIR"; chattr +C "$CACHEDIR"; }
+# # make directories if missing, set no COW for btrfs
+# [ -d "$CONFIGDIR" ] || { mkdir -p "$CONFIGDIR"; chattr +C "$CONFIGDIR"; }
+# [ -d "$CACHEDIR" ] || { mkdir -p "$CACHEDIR"; chattr +C "$CACHEDIR"; }
 
-SUFFIX_NAME=BROWSER_PROFILE_FOR_$WSTAG
-SUFFIX="${!SUFFIX_NAME}"
-echo $SUFFIX
+# SUFFIX_NAME=BROWSER_PROFILE_FOR_$WSTAG
+# SUFFIX="${!SUFFIX_NAME}"
+# echo $SUFFIX
 
 
 
-# echo "browser tag:$WSTAG with SUFFIX_NAME:$SUFFIX_NAME suffix:$SUFFIX" >> /tmp/browser
+# # echo "browser tag:$WSTAG with SUFFIX_NAME:$SUFFIX_NAME suffix:$SUFFIX" >> /tmp/browser
 
+
+# [ -z "$WSPORT" ]  && REMOTE="" || REMOTE="--remote-debugging-port=$WSPORT"
+# [ -z "$WSTAG" ]   && SUFFIX="" || SUFFIX="${!SUFFIX_NAME}"
+# [ "$WSTAG" = "INCOGNITO" ] && INCOGNITO=" --incognito " || INCOGNITO=""
+
+# if [[ -z $SUFFIX ]]; then
+#    INCOGNITO=" --incognito "
+# fi
+
+# echo "wstag "$WSTAG
+# echo "launching browser for" $SUFFIX
+
+# # echo ${CONFIGDIR}/${BROWSER}/${SUFFIX}
+# # echo $INCOGNITO
+# eval $BROWSER_CMD $INCOGNITO --profile-directory=${SUFFIX} ${REMOTE:-} $* \&
+
+
+
+log $SUFFIX
 
 [ -z "$WSPORT" ]  && REMOTE="" || REMOTE="--remote-debugging-port=$WSPORT"
 [ -z "$WSTAG" ]   && SUFFIX="" || SUFFIX="${!SUFFIX_NAME}"
@@ -43,9 +70,21 @@ if [[ -z $SUFFIX ]]; then
    INCOGNITO=" --incognito "
 fi
 
-echo "wstag "$WSTAG
-echo "launching browser for" $SUFFIX
 
-# echo ${CONFIGDIR}/${BROWSER}/${SUFFIX}
-# echo $INCOGNITO
-eval $BROWSER_CMD $INCOGNITO --profile-directory=${SUFFIX} ${REMOTE:-} $* \&
+SUFFIX=$WSTAG
+
+echo "--->$SUFFIX"
+# log "suffix"$SUFFIX
+# log "wstag "$WSTAG
+
+
+
+
+SUFFIX_LOWERCASE="${SUFFIX,,}"
+
+
+echo "Profiledir:"${CONFIGDIR}/${SUFFIX_LOWERCASE}
+
+eval $BROWSER_CMD --profile-directory=${SUFFIX_LOWERCASE} ${REMOTE:-} $* \&
+
+

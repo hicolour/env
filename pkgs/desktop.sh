@@ -36,6 +36,9 @@ apps=(
     maim                    # Utility to take a screenshot using imlib2
     xclip                   # Command line interface to the X11 clipboard
     neofetch                # A CLI system information tool written in BASH that supports displaying images.
+    xorg-xprop
+    # calibre                 # Ebook management application
+    libreoffice
 
 )
 
