@@ -7,6 +7,7 @@
 . ./core/env.sh
 
 apps=(
+    archlinux-keyring   # Arch Linux keyring
     bash
     bc                  # Calculate in bash    
     htop

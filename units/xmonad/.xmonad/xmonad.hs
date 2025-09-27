@@ -34,7 +34,7 @@ import XMonad.Actions.FloatSnap
 import XMonad.Actions.MessageFeedback       -- pseudo conditional key bindings
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.Promote               -- promote window to master
-import XMonad.Actions.SinkAll
+-- import XMonad.Actions.SinkAll
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.WindowGo
 import XMonad.Actions.WithAll               -- action all the things
@@ -111,7 +111,7 @@ import XMonad.Layout.Fullscreen as LF
 import XMonad.Layout.NoBorders
 
 import XMonad.Hooks.DynamicLog
-
+import XMonad.Actions.UpdatePointer
 
 ---------------------------------------------------------------------------
 -- Main
@@ -145,7 +145,7 @@ myConfig p = def
         , manageHook         = myManageHook
         , handleEventHook    = myHandleEventHook
         , layoutHook         = myLayoutHook
-        , logHook            = myLogHook p >> historyHook
+        , logHook            = myLogHook p >> historyHook  >> updatePointer (0.5, 0.5) (0, 0)
         , modMask            = myModMask
         , mouseBindings      = myMouseBindings
         , startupHook        = myStartupHook
@@ -338,6 +338,10 @@ pavucontrolCommand  = "pavucontrol"
 pavucontrolClassName = "Pavucontrol"
 isPavucontrol       = (className =? pavucontrolClassName)
 
+bluemanCommand  = "blueman-manager"
+bluemanClassName = "Blueman-manager"
+isBlueman      = (className =? bluemanClassName)
+
 rchstCommand        = "/home/marek/projects/private/rchst/rchst"
 rchstClassName      = "Rofi"
 isRchst             = (className =? rchstClassName)
@@ -361,6 +365,7 @@ scratchpads =
     -- ,   (NS "wicd-curses" wicdCursesCommand isWicdCurses (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     -- ,   (NS "wicd" wicdGtkCommand isWicdGtk (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "pavucontrol"  pavucontrolCommand isPavucontrol (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
+    ,   (NS "blueman"  bluemanCommand isBlueman (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ,   (NS "spotify"  spotifyCommand  isSpotify  (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     -- ,   (NS "slack"  myCommunicator isSlack (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)))
     ]
@@ -867,6 +872,10 @@ myKeys conf = let
     , ("<XF86AudioLowerVolume>"    , addName "Down audio"                      $ spawn "pamixer -d 5 & notify-send  \"Audio Down\" $(pamixer --get-volume-human)")
     , ("<XF86AudioMute>"           , addName "MUTE audio"                      $ spawn "amixer set Master toggle")
 
+    , ("<XF86AudioNext>"           , addName "Next song"                       $ spawn "playerctl next")
+    , ("<XF86AudioPrev>"           , addName "Previous song"                   $ spawn "playerctl previous")
+    , ("<XF86AudioPlay>"           , addName "Play/Pause"                      $ spawn "playerctl play-pause")
+    , ("<XF86AudioStop>"           , addName "Stop"                            $ spawn "playerctl stop")
 
     , ("M-<XF86Display>"           , addName "Display - force internal"        $ spawn "displayctl internal")
     , ("M-o"                       , addName "Display (output) launcher"       $ namedScratchpadAction scratchpads "displayctl")
@@ -920,8 +929,8 @@ myKeys conf = let
     , ("M-<F3>"                   , addName "NSP Terminal"                    $ namedScratchpadAction scratchpads "terminal-2")
     , ("M-<F4>"                   , addName "NSP Htop"                        $ namedScratchpadAction scratchpads "htop")
     , ("M-<F5>"                   , addName "NSP Glances"                     $ namedScratchpadAction scratchpads "glances")
-    , ("M-<F6>"                   , addName "-- EMPTY SLOT --"                $ namedScratchpadAction scratchpads "emtpy")
-    , ("M-<F7>"                   , addName "-- EMPTY SLOT --"                $ namedScratchpadAction scratchpads "emtpy")
+    , ("M-<F6>"                  , addName "NSP Bleue"                       $ namedScratchpadAction scratchpads "blueman")
+   -- , ("M-<F7>"                   , addName "-- EMPTY SLOT --"                $ namedScratchpadAction scratchpads "emtpy")
     , ("M-<F8>"                   , addName "NSP Wicd"                        $ namedScratchpadAction scratchpads "wicd-curses")
     , ("M-<F9>"                   , addName "NSP Pavucontrol"                 $ namedScratchpadAction scratchpads "pavucontrol")
     , ("M-<F10>"                  , addName "NSP Slack"                       $ namedScratchpadAction scratchpads "slack")    
@@ -936,8 +945,8 @@ myKeys conf = let
     (
     [ ("M-<Backspace>"            , addName "Kill"                            kill1)
     , ("M-S-<Backspace>"          , addName "Kill all"                        $ confirmPrompt hotPromptTheme "kill all" $ killAll)
-    , ("M-d"                      , addName "Duplicate w to all ws"           $ toggleCopyToAll)
-    , ("M-S-d"                    , addName "Kill other duplicates"           $ killAllOtherCopies)
+    -- , ("M-d"                      , addName "Duplicate w to all ws"           $ toggleCopyToAll)
+    -- , ("M-S-d"                    , addName "Kill other duplicates"           $ killAllOtherCopies)
     , ("M-p"                      , addName "Promote"                         $ promote)
     , ("M-g"                      , addName "Un-merge from sublayout"         $ withFocused (sendMessage . UnMerge))
     , ("M-S-g"                    , addName "Merge all into sublayout"        $ withFocused (sendMessage . MergeAll))
@@ -1016,7 +1025,7 @@ myKeys conf = let
     , ("M-S-<Tab>"              , addName "Reset layout"                    $ setLayout $ XMonad.layoutHook conf)
 
     , ("M-y"                    , addName "Float tiled w"                   $ withFocused toggleFloat)
-    , ("M-S-y"                  , addName "Tile all floating w"             $ sinkAll)
+    -- , ("M-S-y"                  , addName "Tile all floating w"             $ sinkAll)
 
     , ("M-,"                    , addName "Decrease master windows"         $ sendMessage (IncMasterN (-1)))
     , ("M-."                    , addName "Increase master windows"         $ sendMessage (IncMasterN 1))

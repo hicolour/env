@@ -551,7 +551,7 @@ c.content.cookies.accept = 'all'
 ## User agent to send. Unset to send the default. Note that the value
 ## read from JavaScript is always the global value.
 ## Type: String
-c.content.headers.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.124 Safari/537.36"
+c.content.headers.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
 
 
 ## Enable host blocking.
@@ -1465,8 +1465,8 @@ c.url.start_pages = ['https://google.com']
 # config.bind('.', 'repeat-command')
 # config.bind('/', 'set-cmd-text /')
 # config.bind(':', 'set-cmd-text :')
-config.bind(',p', 'spawn --userscript qute-lastpass.py')
-# config.bind(',p', 'spawn --userscript qute-1pass')
+# config.bind(',p', 'spawn --userscript qute-lastpass.py')
+config.bind(',p', 'spawn --userscript qute-1pass')
 # config.bind(',p', 'spawn --userscript qute-pass.py')
 # config.bind(',p', 'spawn --userscript qute-1password.py fill_password')
 
@@ -1479,7 +1479,8 @@ config.bind(',p', 'spawn --userscript qute-lastpass.py')
 # config.bind(';f', 'hint all tab-fg')
 # config.bind(';h', 'hint all hover')
 # config.bind(';m', 'hint links spawn streamlink -p mpv {hint-url} best')
-config.bind(';m', 'hint links spawn streamlink {hint-url} best --player-continuous-http -p mpv -a "--force-seekable=yes --hr-seek=yes --hr-seek-framedrop=yes {filename}"')
+# config.bind(';m', 'hint links spawn streamlink {hint-url} best --player-continuous-http -p mpv -a "--force-seekable=yes --hr-seek=yes --hr-seek-framedrop=yes {filename}"')
+config.bind(';m', 'hint links spawn mpv {hint-url}')
 # config.bind(';i', 'hint images')
 # config.bind(';o', 'hint links fill :open {hint-url}')
 # config.bind(';r', 'hint --rapid links tab-bg')

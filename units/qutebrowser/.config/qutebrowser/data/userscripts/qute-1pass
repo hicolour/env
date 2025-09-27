@@ -1,124 +1,412 @@
 #!/usr/bin/env bash
+# qute-1pass — fill credentials from 1Password in qutebrowser
+# - 1Password CLI v2 (v1 fallback)
+# - Desktop App Integration preferred (sessionless)
+# - Searches ALL vaults (override with QUTE_1PASS_VAULT)
+# - Chooser shows ALL title matches when >1 (not narrowed by URL)
+# - Force chooser always: QUTE_1PASS_ALWAYS_PICK=1
+# - DEBUG logging permanently enabled
 
 set +e
 
-# JS field injection code from https://github.com/qutebrowser/qutebrowser/blob/master/misc/userscripts/password_fill
-javascript_escape() {
-    # print the first argument in an escaped way, such that it can safely
-    # be used within javascripts double quotes
-    # shellcheck disable=SC2001
-    sed "s,[\\\\'\"\/],\\\\&,g" <<< "$1"
+# ---------- messaging ----------
+say() {
+  local raw="$1"
+  if [ -n "${QUTE_FIFO:-}" ] && [ -e "$QUTE_FIFO" ]; then
+    printf "%s\n" "$raw" >> "$QUTE_FIFO"
+  else
+    case "$raw" in
+      message-*\ \'*\') printf "%s\n" "${raw#*\'}" | sed "s/'$//" ;;
+      jseval\ -q\ *)    echo "[qutebrowser JS would run here]" ;;
+      *)                printf "%s\n" "$raw" ;;
+    esac
+  fi
 }
+debug() { say "message-info 'DEBUG: $*'"; }
 
-js() {
-cat <<EOF
-    function isVisible(elem) {
-        var style = elem.ownerDocument.defaultView.getComputedStyle(elem, null);
-        if (style.getPropertyValue("visibility") !== "visible" ||
-            style.getPropertyValue("display") === "none" ||
-            style.getPropertyValue("opacity") === "0") {
-            return false;
-        }
-        return elem.offsetWidth > 0 && elem.offsetHeight > 0;
-    };
-    function hasPasswordField(form) {
-        var inputs = form.getElementsByTagName("input");
-        for (var j = 0; j < inputs.length; j++) {
-            var input = inputs[j];
-            if (input.type == "password") {
-                return true;
-            }
-        }
-        return false;
-    };
-    function loadData2Form (form) {
-        var inputs = form.getElementsByTagName("input");
-        for (var j = 0; j < inputs.length; j++) {
-            var input = inputs[j];
-            if (isVisible(input) && (input.type == "text" || input.type == "email")) {
-                input.focus();
-                input.value = "$(javascript_escape "${USERNAME}")";
-                input.dispatchEvent(new Event('change'));
-                input.blur();
-            }
-            if (input.type == "password") {
-                input.focus();
-                input.value = "$(javascript_escape "${PASSWORD}")";
-                input.dispatchEvent(new Event('change'));
-                input.blur();
-            }
-        }
-    };
-    var forms = document.getElementsByTagName("form");
-    if("$(javascript_escape "${QUTE_URL}")" == window.location.href) {
-        for (i = 0; i < forms.length; i++) {
-            if (hasPasswordField(forms[i])) {
-                loadData2Form(forms[i]);
-            }
-        }
-    } else {
-        alert("Secrets will not be inserted.\nUrl of this page and the one where the user script was started differ.");
+# ---------- JS injection (React/SPA-friendly) ----------
+javascript_escape() { sed "s,[\\\\\"'/],\\\\&,g" <<< "$1"; }
+js_tpl() { cat <<'EOF'
+(function () {
+  function isVisible(el){
+    if(!el) return false;
+    const s = el.ownerDocument.defaultView.getComputedStyle(el, null);
+    if(s.getPropertyValue("visibility")!=="visible"||s.getPropertyValue("display")==="none"||s.getPropertyValue("opacity")==="0") return false;
+    const r = el.getBoundingClientRect(); return r.width>0 && r.height>0;
+  }
+  const setValue = (el, val) => {
+    const proto = Object.getPrototypeOf(el);
+    const desc = Object.getOwnPropertyDescriptor(proto, 'value');
+    if (desc && desc.set) { desc.set.call(el, val); } else { el.value = val; }
+    el.dispatchEvent(new Event('input', {bubbles:true}));
+    el.dispatchEvent(new Event('change', {bubbles:true}));
+  };
+  function pickUsernameField(root){
+    const sels = [
+      'input[type="email"]','input[name="email"]','input[id="email"]',
+      'input[name="username"]','input[id="username"]',
+      '[id*="email" i]','[id*="user" i]','[name*="user" i]','[aria-label*="email" i]',
+      'input[type="text"]'
+    ];
+    for(const s of sels){ const el = root.querySelector(s); if(isVisible(el)) return el; }
+    const all = Array.from(root.querySelectorAll('input'));
+    return all.find(el => isVisible(el) && (el.type==='email'||el.type==='text')) || null;
+  }
+  function pickPasswordField(root){
+    const sels = ['input[type="password"]','#password','[id*="pass" i]','[name*="pass" i]','[aria-label*="password" i]'];
+    for(const s of sels){ const el = root.querySelector(s); if(isVisible(el)) return el; }
+    const all = Array.from(root.querySelectorAll('input[type="password"]')); return all.find(isVisible) || null;
+  }
+  function tryFill(doc, user, pass){
+    let filled=false;
+    const forms = Array.from(doc.getElementsByTagName('form'));
+    for(const form of forms){
+      const pwd = pickPasswordField(form) || pickPasswordField(doc);
+      if(!pwd) continue;
+      const usr = pickUsernameField(form) || pickUsernameField(doc);
+      if(usr){ usr.focus(); setValue(usr, user); usr.blur(); filled=true; }
+      if(pwd){ pwd.focus(); setValue(pwd, pass); pwd.blur(); filled=true; }
+      if(filled) return true;
     }
+    const usr = pickUsernameField(doc); const pwd = pickPasswordField(doc);
+    if(usr){ usr.focus(); setValue(usr, user); usr.blur(); filled=true; }
+    if(pwd){ pwd.focus(); setValue(pwd, pass); pwd.blur(); filled=true; }
+    return filled;
+  }
+  const MAX_TRIES=16, DELAY=200; let tries=0;
+  function tick(){
+    try{
+      if(tryFill(document, "__USERNAME__", "__PASSWORD__")) return;
+    }catch(e){}
+    if(++tries<MAX_TRIES) setTimeout(tick, DELAY);
+  }
+  setTimeout(tick, 0);
+})();
 EOF
 }
+build_js() {
+  local code; code="$(js_tpl)"
+  code="${code//__USERNAME__/$(javascript_escape "${USERNAME}")}"
+  code="${code//__PASSWORD__/$(javascript_escape "${PASSWORD}")}"
+  printf "%s" "$code" | tr '\n' ' '
+}
 
-URL=$(echo "$QUTE_URL" | awk -F/ '{print $3}' | sed 's/www.//g')
-TOKEN_TMPDIR="${TMPDIR:-/tmp}"
-TOKEN_CACHE="$TOKEN_TMPDIR/1pass.token"
+# ---------- CLI detection / compat ----------
+op_major() { op --version 2>/dev/null | sed -n '1s/[^0-9]*\([0-9]\+\).*/\1/p'; }
+op_supports_raw_flag() { op signin --help 2>&1 | grep -q -- '--raw'; }
 
-# echo "message-info 'Looking for password for $URL...'" >> "$QUTE_FIFO"
+# v2 wrappers
+op_v2_items_list()    { [ -n "$1" ] && op item list --format=json --categories=LOGIN --vault "$1" 2>/dev/null || op item list --format=json --categories=LOGIN 2>/dev/null; }
+op_v2_item_get_json() { op item get "$2" ${1:+--session "$1"} --format=json 2>/dev/null; }
+op_v2_item_get_totp() { op item get "$2" ${1:+--session "$1"} --otp 2>/dev/null; }
 
-# if [ -f "$TOKEN_CACHE" ]; then
-#     TOKEN=$(cat "$TOKEN_CACHE")
-#     if ! op signin --session="$TOKEN" --output=raw > /dev/null; then
-#         TOKEN=$(rofi -dmenu -password -p "1password: "| eval $(op signin)) || TOKEN=""
-#         echo "$TOKEN" > "$TOKEN_CACHE"
-#     fi
-# else
-#     TOKEN=$(rofi -dmenu -password -p "1password: "| eval $(op signin)) || TOKEN=""
-#     install -m 600 /dev/null "$TOKEN_CACHE"
-#     echo "$TOKEN" > "$TOKEN_CACHE"
-# fi
+# v1 wrappers
+op_v1_items_list()    { op list items --cache ${1:+--session "$1"} 2>/dev/null; }
+op_v1_item_get_json() { op get item  --cache ${1:+--session "$1"} "$2" 2>/dev/null; }
+op_v1_item_get_totp() { op get totp  --cache ${1:+--session "$1"} "$2" 2>/dev/null; }
 
+# Desktop App Integration check
+op_sessionless_ok() {
+  if [ "$(op_major)" = "2" ]; then op item list --format=json --categories=LOGIN >/dev/null 2>&1
+  else op list items --cache >/dev/null 2>&1; fi
+}
 
-    URL="strava"
-    rofi -dmenu -password -p "1password: "| eval $(op signin)
+# Token-based signin fallback
+prompt_pw() {
+  if command -v rofi >/dev/null 2>&1; then rofi -dmenu -password -p "1Password:"
+  else printf "1Password: " 1>&2; stty -echo; local pw; IFS= read -r pw; stty echo; printf "\n" 1>&2; printf "%s" "$pw"; fi
+}
+signin_get_token() {
+  local pw rawflag; pw="$(cat)"
+  if op_supports_raw_flag; then rawflag="--raw"; else rawflag="--output=raw"; fi
+  if [ "$(op_major)" = "2" ]; then
+    local sh; sh="$(op account list --format=json 2>/dev/null | jq -r '.[0].shorthand' 2>/dev/null)"
+    if [ -n "$sh" ]; then printf "%s" "$pw" | op signin "$sh" "$rawflag"; else printf "%s" "$pw" | op signin "$rawflag"; fi
+  else
+    printf "%s" "$pw" | op signin "$rawflag"
+  fi
+}
+token_valid() {
+  if [ "$(op_major)" = "2" ]; then op item list --format=json --categories=LOGIN --session "$1" >/dev/null 2>&1
+  else op list items --cache --session "$1" >/dev/null 2>&1; fi
+}
 
-    UUID=$(op item list --format=json | jq --arg url "$URL" -r '[.[] | {uuid, url: [.overview.URLs[]?.u, .overview.url][]?} | select(.uuid != null) | select(.url != null) | select(.url|test(".*\($url).*"))][.0].uuid') || UUID="" 
+pick_vault_name() { [ -n "${QUTE_1PASS_VAULT:-}" ] && printf "%s" "$QUTE_1PASS_VAULT" || echo ""; }
 
+# ---------- username/password extractors ----------
+jq_extract_username_v2='
+  ( .fields[]? | select((.purpose=="USERNAME")
+    or ((.label//"")|test("user|email|login";"i"))
+    or ((.id//"")   |test("user|email|login";"i")) ) | .value ) // empty
+'
+jq_extract_password_v2='
+  ( .fields[]? | select((.purpose=="PASSWORD")
+    or ((.label//"")|test("pass";"i"))
+    or ((.id//"")   |test("pass";"i")) ) | .value ) // empty
+'
+jq_extract_username_v1='.details.fields[]? | select(.designation=="username" or ((.name//"")|test("user|email|login";"i"))) | .value'
+jq_extract_password_v1='.details.fields[]? | select(.designation=="password" or ((.name//"")|test("pass";"i"))) | .value'
 
-    if [ -z "$UUID" ] || [ "$UUID" == "null" ];then
-        echo "message-error 'No entry found for $URL'" >> "$QUTE_FIFO"
-        TITLE=$(op list items --cache --session="$TOKEN" | jq -r '.[].overview.title' | rofi -dmenu -i) || TITLE=""
-        if [ -n "$TITLE" ]; then
-            UUID=$(op list items --cache --session="$TOKEN" | jq --arg title "$TITLE" -r '[.[] | {uuid, title:.overview.title}|select(.title|test("\($title)"))][.0].uuid') || UUID=""
-        else
-            UUID=""
-        fi
-    fi
+# ---------- main ----------
+QURL="${QUTE_URL:-}"
+URL_HOST="$(printf "%s" "$QURL" | awk -F/ '{print $3}')"
+URL_DOMAIN="$(printf "%s" "$URL_HOST" | sed 's/^www[.]//')"
+[ -z "$URL_DOMAIN" ] && URL_DOMAIN="(unknown url)"
 
-    if [ -n "$UUID" ];then
-        ITEM=$(op get item --cache --session="$TOKEN" "$UUID")
+for b in op jq; do command -v "$b" >/dev/null 2>&1 || { say "message-error 'Missing dependency: $b'"; exit 1; }; done
+command -v xclip >/dev/null 2>&1 || NO_XCLIP=1
 
-        PASSWORD=$(echo "$ITEM" | jq -r '.details.fields | .[] | select(.designation=="password") | .value')
+OPMAJOR="$(op_major)"
+MODE="sessionless"
+SESSION=""
 
-        if [ -n "$PASSWORD" ]; then
-            TITLE=$(echo "$ITEM" | jq -r '.overview.title')
-            USERNAME=$(echo "$ITEM" | jq -r '.details.fields | .[] | select(.designation=="username") | .value')
+say "message-info 'Looking for password for $URL_DOMAIN...'"
+debug "op version major: ${OPMAJOR:-unknown}"
 
-            printjs() {
-                js | sed 's,//.*$,,' | tr '\n' ' '
-            }
-            echo "jseval -q $(printjs)" >> "$QUTE_FIFO"
+if ! op_sessionless_ok; then
+  MODE="token"
+  TOKEN_TMPDIR="${TMPDIR:-/tmp}"
+  TOKEN_CACHE="$TOKEN_TMPDIR/1pass.token"
+  if [ -f "$TOKEN_CACHE" ]; then
+    SESSION="$(cat "$TOKEN_CACHE")"
+    token_valid "$SESSION" || SESSION=""
+  fi
+  if [ -z "$SESSION" ]; then
+    SESSION="$(prompt_pw | signin_get_token)" || SESSION=""
+    [ -z "$SESSION" ] && { say "message-error 'Sign-in failed (enable desktop app integration or run: op account add)'" ; exit 1; }
+    install -m 600 /dev/null "$TOKEN_CACHE" 2>/dev/null
+    printf "%s" "$SESSION" > "$TOKEN_CACHE" 2>/dev/null
+  fi
+fi
+debug "auth mode: $MODE"
 
-            TOTP=$(echo "$ITEM" | op get totp --cache --session="$TOKEN" "$UUID") || TOTP=""
-            if [ -n "$TOTP" ]; then
-                echo "$TOTP" | xclip -in -selection clipboard
-                echo "message-info 'Pasted one time password for $TITLE to clipboard'" >> "$QUTE_FIFO" 
-            fi
-        else
-            echo "message-error 'No password found for $URL'" >> "$QUTE_FIFO"
-        fi
+# Build matching regex (allow any subdomain)
+esc_domain="$(printf "%s" "$URL_DOMAIN" | sed -e 's/[.[\]{}()*+?^$|\\]/\\&/g')"
+MATCH_RE="(^|://)([^/]*\\.)?${esc_domain}(/|$)"
+debug "match regex: $MATCH_RE"
+debug "QUTE_URL: ${QURL:-<empty>}   host: ${URL_HOST:-<empty>}"
+
+if [ "$OPMAJOR" = "2" ]; then
+  VAULT_NAME="$(pick_vault_name)"
+  [ -n "$VAULT_NAME" ] && debug "restricting to vault: $VAULT_NAME" || debug "searching all visible vaults"
+
+  ITEMS_MIN="$(op_v2_items_list "$VAULT_NAME")"
+  [ -z "$ITEMS_MIN" ] && { say "message-error 'No 1Password LOGIN items visible (check vault filters / integration)'" ; exit 1; }
+  COUNT_MIN="$(printf "%s" "$ITEMS_MIN" | jq 'length' 2>/dev/null || echo 0)"
+  debug "listed LOGIN items: $COUNT_MIN"
+
+  # Fast-path by title token to cut API calls
+  TITLE_TOKEN="$(printf "%s" "$URL_HOST" | sed 's/^www[.]//' | awk -F. '{ if (NF>=2) print $(NF-1); else print $1 }')"
+  [ -z "$TITLE_TOKEN" ] && TITLE_TOKEN="$URL_DOMAIN"
+  debug "title token: $TITLE_TOKEN"
+  TITLE_MATCHES_JSON="$(printf "%s" "$ITEMS_MIN" | jq --arg t "$TITLE_TOKEN" '[ .[] | select((.title // "") | test($t;"i")) ]')"
+  TITLE_MATCH_COUNT="$(printf "%s" "$TITLE_MATCHES_JSON" | jq 'length' 2>/dev/null || echo 0)"
+  debug "title matches: $TITLE_MATCH_COUNT"
+
+  # IDs to fetch in detail
+  if [ "$TITLE_MATCH_COUNT" -gt 0 ] && [ "$TITLE_MATCH_COUNT" -le 20 ]; then
+    IDS_TO_FETCH="$(printf "%s" "$TITLE_MATCHES_JSON" | jq -r '.[].id')"
+  else
+    IDS_TO_FETCH="$(printf "%s" "$ITEMS_MIN" | jq -r '.[].id')"
+  fi
+
+  FETCH_COUNT="$(printf "%s\n" "$IDS_TO_FETCH" | sed '/^$/d' | wc -l | tr -d ' ' || echo 0)"
+  debug "fetching details for $FETCH_COUNT items… (dots = progress)"
+
+  PROG=""; : > /tmp/.qute1pass_items.$$
+  printf "%s\n" "$IDS_TO_FETCH" | while IFS= read -r id; do
+    it="$(op_v2_item_get_json "$SESSION" "$id")"
+    [ -n "$it" ] && printf "%s\n" "$it" >> /tmp/.qute1pass_items.$$
+    PROG="$PROG."; say "message-info 'DEBUG: progress $PROG'"
+  done
+
+  [ -s /tmp/.qute1pass_items.$$ ] || { rm -f /tmp/.qute1pass_items.$$; say "message-error 'Failed to fetch item details'"; exit 1; }
+  FULL_ITEMS="$(jq -s '.' /tmp/.qute1pass_items.$$ 2>/dev/null)"; rm -f /tmp/.qute1pass_items.$$
+
+  # ---- Build candidate sets ----
+  # A) URL-based candidates (for auto-pick when only one)
+  CANDS_URL="$(printf "%s" "$FULL_ITEMS" | jq -r --arg re "$MATCH_RE" '
+    [ .[] as $it
+      | {
+          id:    ($it.id),
+          title: ($it.title // ""),
+          username: (
+            ($it.fields // [])
+            | map(select(
+                (.purpose == "USERNAME")
+                or ((.label // "") | test("user|email|login"; "i"))
+                or ((.id    // "") | test("user|email|login"; "i"))
+              ))
+            | (.[0].value // "")
+          ),
+          urls: ([$it.urls[]?.href])
+        }
+      | select( ((.urls | length) == 0)
+                or (([.urls[] | select(test($re))] | length) > 0) )
+    ]')"
+  CANDS_URL_COUNT="$(printf "%s" "$CANDS_URL" | jq 'length' 2>/dev/null || echo 0)"
+  debug "URL candidates: $CANDS_URL_COUNT"
+
+  # B) Title-match candidates (show these in the chooser if >1)
+  TITLE_IDS="$(printf "%s" "$TITLE_MATCHES_JSON" | jq -r '.[].id')"
+  CANDS_TITLE="$(printf "%s" "$FULL_ITEMS" | jq -r --argjson ids "$(printf '%s\n' "$TITLE_IDS" | jq -R -s 'split("\n")|map(select(length>0))')" '
+    [ .[] as $it
+      | select( ($ids | index($it.id)) )
+      | {
+          id:    ($it.id),
+          title: ($it.title // ""),
+          username: (
+            ($it.fields // [])
+            | map(select(
+                (.purpose == "USERNAME")
+                or ((.label // "") | test("user|email|login"; "i"))
+                or ((.id    // "") | test("user|email|login"; "i"))
+              ))
+            | (.[0].value // "")
+          ),
+          urls: ([$it.urls[]?.href])
+        }
+    ]')"
+  CANDS_TITLE_COUNT="$(printf "%s" "$CANDS_TITLE" | jq 'length' 2>/dev/null || echo 0)"
+  debug "Title candidates: $CANDS_TITLE_COUNT"
+
+  # ----- chooser logic (v2) -----
+  CHOSEN_ID=""
+  if [ -n "${QUTE_1PASS_ALWAYS_PICK:-}" ] || [ "$CANDS_TITLE_COUNT" -gt 1 ]; then
+    MENU="$(printf "%s" "$CANDS_TITLE" | jq -r '.[] | "\(.title) — \(.username)"')"
+    if command -v rofi >/dev/null 2>&1; then
+      PICK="$(printf "%s\n" "$MENU" | rofi -dmenu -i -p 'Choose login')"
     else
-        echo "message-error 'Entry not found for $UUID'" >> "$QUTE_FIFO"
+      echo "Choose login:" 1>&2; nl -ba <<< "$MENU" 1>&2; printf "Enter number: " 1>&2; read -r idx; PICK="$(printf "%s\n" "$MENU" | sed -n "${idx}p")"
     fi
+    [ -z "$PICK" ] && { say "message-error 'No item selected'"; exit 1; }
+    IDX="$(printf "%s\n" "$MENU" | nl -ba | awk -v s="$PICK" '$0 ~ s {print $1; exit}')"
+    CHOSEN_ID="$(printf "%s" "$CANDS_TITLE" | jq -r --argjson i "$IDX" '.[$i-1].id')"
+    debug "user picked index $IDX -> id: $CHOSEN_ID"
+  elif [ "$CANDS_URL_COUNT" -gt 1 ]; then
+    MENU="$(printf "%s" "$CANDS_URL" | jq -r '.[] | "\(.title) — \(.username)"')"
+    if command -v rofi >/dev/null 2>&1; then
+      PICK="$(printf "%s\n" "$MENU" | rofi -dmenu -i -p 'Choose login')"
+    else
+      echo "Choose login:" 1>&2; nl -ba <<< "$MENU" 1>&2; printf "Enter number: " 1>&2; read -r idx; PICK="$(printf "%s\n" "$MENU" | sed -n "${idx}p")"
+    fi
+    [ -z "$PICK" ] && { say "message-error 'No item selected'"; exit 1; }
+    IDX="$(printf "%s\n" "$MENU" | nl -ba | awk -v s="$PICK" '$0 ~ s {print $1; exit}')"
+    CHOSEN_ID="$(printf "%s" "$CANDS_URL" | jq -r --argjson i "$IDX" '.[$i-1].id')"
+    debug "user picked index $IDX -> id: $CHOSEN_ID"
+  else
+    # Single candidate: prefer URL candidates; else fall back to title candidates; else error
+    CHOSEN_ID="$(printf "%s" "$CANDS_URL" | jq -r '.[0].id' 2>/dev/null || echo "")"
+    [ -z "$CHOSEN_ID" -o "$CHOSEN_ID" = "null" ] && CHOSEN_ID="$(printf "%s" "$CANDS_TITLE" | jq -r '.[0].id' 2>/dev/null || echo "")"
+    debug "auto-select id: $CHOSEN_ID"
+  fi
+
+  [ -z "$CHOSEN_ID" -o "$CHOSEN_ID" = "null" ] && { say "message-error 'Entry not selected or not found'"; exit 1; }
+
+  ITEM="$(printf "%s" "$FULL_ITEMS" | jq --arg id "$CHOSEN_ID" -r '[.[] | select(.id==$id)][0]')"
+  USERNAME="$(printf "%s" "$ITEM" | jq -r "$jq_extract_username_v2")"
+  PASSWORD="$(printf "%s" "$ITEM" | jq -r "$jq_extract_password_v2")"
+  TITLE="$(printf "%s" "$ITEM" | jq -r '.title')"
+
+  [ -z "$PASSWORD" -o "$PASSWORD" = "null" ] && { say "message-error 'No password field in selected item'"; exit 1; }
+  debug "selected item: $TITLE  (id: $CHOSEN_ID)"
+  [ -n "$USERNAME" ] && debug "username: ${USERNAME}" || debug "username: <empty>"
+  debug "password length: $(printf "%s" "$PASSWORD" | wc -c | tr -d ' ')"
+
+  JS_PAYLOAD="$(build_js)"
+  say "jseval -q $JS_PAYLOAD"
+  debug "injected JS (chars): $(printf "%s" "$JS_PAYLOAD" | wc -c | tr -d ' ')"
+
+  TOTP="$(op_v2_item_get_totp "$SESSION" "$CHOSEN_ID" || true)"
+  if [ -n "$TOTP" ]; then
+    if [ -z "${NO_XCLIP:-}" ]; then printf "%s" "$TOTP" | xclip -selection clipboard -in
+         say "message-info 'Pasted one-time password for $TITLE to clipboard'"
+    else say "message-info 'TOTP for $TITLE: $TOTP'"; fi
+  fi
+
+else
+  # ----- v1 path -----
+  ITEMS_JSON="$(op_v1_items_list "$SESSION")"
+  [ -z "$ITEMS_JSON" ] && { say "message-error 'Failed to list items (v1)'" ; exit 1; }
+  debug "listed items (v1): $(printf "%s" "$ITEMS_JSON" | jq 'length' 2>/dev/null || echo 0)"
+
+  # Title candidates (v1)
+  TITLE_CANDS_V1="$(printf "%s" "$ITEMS_JSON" | jq -r --arg t "$TITLE_TOKEN" '
+    [ .[] as $it
+      | select( ($it.overview.title // "") | test($t; "i") )
+      | {
+          uuid:  $it.uuid,
+          title: ($it.overview.title // ""),
+          username: (('"$jq_extract_username_v1"') // ""),
+          urls: ([$it.overview.URLs[]?.u, $it.overview.url] | map(select(.!=null)))
+        }
+    ]')"
+  TITLE_CANDS_V1_COUNT="$(printf "%s" "$TITLE_CANDS_V1" | jq 'length' 2>/dev/null || echo 0)"
+  debug "Title candidates (v1): $TITLE_CANDS_V1_COUNT"
+
+  # URL candidates (v1)
+  CANDS_V1_URL="$(printf "%s" "$ITEMS_JSON" | jq -r --arg re "$MATCH_RE" '
+    [ .[] as $it
+      | {uuid: $it.uuid,
+          title: $it.overview.title,
+          username: (('"$jq_extract_username_v1"') // ""),
+          urls: ([$it.overview.URLs[]?.u, $it.overview.url] | map(select(.!=null)))}
+      | select( ( .urls|length==0 ) or ( [.urls[] | select(test($re))] | length ) > 0 )
+    ]')"
+  CANDS_V1_URL_COUNT="$(printf "%s" "$CANDS_V1_URL" | jq 'length' 2>/dev/null || echo 0)"
+  debug "URL candidates (v1): $CANDS_V1_URL_COUNT"
+
+  CHOSEN_UUID=""
+  if [ -n "${QUTE_1PASS_ALWAYS_PICK:-}" ] || [ "$TITLE_CANDS_V1_COUNT" -gt 1 ]; then
+    MENU="$(printf "%s" "$TITLE_CANDS_V1" | jq -r '.[] | "\(.title) — \(.username)"')"
+    if command -v rofi >/dev/null 2>&1; then
+      PICK="$(printf "%s\n" "$MENU" | rofi -dmenu -i -p 'Choose login')"
+    else
+      echo "Choose login:" 1>&2; nl -ba <<< "$MENU" 1>&2; printf "Enter number: " 1>&2; read -r idx; PICK="$(printf "%s\n" "$MENU" | sed -n "${idx}p")"
+    fi
+    [ -z "$PICK" ] && { say "message-error 'No item selected'"; exit 1; }
+    IDX="$(printf "%s\n" "$MENU" | nl -ba | awk -v s="$PICK" '$0 ~ s {print $1; exit}')"
+    CHOSEN_UUID="$(printf "%s" "$TITLE_CANDS_V1" | jq -r --argjson i "$IDX" '.[$i-1].uuid')"
+    debug "user picked index $IDX -> uuid: $CHOSEN_UUID"
+  elif [ "$CANDS_V1_URL_COUNT" -gt 1 ]; then
+    MENU="$(printf "%s" "$CANDS_V1_URL" | jq -r '.[] | "\(.title) — \(.username)"')"
+    if command -v rofi >/dev/null 2>&1; then
+      PICK="$(printf "%s\n" "$MENU" | rofi -dmenu -i -p 'Choose login')"
+    else
+      echo "Choose login:" 1>&2; nl -ba <<< "$MENU" 1>&2; printf "Enter number: " 1>&2; read -r idx; PICK="$(printf "%s\n" "$MENU" | sed -n "${idx}p")"
+    fi
+    [ -z "$PICK" ] && { say "message-error 'No item selected'"; exit 1; }
+    IDX="$(printf "%s\n" "$MENU" | nl -ba | awk -v s="$PICK" '$0 ~ s {print $1; exit}')"
+    CHOSEN_UUID="$(printf "%s" "$CANDS_V1_URL" | jq -r --argjson i "$IDX" '.[$i-1].uuid')"
+    debug "user picked index $IDX -> uuid: $CHOSEN_UUID"
+  else
+    CHOSEN_UUID="$(printf "%s" "$CANDS_V1_URL" | jq -r '.[0].uuid' 2>/dev/null || echo "")"
+    [ -z "$CHOSEN_UUID" -o "$CHOSEN_UUID" = "null" ] && CHOSEN_UUID="$(printf "%s" "$TITLE_CANDS_V1" | jq -r '.[0].uuid' 2>/dev/null || echo "")"
+    debug "auto-select uuid: $CHOSEN_UUID"
+  fi
+
+  [ -z "$CHOSEN_UUID" -o "$CHOSEN_UUID" = "null" ] && { say "message-error 'Entry not selected or not found'"; exit 1; }
+
+  ITEM="$(op_v1_item_get_json "$SESSION" "$CHOSEN_UUID")"
+  USERNAME="$(printf "%s" "$ITEM" | jq -r "$jq_extract_username_v1")"
+  PASSWORD="$(printf "%s" "$ITEM" | jq -r "$jq_extract_password_v1")"
+  TITLE="$(printf "%s" "$ITEM"   | jq -r '.overview.title')"
+
+  [ -z "$PASSWORD" -o "$PASSWORD" = "null" ] && { say "message-error 'No password field in selected item'" ; exit 1; }
+  debug "selected item: $TITLE  (uuid: $CHOSEN_UUID)"
+  [ -n "$USERNAME" ] && debug "username: ${USERNAME}" || debug "username: <empty>"
+  debug "password length: $(printf "%s" "$PASSWORD" | wc -c | tr -d ' ')"
+
+  JS_PAYLOAD="$(build_js)"
+  say "jseval -q $JS_PAYLOAD"
+  debug "injected JS (chars): $(printf "%s" "$JS_PAYLOAD" | wc -c | tr -d ' ')"
+
+  TOTP="$(op_v1_item_get_totp "$SESSION" "$CHOSEN_UUID" || true)"
+  if [ -n "$TOTP" ]; then
+    if [ -z "${NO_XCLIP:-}" ]; then printf "%s" "$TOTP" | xclip -selection clipboard -in
+         say "message-info 'Pasted one-time password for $TITLE to clipboard'"
+    else say "message-info 'TOTP for $TITLE: $TOTP'"; fi
+  fi
+fi
+
+exit 0

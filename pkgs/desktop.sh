@@ -37,8 +37,18 @@ apps=(
     xclip                   # Command line interface to the X11 clipboard
     neofetch                # A CLI system information tool written in BASH that supports displaying images.
     xorg-xprop
-    # calibre                 # Ebook management application
+    # calibre               # Ebook management application
     libreoffice
+    arandr                  # Provide a simple visual front end for XRandR 1.2.
+    # Audio expierience + bluetooth
+    pipewire-pulse          # Low-latency audio/video router and processor - PulseAudio replacement
+    bluez                   # Daemons for the bluetooth protocol stack
+    blueman                 # GTK+ Bluetooth Manager
+
+    mpv                     # Video player    
+    streamlink              # CLI program to stream web-based media to a video player
+
+
 
 )
 
