@@ -85,6 +85,6 @@ SUFFIX_LOWERCASE="${SUFFIX,,}"
 
 echo "Profiledir:"${CONFIGDIR}/${SUFFIX_LOWERCASE}
 
-eval $BROWSER_CMD --profile-directory=${SUFFIX_LOWERCASE} ${REMOTE:-} $* \&
+eval $BROWSER_CMD --force-dark-mode --profile-directory=${SUFFIX_LOWERCASE} ${REMOTE:-} $* \&
 
 

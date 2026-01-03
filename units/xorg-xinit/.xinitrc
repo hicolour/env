@@ -13,6 +13,18 @@ EXTERNAL_OUTPUT="DP1"
 INTERNAL_OUTPUT="eDP1"
 
 
+
+### DARK THEME ###
+# GTK fallback (helps Chromium/Chrome too)
+export GTK_THEME=Adwaita:dark
+
+# Optional: make Qt apps dark if you use them
+export QT_QPA_PLATFORMTHEME=qt5ct
+export QT_STYLE_OVERRIDE=kvantum
+
+
+
+
 #xrandr --output eDP1 --mode 1920x1080 --left-of DP2
 # xrandr --output DP2 --mode 1152x864
 

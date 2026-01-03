@@ -8,7 +8,7 @@ export color_sec2="^fg(#747369)"
 #export font="-*-terminus-medium-*-*-*-16-*-*-*-*-*-*-u"
 #export font="-xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso8859-1"
 #export font="-ypn-envypn-Medium-R-Normal--13-130-75-75-C-90-ISO8859-1"
-export font="-misc-dina-medium-r-normal--15-68-75-160-c-60-iso8859-1"
+export font="-*-terminus-medium-*-*-*-15-*-*-*-*-*-*-*"
 # export font="*ypn*envypn*"
 #font="Anonymous Pro 16"
 
@@ -25,8 +25,11 @@ dzen_style="-fg $fg_color -bg $bg_color -fn $font -h 20 -e onstart=lower"
 
 screen0_width=`xrandr | grep "Screen 0" | grep -o "current [0-9]*" |  grep -o "[0-9]*"`
 
+# Calculate right-side bar width (screen width - left bar width, no gap)
+right_bar_width=$((screen0_width - 1000))
+right_bar_x=1000
 
-~/.dzen/status_bars/dzen_main.sh      | dzen2 -y 0 -x 700  -w $screen0_width -ta r $dzen_style &
+~/.dzen/status_bars/dzen_main.sh      | dzen2 -y 0 -x $right_bar_x -w $right_bar_width -ta r $dzen_style &
 # ~/.dzen/status_bars/dzen_audio.sh     | dzen2 -y 0 -x 1920 -w 700  -ta l $dzen_style &
 # ~/.dzen/status_bars/dzen_secondary.sh | dzen2 -y 0 -x 2200 -w 1320 -ta r $dzen_style &
 

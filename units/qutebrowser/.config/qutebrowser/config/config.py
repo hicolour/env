@@ -1746,3 +1746,16 @@ config.bind(';m', 'hint links spawn mpv {hint-url}')
 # config.bind('y', 'prompt-accept yes', mode='yesno')
 
 config.set('content.register_protocol_handler', True, '*://gmail.com/')
+
+# Dark theme settings to avoid white flash before pages load
+config.set('colors.webpage.darkmode.enabled', True)
+config.set('colors.webpage.darkmode.algorithm', 'lightness-cielab')
+config.set('colors.webpage.darkmode.contrast', 0.0)
+config.set('colors.webpage.darkmode.policy.images', 'never')
+config.set('colors.webpage.darkmode.policy.page', 'smart')
+config.set('colors.webpage.darkmode.threshold.background', 128)
+config.set('colors.webpage.darkmode.threshold.foreground', 128)
+
+# Set dark background for page area
+config.set('colors.webpage.bg', 'black')
+config.set('colors.webpage.preferred_color_scheme', 'dark')
