@@ -48,6 +48,9 @@ apps=(
     mpv                     # Video player    
     streamlink              # CLI program to stream web-based media to a video player
 
+    noto-fonts 
+    noto-fonts-emoji 
+
 
 
 )

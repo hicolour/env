@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 
 var=$(pwd)
@@ -63,84 +63,122 @@ slink(){
       sudo ln -s $1 $2
       }
 
+_spin() {
+      local pid=$1 label=$2 spin='-\|/' i=0
+      while kill -0 "$pid" 2>/dev/null; do
+            printf "\r  [%s] %s..." "${spin:$((i++ % 4)):1}" "$label"
+            sleep 0.1
+      done
+      printf "\r\033[K"
+}
+
+_install_pkg() {
+      local package=$1
+      if [ "${DRY:-}" = "1" ]; then
+            color '33;1' "  [dry] would install: $package"
+            return 0
+      fi
+
+      if pacman -Ss "$package" | grep "^[^ ]*/$package " > /dev/null 2>&1; then
+            sudo pacman -S "$package" --noconfirm >> "$ENV_LOG" 2>&1 &
+            _spin $! "$package"
+            wait $!
+      else
+            color '37;1' "  ᗧ̿ not in repos, trying aur: $package"
+            yay -S "$package" --noconfirm >> "$ENV_LOG" 2>&1 &
+            _spin $! "$package (aur)"
+            wait $!
+      fi
+}
 
 env(){
 
       fname=$(basename $0)
       fbname=${fname%.*}
 
-      units=($@)
+      local units=($@)
+      local total=${#units[@]}
+      local step=0
+      local failed=()
+      local skipped=()
 
-      info "Package check ... for $fbname"
-      for package in ${units[@]}; do
+      ENV_LOG="/tmp/env-${fbname}-$(date +%Y%m%d-%H%M%S).log"
+      ENV_STATE=".env-state-${fbname}"
 
-            if pacman -Qs $package > /dev/null ; then
-                  color '32;1'  "  ✓ ᗧ̿ $package "
+      info "Package check ... for $fbname  [${total} units]  log: $ENV_LOG"
+
+      for package in "${units[@]}"; do
+            if pacman -Qs "$package" > /dev/null 2>&1; then
+                  color '32;1' "  ✓ ᗧ̿ $package"
             else
                   color '34;1' "  ✗ ᗧ̿ $package"
             fi
       done
 
       echo
-      read -p "Continue ? [Y/y]" -n 1 -r
-      echo
-      if ! [[ $REPLY =~ ^[Yy]$ ]]
-      then 
-            exit 0
+      if [ "${DRY:-}" = "1" ]; then
+            color '33;1' "  -- dry run, skipping confirmation --"
+      else
+            read -p "Continue ? [Y/y] " -n 1 -r
+            echo
+            if ! [[ $REPLY =~ ^[Yy]$ ]]; then
+                  exit 0
+            fi
       fi
 
-      for package in ${units[@]}; do 
-            
-            if grep -q "NO_PKG=true" "units/$package/unit.sh"; then
-                  color '34;1'  "  ᗧ̿ No $package"
-            else
+      line
 
-            
-                  color '34;1'  "  ᗧ̿ $package"
-                  # sudo pacman -S $package
-      
+      for package in "${units[@]}"; do
+            step=$((step + 1))
 
-                  if pacman -Ss $package | grep $package' '| grep -v '^ ' > /dev/null ; then
-                        color '37;1'  "  The package $package is available"
-                        sudo pacman -S $package --noconfirm  >> /dev/null
-                        # PID=$!
-                        # i=1
-                        # sp="/-\|"
-                        # echo -n ' '
-                        # while [ -d /proc/$PID ]
-                        # do
-                        # printf "\b${sp:i++%${#sp}:1}"
-                        # done
-                        if [ $? -eq 0 ] 
-                        then
-                        color '32;1'  "  ✓ $package"
-                        else
-                        color '31;1'  "  X $package"
-                        fi
-                  else
-                        color '37;1'  "  The package $package is not availble, falling back to aur"
-                        yay -S $package --noconfirm  >> /dev/null 
-
-
-                        if [ $? -eq 0 ] 
-                        then
-                        color '32;1'  "  ✓ $package"
-                        else
-                        color '31;1'  "  X $package"
-                        fi
-                  fi
-
+            # resume: skip already completed units
+            if grep -qx "$package" "$ENV_STATE" 2>/dev/null; then
+                  color '32;1' "  [$step/$total] ✓ skip $package  (state file)"
+                  skipped+=("$package")
+                  continue
             fi
 
-            if [[ -f "units/$package/unit.sh" ]]
-            then
-                  color '34;1'  "  🤖 ✓ ▶ $package "
+            color '37;1' "  [$step/$total] ᗧ̿ $package"
+
+            pkg_ok=true
+            if [ -f "units/$package/unit.sh" ] && grep -q "NO_PKG=true" "units/$package/unit.sh"; then
+                  color '34;1' "         no package needed"
+            else
+                  _install_pkg "$package"
+                  if [ $? -eq 0 ]; then
+                        color '32;1' "         ✓ installed"
+                  else
+                        color '31;1' "         ✗ install failed  (see $ENV_LOG)"
+                        failed+=("$package")
+                        pkg_ok=false
+                  fi
+            fi
+
+            if [ -f "units/$package/unit.sh" ]; then
+                  color '34;1' "         🤖 configuring..."
                   units/$package/unit.sh
+            fi
+
+            if $pkg_ok; then
+                  echo "$package" >> "$ENV_STATE"
             fi
       done
 
-
-
-
-
+      # summary
+      line
+      color '32;1' "  Done: $fbname  [$total units]"
+      color '37;1' "  Log:  $ENV_LOG"
+      if [ ${#skipped[@]} -gt 0 ]; then
+            color '32;1' "  Skipped (already done): ${skipped[*]}"
+      fi
+      if [ ${#failed[@]} -gt 0 ]; then
+            color '31;1' "  Failed:"
+            for f in "${failed[@]}"; do
+                  color '31;1' "    ✗ $f"
+            done
+            color '31;1' "  Re-run to retry failed units (state file preserves successes)"
+      else
+            color '32;1' "  All units succeeded ✓"
+      fi
+      line
 }

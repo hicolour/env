@@ -8,7 +8,7 @@
 --     _|      _|  _|      _|    _|_|    _|    _|    _|_|_|    _|_|_|    --
 --                                                                       --
 ---------------------------------------------------------------------------
---                       current as of XMonad 0.13                       --
+--                       current as of XMonad 0.18                       --
 ---------------------------------------------------------------------------
 --                                Modules                                --
 ---------------------------------------------------------------------------
@@ -18,12 +18,10 @@ import qualified Data.Map as M
 import Data.Monoid
 import System.Exit
 import System.IO                            -- for xmonbar
-import System.Posix.Process(executeFile)
 
 import XMonad hiding ( (|||) )              -- ||| from X.L.LayoutCombinators
 import qualified XMonad.StackSet as W       -- myManageHookShift
 
-import XMonad.Actions.Commands
 import XMonad.Actions.ConditionalKeys       -- bindings per workspace or layout
 import qualified XMonad.Actions.ConstrainedResize as Sqr
 import XMonad.Actions.CopyWindow            -- like cylons, except x windows
@@ -56,7 +54,6 @@ import XMonad.Layout.BorderResize
 import XMonad.Layout.Column
 import XMonad.Layout.Combo
 import XMonad.Layout.ComboP
-import XMonad.Layout.DecorationMadness      -- testing alternative accordion styles
 import XMonad.Layout.Dishes
 import XMonad.Layout.DragPane
 import XMonad.Layout.Drawer
@@ -101,16 +98,12 @@ import XMonad.Util.WorkspaceCompare         -- custom WS functions filtering NSP
 import XMonad.Util.XSelection
 import XMonad.Actions.GroupNavigation
 
--- experimenting with tripane
 import XMonad.Layout.Decoration
-import XMonad.Layout.ResizableTile
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Maximize
-import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Fullscreen as LF
 import XMonad.Layout.NoBorders
 
-import XMonad.Hooks.DynamicLog
 import XMonad.Actions.UpdatePointer
 
 ---------------------------------------------------------------------------
@@ -159,21 +152,12 @@ myConfig p = def
 ---------------------------------------------------------------------------
 
 wsAV    = "0:mail"
-wsBSA   = "BSA"
-wsCOM   = "COM"
-wsDOM   = "DOM"
-wsDMO   = "DMO"
-wsGCC   = "GCC"
 wsMON   = "5"
-wsOSS   = "OSS"
 wsRAD   = "RAD"
-wsRW    = "7"
 wsSYS   = "4"
 wsTMP   = "8"
-wsVIX   = "VIX"
 wsWRK   = "wrk@1"
 wsWRK2  = "wrk@2"
-wsGGC   = "GGC"
 wsFLOAT = "FLOAT"
 wsTERM3 = "3:tw"
 
@@ -204,11 +188,11 @@ projects =
 
     , Project   { projectName       = wsTERM2
                 , projectDirectory  = "~/"
-                , projectStartHook  = Just $ do 
+                , projectStartHook  = Just $ do
                     sendMessage (JumpToLayout "Flex")
-                    spawnOn wsTERM1 myTerminal
-                    spawnOn wsTERM1 myTerminal
-                    spawnOn wsTERM1 myTerminal
+                    spawnOn wsTERM2 myTerminal
+                    spawnOn wsTERM2 myTerminal
+                    spawnOn wsTERM2 myTerminal
 
                 }
 
@@ -305,8 +289,6 @@ myAltBrowser        = "browser-chrome"
 myAltBrowserClass   = "Google-chrome-stable"
 
 
-myStatusBar         = "dzen2 -y 0 -x 0 -w 1000 -ta l "
-
 myIDE               = "intellij-idea-ultimate-edition"
 myAltIDE            = "code"
 
@@ -376,21 +358,6 @@ scratchpads =
 ---------------------------------------------------------------------------
 -- Status Bar
 ---------------------------------------------------------------------------
-
-myDzenPP = dzenPP
-  {
-    ppCurrent          = wrap "^fg(#F39C12)[^fg(#F1C40F)" "^fg(#F39C12)]"
-  , ppVisible          = wrap "^fg(#E67E22)[^fg(#d3d0c8)" "^fg(#E67E22)]"
-  , ppHidden           = wrap " ^fg(#d3d0c8)" " "
-  , ppHiddenNoWindows  = wrap " ^fg(#747369)" " "
-  , ppUrgent           = wrap "^fg(#8ab3b5)[^fg(#cdc5b3)" "^fg(#8ab3b5)]"
-  , ppSep              = "  "
-  , ppLayout           = wrap "^fg(#8E44AD)[^fg(#9B59B6)" "^fg(#8E44AD)]"
-  , ppTitle            = (" " ++) . dzenColor "#5b709b" "" . dzenEscape
-  , ppSort             = fmap
-                                                           (filterOutWs [scratchpadWorkspaceTag].)
-                                                           (ppSort def)
-  }
 
 
 myDzenXmonad="dzen2 -y 0 -x 0 -w 1000 -ta l " ++ myDzenStyle
@@ -741,11 +708,6 @@ myLayoutHook = showWorkspaceName
                 wideScreen = reflectHoriz $ Tall 1 0.03 (2/3)
                 normalScreen = Mirror $ Tall 1 0.03 (4/5)
 
-    smartTabbed = named "Smart Tabbed"
-              $ addTopBar
-              $ myGaps
-              $ tabbed shrinkText myTabTheme
-
     simpleThree = named "Three Col"
               $ avoidStruts
               $ addTopBar
@@ -754,14 +716,6 @@ myLayoutHook = showWorkspaceName
             --   $ myGaps
               $ ThreeColMid 1 (3/100) (1/2)
 
-
-    oneUp =   named "1UP"
-              $ avoidStruts
-              $ myGaps
-              $ combineTwoP (ThreeCol 1 (3/100) (1/2))
-                            (Simplest)
-                            (Tall 1 0.03 0.5)
-                            (ClassName "Google-chrome-beta")
 
 ---------------------------------------------------------------------------
 -- Bindings
@@ -812,11 +766,6 @@ myKeys conf = let
 
     zipM  m nm ks as f = zipWith (\k d -> (m ++ k, addName nm $ f d)) ks as
     zipM' m nm ks as f b = zipWith (\k d -> (m ++ k, addName nm $ f d b)) ks as
-
-    -- from xmonad.layout.sublayouts
-    focusMaster' st = let (f:fs) = W.integrate st
-        in W.Stack f [] fs
-    swapMaster' (W.Stack f u d) = W.Stack f [] $ reverse u ++ d
 
     -- try sending one message, fallback if unreceived, then refresh
     tryMsgR x y = sequence_ [(tryMessageWithNoRefreshToCurrent x y), refresh]
@@ -870,7 +819,7 @@ myKeys conf = let
     , ("M-M1-m"                    , addName "MUTE audio"                      $ spawn "pamixer -t & notify-send  \"Audio Mute\"")
     , ("<XF86AudioRaiseVolume>"    , addName "Up audio"                        $ spawn "pamixer -i 5 & notify-send  \"Audio Up\" $(pamixer --get-volume-human)")
     , ("<XF86AudioLowerVolume>"    , addName "Down audio"                      $ spawn "pamixer -d 5 & notify-send  \"Audio Down\" $(pamixer --get-volume-human)")
-    , ("<XF86AudioMute>"           , addName "MUTE audio"                      $ spawn "amixer set Master toggle")
+    , ("<XF86AudioMute>"           , addName "MUTE audio"                      $ spawn "pamixer -t & notify-send \"Audio Mute\"")
 
     , ("<XF86AudioNext>"           , addName "Next song"                       $ spawn "playerctl next")
     , ("<XF86AudioPrev>"           , addName "Previous song"                   $ spawn "playerctl previous")
@@ -885,7 +834,7 @@ myKeys conf = let
     -- Actions
     -----------------------------------------------------------------------
     subKeys "Actions"
-    [ ("M-a"                       , addName "Notify w current X selection"    $ unsafeWithSelection "notify-send")
+    [ ("M-M1-n"                    , addName "Notify w current X selection"    $ unsafeWithSelection "notify-send")
 
     , ("M-M1-/"                    , addName "On-screen keys (on/off) "        $ spawn "killall screenkey &>/dev/null || screenkey --no-systray")
     , ("M-M1-S-/"                  , addName "On-screen keys settings"         $ spawn "screenkey --show-settings")
@@ -929,11 +878,8 @@ myKeys conf = let
     , ("M-<F3>"                   , addName "NSP Terminal"                    $ namedScratchpadAction scratchpads "terminal-2")
     , ("M-<F4>"                   , addName "NSP Htop"                        $ namedScratchpadAction scratchpads "htop")
     , ("M-<F5>"                   , addName "NSP Glances"                     $ namedScratchpadAction scratchpads "glances")
-    , ("M-<F6>"                  , addName "NSP Bleue"                       $ namedScratchpadAction scratchpads "blueman")
-   -- , ("M-<F7>"                   , addName "-- EMPTY SLOT --"                $ namedScratchpadAction scratchpads "emtpy")
-    , ("M-<F8>"                   , addName "NSP Wicd"                        $ namedScratchpadAction scratchpads "wicd-curses")
+    , ("M-<F6>"                   , addName "NSP Blueman"                     $ namedScratchpadAction scratchpads "blueman")
     , ("M-<F9>"                   , addName "NSP Pavucontrol"                 $ namedScratchpadAction scratchpads "pavucontrol")
-    , ("M-<F10>"                  , addName "NSP Slack"                       $ namedScratchpadAction scratchpads "slack")    
     , ("M-<F11>"                  , addName "NSP Spotify"                     $ namedScratchpadAction scratchpads "spotify")
     ] ^++^
 
@@ -1108,9 +1054,6 @@ myStartupHook = do
     setDefaultCursor xC_left_ptr
 
 
-quitXmonad :: X ()
-quitXmonad = io (exitWith ExitSuccess)
-
 rebuildXmonad :: X ()
 rebuildXmonad = do
     spawn "xmonad --recompile && xmonad --restart"
@@ -1157,14 +1100,10 @@ myLogHook h = do
 
 myFadeHook = composeAll
     [ opaque -- default to opaque
-    , isUnfocused --> opacity 1.0
     , (className =? "Terminator") <&&> (isUnfocused) --> opacity 0.9
     , (className =? "roxterm") <&&> (isUnfocused) --> opacity 0.8
-    , (className =? "URxvt") <&&> (isUnfocused) --> opacity 1.0
     , fmap ("Google" `isPrefixOf`) className --> opaque
     , isDialog --> opaque
-    --, isUnfocused --> opacity 0.55
-    --, isFloating  --> opacity 0.75
     ]
 
 ---------------------------------------------------------------------------
@@ -1221,8 +1160,6 @@ myManageHook =
             , resource =? "console" -?> tileBelowNoFocus
             , isFullscreen -?> doFullFloat
             , pure True -?> tileBelow ]
-        isBrowserDialog = isDialog <&&> className =? myBrowserClass
-        gtkFile = "GtkFileChooserDialog"
         isRole = stringProperty "WM_WINDOW_ROLE"
         -- insert WHERE and focus WHAT
         tileBelow = insertPosition Below Newer

@@ -115,6 +115,43 @@ alias y="yaourt --noconfirm"
 alias h='history'
 alias hg='history | gr'
 
+gkework() {
+  local cfg
+  cfg="$(gcloud config configurations list --format='value(name)' | fzf)" || return 1
+
+  gcloud config configurations activate "$cfg" || return 1
+  gcloud config set container/use_application_default_credentials false >/dev/null
+
+  case "$cfg" in
+    work)
+      gcloud container clusters get-credentials findify-prod-usce1-gke \
+        --region us-central1 \
+        --project findify-production
+      ;;
+    priv)
+      gcloud container clusters get-credentials hiscale \
+        --region us-central1 \
+        --project hiscale-475309
+      ;;
+    *)
+      echo "Unknown config: $cfg" >&2
+      return 1
+      ;;
+  esac
+}
+
+gw() {
+gcloud config configurations list --format="value(name)" \
+| fzf \
+| while read -r cfg; do
+    gcloud config configurations activate "$cfg" || exit $?
+    case "$cfg" in
+      work) kubectl config use-context gke_findify-production_us-central1_findify-prod-usce1-gke ;;
+      priv) kubectl config use-context gke_hiscale-475309_us-central1_hiscale ;;
+    esac
+  done
+}
+
 fjq() {
 
 if [[ -z $1 ]] || [[ $1 == "-" ]]; then
