@@ -64,10 +64,22 @@ slink(){
       }
 
 _spin() {
-      local pid=$1 label=$2 spin='-\|/' i=0
+      local pid=$1 label=$2
+      local track=10 pos=0 i pac eaten dots_ahead
+      local open='ᗧ̿' closed='ᗧ' dot='·'
+
       while kill -0 "$pid" 2>/dev/null; do
-            printf "\r  [%s] %s..." "${spin:$((i++ % 4)):1}" "$label"
-            sleep 0.1
+            [ $(( pos % 2 )) -eq 0 ] && pac="$open" || pac="$closed"
+
+            eaten=""
+            for (( i=0; i<pos; i++ )); do eaten+="  "; done
+
+            dots_ahead=""
+            for (( i=pos+1; i<track; i++ )); do dots_ahead+="$dot "; done
+
+            printf "\r  %s%s %s  %s" "$eaten" "$pac" "$dots_ahead" "$label"
+            pos=$(( (pos + 1) % track ))
+            sleep 0.12
       done
       printf "\r\033[K"
 }
