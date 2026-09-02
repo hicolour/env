@@ -333,6 +333,15 @@ then
    source ~/.personal/.private-bashrc
 fi
 
+# Drop-in shell snippets (functions, aliases, exports) managed by units.
+# Anything symlinked into ~/.bashrc.d/*.sh is sourced for interactive shells.
+if [ -d ~/.bashrc.d ]; then
+   for _f in ~/.bashrc.d/*.sh; do
+      [ -r "$_f" ] && source "$_f"
+   done
+   unset _f
+fi
+
 # Add ENV scripts to PATH
 if [ -d $HOME/.bin ]; then
     PATH=$PATH:$HOME/bin/
