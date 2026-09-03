@@ -1,14 +1,7 @@
-[user]
-
-#Default User
-email = marek.prochera@gmail.com
-name = Marek Prochera
-
-[includeIf "gitdir:~/projects/work/"]
-    path = ~/work/.gitconfig
-
-[includeIf "gitdir:~/projects/personal/"]
-    path = ~/personal/.gitconfig
+# Git identity (default name/email + per-work-folder overrides) is provided by
+# the private overlay, so this shared config carries no personal data.
+[include]
+    path = ~/.config/git/identity.gitconfig
 
 [color]
     ui = auto
